@@ -8,7 +8,7 @@ import { isEmptyObject } from 'widget/helpers/utils';
 import routerMixin from 'widget/mixins/routerMixin';
 import darkModeMixin from 'widget/mixins/darkModeMixin';
 import configMixin from 'widget/mixins/configMixin';
-import customAttributeMixin from '../../../dashboard/mixins/customAttributeMixin';
+
 
 export default {
   components: {
@@ -20,7 +20,6 @@ export default {
     darkModeMixin,
     messageFormatterMixin,
     configMixin,
-    customAttributeMixin,
   ],
   props: {
     options: {
