@@ -1,5 +1,0 @@
-{
-  "GENERAL": {
-    "SHOWING_RESULTS": "Показаны {firstIndex}-{lastIndex} из {totalCount} элементов"
-  }
-}
