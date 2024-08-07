@@ -190,7 +190,7 @@ group :development do
   gem 'scss_lint', require: false
   gem 'web-console', '>= 4.2.1'
 
-
+  # used in swagger build
   gem 'json_refs'
 
   # When we want to squash migrations
