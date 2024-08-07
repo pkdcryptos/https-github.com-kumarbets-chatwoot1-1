@@ -11,8 +11,8 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     # Make the public endpoints accessible to the frontend
     resource '/public/api/*', headers: :any, methods: :any
 
-       resource '*', headers: :any, methods: :any, expose: %w[access-token client uid expiry]
-
+     resource '*', headers: :any, methods: :any, expose: %w[access-token client uid expiry]
+   
   end
 end
 
