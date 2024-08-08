@@ -368,6 +368,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
     t.index ["portal_id"], name: "index_inboxes_on_portal_id"
   end
 
+  create_table "installation_configs", force: :cascade do |t|
+    t.string "name", null: false
+    t.jsonb "serialized_value", default: {}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "locked", default: true, null: false
+    t.index ["name", "created_at"], name: "index_installation_configs_on_name_and_created_at", unique: true
+    t.index ["name"], name: "index_installation_configs_on_name", unique: true
+  end
+
 
   create_table "labels", force: :cascade do |t|
     t.string "title"

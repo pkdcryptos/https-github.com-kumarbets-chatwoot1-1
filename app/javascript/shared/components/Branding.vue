@@ -1,4 +1,5 @@
 <script>
+import globalConfigMixin from 'shared/mixins/globalConfigMixin';
 
 const {
   LOGO_THUMBNAIL: logoThumbnail,
@@ -7,7 +8,7 @@ const {
 } = window.globalConfig || {};
 
 export default {
-
+  mixins: [globalConfigMixin],
   props: {
     disableBranding: {
       type: Boolean,
@@ -59,7 +60,9 @@ export default {
         :alt="globalConfig.brandName"
         :src="globalConfig.logoThumbnail"
       />
-    
+      <span>
+        {{ useInstallationName($t('POWERED_BY'), globalConfig.brandName) }}
+      </span>
     </a>
   </div>
   <div v-else class="p-3" />

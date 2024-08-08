@@ -5,7 +5,8 @@ class DashboardController < ActionController::Base
   before_action :set_global_config
   before_action :set_dashboard_scripts
   around_action :switch_locale
-
+  before_action :ensure_installation_onboarding, only: [:index]
+  before_action :render_hc_if_custom_domain, only: [:index]
 
   layout 'vueapp'
 
@@ -16,6 +17,7 @@ class DashboardController < ActionController::Base
   def set_global_config
     @global_config = GlobalConfig.get(
       'LOGO', 'LOGO_DARK', 'LOGO_THUMBNAIL',
+      'INSTALLATION_NAME',
       'WIDGET_BRAND_URL', 'TERMS_URL',
       'BRAND_URL', 'BRAND_NAME',
       'PRIVACY_URL',
@@ -37,7 +39,9 @@ class DashboardController < ActionController::Base
     @dashboard_scripts = sensitive_path? ? nil : GlobalConfig.get_value('DASHBOARD_SCRIPTS')
   end
 
-
+  def ensure_installation_onboarding
+    redirect_to '/installation/onboarding' if ::Redis::Alfred.get(::Redis::Alfred::CHATWOOT_INSTALLATION_ONBOARDING)
+  end
 
   def render_hc_if_custom_domain
     domain = request.host

@@ -11,7 +11,10 @@ end
 ## Seeds for Local Development
 unless Rails.env.production?
 
-
+  # Enables creating additional accounts from dashboard
+  installation_config = InstallationConfig.find_by(name: 'CREATE_NEW_ACCOUNT_FROM_DASHBOARD')
+  installation_config.value = true
+  installation_config.save!
   GlobalConfig.clear_cache
 
   account = Account.create!(
@@ -22,7 +25,7 @@ unless Rails.env.production?
     name: 'Acme Org'
   )
 
-  user = User.new(name: 'John', email: 'john@acme.inc', password: 'Password1!', type: '')
+  user = User.new(name: 'John', email: 'john@acme.inc', password: 'Password1!', type: 'SuperAdmin')
   user.skip_confirmation!
   user.save!
 
