@@ -115,8 +115,7 @@ class Conversation < ApplicationRecord
   def can_reply?
     channel = inbox&.channel
 
-    return can_reply_on_instagram? if additional_attributes['type'] == 'instagram_direct_message'
-
+   
     return true unless channel&.messaging_window_enabled?
 
     messaging_window = inbox.api? ? channel.additional_attributes['agent_reply_time_window'].to_i : 24
@@ -133,17 +132,7 @@ class Conversation < ApplicationRecord
     Time.current < last_incoming_message.created_at + time.hours
   end
 
-  def can_reply_on_instagram?
-    global_config = GlobalConfig.get('ENABLE_MESSENGER_CHANNEL_HUMAN_AGENT')
 
-    return false if last_incoming_message.nil?
-
-    if global_config['ENABLE_MESSENGER_CHANNEL_HUMAN_AGENT']
-      Time.current < last_incoming_message.created_at + 7.days
-    else
-      last_message_in_messaging_window?(24)
-    end
-  end
 
   def toggle_status
     # FIXME: implement state machine with aasm

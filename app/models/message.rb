@@ -153,14 +153,7 @@ class Message < ApplicationRecord
     }
   end
 
-  # TODO: We will be removing this code after instagram_manage_insights is implemented
-  # Better logic is to listen to webhook and remove stories proactively rather than trying
-  # a fetch every time a message is returned
-  def validate_instagram_story
-    inbox.channel.fetch_instagram_story_link(self)
-    # we want to reload the message in case the story has expired and data got removed
-    reload
-  end
+
 
   def merge_sender_attributes(data)
     data[:sender] = sender.push_event_data if sender 
@@ -210,16 +203,7 @@ class Message < ApplicationRecord
     true
   end
 
-  def save_story_info(story_info)
-    self.content_attributes = content_attributes.merge(
-      {
-        story_id: story_info['id'],
-        story_sender: inbox.channel.instagram_id,
-        story_url: story_info['url']
-      }
-    )
-    save!
-  end
+ 
 
   private
 
