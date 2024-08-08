@@ -211,7 +211,7 @@ export default {
       width: 100%;
 
       &::placeholder {
-        color: $color-light-gray;
+
       }
     }
 

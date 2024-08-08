@@ -66,7 +66,7 @@ export default {
 
 .has-selected {
   .option-button:not(.is-selected) {
-    color: $color-light-gray;
+
     cursor: initial;
   }
 }
