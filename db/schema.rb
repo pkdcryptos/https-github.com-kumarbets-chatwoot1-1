@@ -188,37 +188,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
     t.index ["account_id"], name: "index_automation_rules_on_account_id"
   end
 
-  create_table "campaigns", force: :cascade do |t|
-    t.integer "display_id", null: false
-    t.string "title", null: false
-    t.text "description"
-    t.text "message", null: false
-    t.integer "sender_id"
-    t.boolean "enabled", default: true
-    t.bigint "account_id", null: false
-    t.bigint "inbox_id", null: false
-    t.jsonb "trigger_rules", default: {}
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "campaign_type", default: 0, null: false
-    t.integer "campaign_status", default: 0, null: false
-    t.jsonb "audience", default: []
-    t.datetime "scheduled_at", precision: nil
-    t.boolean "trigger_only_during_business_hours", default: false
-    t.index ["account_id"], name: "index_campaigns_on_account_id"
-    t.index ["campaign_status"], name: "index_campaigns_on_campaign_status"
-    t.index ["campaign_type"], name: "index_campaigns_on_campaign_type"
-    t.index ["inbox_id"], name: "index_campaigns_on_inbox_id"
-    t.index ["scheduled_at"], name: "index_campaigns_on_scheduled_at"
-  end
 
-  create_table "canned_responses", id: :serial, force: :cascade do |t|
-    t.integer "account_id", null: false
-    t.string "short_code"
-    t.text "content"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-  end
+
 
   create_table "categories", force: :cascade do |t|
     t.integer "account_id", null: false
@@ -708,47 +679,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
     t.index ["user_id"], name: "index_notes_on_user_id"
   end
 
-  create_table "notification_settings", force: :cascade do |t|
-    t.integer "account_id"
-    t.integer "user_id"
-    t.integer "email_flags", default: 0, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "push_flags", default: 0, null: false
-    t.index ["account_id", "user_id"], name: "by_account_user", unique: true
-  end
 
-  create_table "notification_subscriptions", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.integer "subscription_type", null: false
-    t.jsonb "subscription_attributes", default: {}, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.text "identifier"
-    t.index ["identifier"], name: "index_notification_subscriptions_on_identifier", unique: true
-    t.index ["user_id"], name: "index_notification_subscriptions_on_user_id"
-  end
 
-  create_table "notifications", force: :cascade do |t|
-    t.bigint "account_id", null: false
-    t.bigint "user_id", null: false
-    t.integer "notification_type", null: false
-    t.string "primary_actor_type", null: false
-    t.bigint "primary_actor_id", null: false
-    t.string "secondary_actor_type"
-    t.bigint "secondary_actor_id"
-    t.datetime "read_at", precision: nil
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "snoozed_until"
-    t.datetime "last_activity_at", default: -> { "CURRENT_TIMESTAMP" }
-    t.jsonb "meta", default: {}
-    t.index ["account_id"], name: "index_notifications_on_account_id"
-    t.index ["last_activity_at"], name: "index_notifications_on_last_activity_at"
-    t.index ["primary_actor_type", "primary_actor_id"], name: "uniq_primary_actor_per_account_notifications"
-    t.index ["secondary_actor_type", "secondary_actor_id"], name: "uniq_secondary_actor_per_account_notifications"
-    t.index ["user_id"], name: "index_notifications_on_user_id"
-  end
+
 
   create_table "platform_app_permissibles", force: :cascade do |t|
     t.bigint "platform_app_id", null: false

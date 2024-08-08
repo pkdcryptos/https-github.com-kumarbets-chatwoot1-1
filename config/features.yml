@@ -39,9 +39,6 @@
   help_url: https://chwt.app/hc/custom-attributes
 - name: automations
   enabled: true
-- name: canned_responses
-  enabled: true
-  help_url: https://chwt.app/hc/canned
 - name: integrations
   enabled: true
   help_url: https://chwt.app/hc/integrations

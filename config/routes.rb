@@ -64,8 +64,7 @@ Rails.application.routes.draw do
               post :reauthorize_page
             end
           end
-          resources :canned_responses, only: [:index, :create, :update, :destroy]
-          resources :automation_rules, only: [:index, :create, :show, :update, :destroy] do
+         resources :automation_rules, only: [:index, :create, :show, :update, :destroy] do
             post :clone
           end
           resources :macros, only: [:index, :create, :show, :update, :destroy] do
@@ -164,18 +163,8 @@ Rails.application.routes.draw do
             end
           end
 
-          resources :notifications, only: [:index, :update, :destroy] do
-            collection do
-              post :read_all
-              get :unread_count
-              post :destroy_all
-            end
-            member do
-              post :snooze
-              post :unread
-            end
-          end
-          resource :notification_settings, only: [:show, :update]
+
+
 
           resources :teams do
             resources :team_members, only: [:index, :create] do
@@ -264,7 +253,6 @@ Rails.application.routes.draw do
         end
       end
 
-      resource :notification_subscriptions, only: [:create, :destroy]
 
       namespace :widget do
         resource :direct_uploads, only: [:create]

@@ -32,18 +32,13 @@ class AccountUser < ApplicationRecord
 
   accepts_nested_attributes_for :account
 
-  after_create_commit :notify_creation, :create_notification_setting
+
   after_destroy :notify_deletion, :remove_user_from_account
   after_save :update_presence_in_redis, if: :saved_change_to_availability?
 
   validates :user_id, uniqueness: { scope: :account_id }
 
-  def create_notification_setting
-    setting = user.notification_settings.new(account_id: account.id)
-    setting.selected_email_flags = [:email_conversation_assignment]
-    setting.selected_push_flags = [:push_conversation_assignment]
-    setting.save!
-  end
+
 
   def remove_user_from_account
     ::Agents::DestroyJob.perform_later(account, user)

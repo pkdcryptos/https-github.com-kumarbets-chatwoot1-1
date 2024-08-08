@@ -108,15 +108,6 @@ en:
       avg_customer_waiting_time: Avg customer waiting time
     conversation_traffic_csv:
       timezone: Timezone
-
-  notifications:
-    notification_title:
-      conversation_creation: "A conversation (#%{display_id}) has been created in %{inbox_name}"
-      conversation_assignment: "A conversation (#%{display_id}) has been assigned to you"
-      assigned_conversation_new_message: "A new message is created in conversation (#%{display_id})"
-      conversation_mention: "You have been mentioned in conversation (#%{display_id})"
-    attachment: "Attachment"
-    no_content: "No content"
   conversations:
     messages:
       instagram_story_content: "%{story_sender} mentioned you in the story: "

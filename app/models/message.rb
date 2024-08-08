@@ -123,7 +123,7 @@ class Message < ApplicationRecord
   belongs_to :sender, polymorphic: true, optional: true
 
   has_many :attachments, dependent: :destroy, autosave: true, before_add: :validate_attachments_limit
-  has_many :notifications, as: :primary_actor, dependent: :destroy_async
+
 
   after_create_commit :execute_after_create_commit_callbacks
 

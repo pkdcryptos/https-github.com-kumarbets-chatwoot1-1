@@ -3,8 +3,7 @@ class Agents::DestroyJob < ApplicationJob
 
   def perform(account, user)
     ActiveRecord::Base.transaction do
-      destroy_notification_setting(account, user)
-      remove_user_from_teams(account, user)
+     remove_user_from_teams(account, user)
       remove_user_from_inboxes(account, user)
       unassign_conversations(account, user)
     end
@@ -24,10 +23,7 @@ class Agents::DestroyJob < ApplicationJob
     team_members.destroy_all
   end
 
-  def destroy_notification_setting(account, user)
-    setting = user.notification_settings.find_by(account_id: account.id)
-    setting&.destroy!
-  end
+
 
   def unassign_conversations(account, user)
     # rubocop:disable Rails/SkipsModelValidations

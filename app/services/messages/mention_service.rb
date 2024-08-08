@@ -8,7 +8,6 @@ class Messages::MentionService
     return if validated_mentioned_ids.blank?
 
     Conversations::UserMentionJob.perform_later(validated_mentioned_ids, message.conversation.id, message.account.id)
-    generate_notifications_for_mentions(validated_mentioned_ids)
     add_mentioned_users_as_participants(validated_mentioned_ids)
   end
 
@@ -29,17 +28,6 @@ class Messages::MentionService
     mentioned_ids & valid_mentionable_ids.uniq.map(&:to_s)
   end
 
-  def generate_notifications_for_mentions(validated_mentioned_ids)
-    validated_mentioned_ids.each do |user_id|
-      NotificationBuilder.new(
-        notification_type: 'conversation_mention',
-        user: User.find(user_id),
-        account: message.account,
-        primary_actor: message.conversation,
-        secondary_actor: message
-      ).perform
-    end
-  end
 
   def add_mentioned_users_as_participants(validated_mentioned_ids)
     validated_mentioned_ids.each do |user_id|

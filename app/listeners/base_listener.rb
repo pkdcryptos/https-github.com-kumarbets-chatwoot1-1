@@ -6,13 +6,7 @@ class BaseListener
     [conversation, conversation.account]
   end
 
-  def extract_notification_and_account(event)
-    notification = event.data[:notification]
-    notification_finder = NotificationFinder.new(notification.user, notification.account)
-    unread_count = notification_finder.unread_count
-    count = notification_finder.count
-    [notification, notification.account, unread_count, count]
-  end
+
 
   def extract_message_and_account(event)
     message = event.data[:message]

@@ -150,10 +150,7 @@ class MailPresenter < SimpleDelegator
     auto_submitted? || x_auto_reply?
   end
 
-  def notification_email_from_chatwoot?
-    # notification emails are send via mailer sender email address. so it should match
-    original_sender == Mail::Address.new(ENV.fetch('MAILER_SENDER_EMAIL', 'Chatwoot <accounts@chatwoot.com>')).address
-  end
+
 
   private
 
