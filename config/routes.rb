@@ -46,7 +46,9 @@ Rails.application.routes.draw do
           resources :agents, only: [:index, :create, :update, :destroy] do
             post :bulk_create, on: :collection
           end
-          
+          resources :agent_bots, only: [:index, :create, :show, :update, :destroy] do
+            delete :avatar, on: :member
+          end
           resources :contact_inboxes, only: [] do
             collection do
               post :filter
@@ -138,7 +140,9 @@ Rails.application.routes.draw do
           resources :inboxes, only: [:index, :show, :create, :update, :destroy] do
             get :assignable_agents, on: :member
             get :response_sources, on: :member
-           delete :avatar, on: :member
+            get :agent_bot, on: :member
+            post :set_agent_bot, on: :member
+            delete :avatar, on: :member
           end
           resources :inbox_members, only: [:create, :show], param: :inbox_id do
             collection do
@@ -282,12 +286,14 @@ Rails.application.routes.draw do
           resources :reports, only: [:index] do
             collection do
               get :summary
+              get :bot_summary
               get :agents
               get :inboxes
               get :labels
               get :teams
               get :conversations
               get :conversation_traffic
+              get :bot_metrics
             end
           end
         end
@@ -323,7 +329,9 @@ Rails.application.routes.draw do
             get :login
           end
         end
-       
+        resources :agent_bots, only: [:index, :create, :show, :update, :destroy] do
+          delete :avatar, on: :member
+        end
         resources :accounts, only: [:create, :show, :update, :destroy] do
           resources :account_users, only: [:index, :create] do
             collection do
@@ -373,7 +381,7 @@ Rails.application.routes.draw do
 
   # ----------------------------------------------------------------------
   # Routes for channel integrations
-
+  mount Facebook::Messenger::Server, at: 'bot'
   get 'webhooks/twitter', to: 'api/v1/webhooks#twitter_crc'
   post 'webhooks/twitter', to: 'api/v1/webhooks#twitter_events'
   post 'webhooks/line/:line_channel_id', to: 'webhooks/line#process_payload'
@@ -428,6 +436,9 @@ Rails.application.routes.draw do
       resources :response_documents, only: [:index, :show, :new, :create, :edit, :update, :destroy]
       resources :responses, only: [:index, :show, :new, :create, :edit, :update, :destroy]
       resources :installation_configs, only: [:index, :new, :create, :show, :edit, :update]
+      resources :agent_bots, only: [:index, :new, :create, :show, :edit, :update] do
+        delete :avatar, on: :member, action: :destroy_avatar
+      end
       resources :platform_apps, only: [:index, :new, :create, :show, :edit, :update]
       resource :instance_status, only: [:show]
 
