@@ -745,26 +745,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
     t.index ["related_category_id", "category_id"], name: "index_related_categories_on_related_category_id_and_category_id", unique: true
   end
 
-  create_table "reporting_events", force: :cascade do |t|
-    t.string "name"
-    t.float "value"
-    t.integer "account_id"
-    t.integer "inbox_id"
-    t.integer "user_id"
-    t.integer "conversation_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.float "value_in_business_hours"
-    t.datetime "event_start_time", precision: nil
-    t.datetime "event_end_time", precision: nil
-    t.index ["account_id", "name", "created_at"], name: "reporting_events__account_id__name__created_at"
-    t.index ["account_id"], name: "index_reporting_events_on_account_id"
-    t.index ["conversation_id"], name: "index_reporting_events_on_conversation_id"
-    t.index ["created_at"], name: "index_reporting_events_on_created_at"
-    t.index ["inbox_id"], name: "index_reporting_events_on_inbox_id"
-    t.index ["name"], name: "index_reporting_events_on_name"
-    t.index ["user_id"], name: "index_reporting_events_on_user_id"
-  end
 
 
 
