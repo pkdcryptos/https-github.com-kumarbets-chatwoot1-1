@@ -1,5 +1,4 @@
 <script>
-import globalConfigMixin from 'shared/mixins/globalConfigMixin';
 
 const {
   LOGO_THUMBNAIL: logoThumbnail,
@@ -8,7 +7,7 @@ const {
 } = window.globalConfig || {};
 
 export default {
-  mixins: [globalConfigMixin],
+
   props: {
     disableBranding: {
       type: Boolean,
