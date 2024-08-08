@@ -246,47 +246,6 @@ Rails.application.routes.draw do
     end
   end
 
-  if ChatwootApp.enterprise?
-    namespace :enterprise, defaults: { format: 'json' } do
-      namespace :api do
-        namespace :v1 do
-          resources :accounts do
-            member do
-              post :checkout
-              post :subscription
-              get :limits
-            end
-          end
-        end
-      end
-
-      
-    end
-  end
-
-  # ----------------------------------------------------------------------
-  # Routes for platform APIs
-  namespace :platform, defaults: { format: 'json' } do
-    namespace :api do
-      namespace :v1 do
-        resources :users, only: [:create, :show, :update, :destroy] do
-          member do
-            get :login
-          end
-        end
-        resources :agent_bots, only: [:index, :create, :show, :update, :destroy] do
-          delete :avatar, on: :member
-        end
-        resources :accounts, only: [:create, :show, :update, :destroy] do
-          resources :account_users, only: [:index, :create] do
-            collection do
-              delete :destroy
-            end
-          end
-        end
-      end
-    end
-  end
 
   # ----------------------------------------------------------------------
   # Routes for inbox APIs Exposed to contacts
@@ -340,48 +299,6 @@ Rails.application.routes.draw do
   # Internal Monitoring Routes
   require 'sidekiq/web'
   require 'sidekiq/cron/web'
-
-  devise_for :super_admins, path: 'super_admin', controllers: { sessions: 'super_admin/devise/sessions' }
-  devise_scope :super_admin do
-    get 'super_admin/logout', to: 'super_admin/devise/sessions#destroy'
-    namespace :super_admin do
-      root to: 'dashboard#index'
-
-      resource :app_config, only: [:show, :create]
-
-      # order of resources affect the order of sidebar navigation in super admin
-      resources :accounts, only: [:index, :new, :create, :show, :edit, :update, :destroy] do
-        post :seed, on: :member
-        post :reset_cache, on: :member
-      end
-      resources :users, only: [:index, :new, :create, :show, :edit, :update, :destroy] do
-        delete :avatar, on: :member, action: :destroy_avatar
-      end
-
-      resources :access_tokens, only: [:index, :show]
-      resources :response_sources, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
-        get :chat, on: :member
-        post :chat, on: :member, action: :process_chat
-      end
-      resources :response_documents, only: [:index, :show, :new, :create, :edit, :update, :destroy]
-      resources :responses, only: [:index, :show, :new, :create, :edit, :update, :destroy]
-     resources :agent_bots, only: [:index, :new, :create, :show, :edit, :update] do
-        delete :avatar, on: :member, action: :destroy_avatar
-      end
-      resources :platform_apps, only: [:index, :new, :create, :show, :edit, :update]
-      resource :instance_status, only: [:show]
-
-      resource :settings, only: [:show] do
-        get :refresh, on: :collection
-      end
-
-      # resources that doesn't appear in primary navigation in super admin
-      resources :account_users, only: [:new, :create, :destroy]
-    end
-    authenticated :super_admin do
-      mount Sidekiq::Web => '/monitoring/sidekiq'
-    end
-  end
 
 
 
