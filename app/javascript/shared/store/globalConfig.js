@@ -10,7 +10,6 @@ const {
   DISPLAY_MANIFEST: displayManifest,
   GIT_SHA: gitSha,
   HCAPTCHA_SITE_KEY: hCaptchaSiteKey,
-  INSTALLATION_NAME: installationName,
   LOGO_THUMBNAIL: logoThumbnail,
   LOGO: logo,
   LOGO_DARK: logoDark,
@@ -35,7 +34,6 @@ const state = {
   displayManifest,
   gitSha,
   hCaptchaSiteKey,
-  installationName,
   logo,
   logoDark,
   logoThumbnail,
@@ -47,8 +45,6 @@ const state = {
 export const getters = {
   get: $state => $state,
   isOnChatwootCloud: $state => $state.deploymentEnv === 'cloud',
-  isACustomBrandedInstance: $state => $state.installationName !== 'Chatwoot',
-  isAChatwootInstance: $state => $state.installationName === 'Chatwoot',
 };
 
 export const actions = {};

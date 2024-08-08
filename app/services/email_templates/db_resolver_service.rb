@@ -54,7 +54,7 @@ class ::EmailTemplates::DbResolverService < ActionView::Resolver
   private
 
   def find_db_template
-    find_account_template || find_installation_template
+    find_account_template 
   end
 
   def find_account_template
@@ -63,9 +63,7 @@ class ::EmailTemplates::DbResolverService < ActionView::Resolver
     @@model.find_by(name: @template_name, template_type: @template_type, account: Current.account)
   end
 
-  def find_installation_template
-    @@model.find_by(name: @template_name, template_type: @template_type, account: nil)
-  end
+
 
   # Build path with eventual prefix
   def build_path(prefix)

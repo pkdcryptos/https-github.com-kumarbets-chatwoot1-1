@@ -41,17 +41,11 @@ class GlobalConfig
       cache_key = "#{VERSION}:#{KEY_PREFIX}:#{config_key}"
       cached_value = $alfred.with { |conn| conn.get(cache_key) }
 
-      if cached_value.blank?
-        value_from_db = db_fallback(config_key)
-        cached_value = { value: value_from_db }.to_json
-        $alfred.with { |conn| conn.set(cache_key, cached_value, { ex: DEFAULT_EXPIRY }) }
-      end
+
 
       JSON.parse(cached_value)['value']
     end
 
-    def db_fallback(config_key)
-      InstallationConfig.find_by(name: config_key)&.value
-    end
+
   end
 end

@@ -6,7 +6,7 @@ if ActiveModel::Type::Boolean.new.cast(ENV.fetch('LOGRAGE_ENABLED', false)).pres
     config.lograge.formatter = Lograge::Formatters::Json.new
     config.lograge.custom_payload do |controller|
       # Fixes https://github.com/chatwoot/chatwoot/issues/6922
-      user_id = controller.try(:current_user).try(:id) unless controller.is_a?(SuperAdmin::Devise::SessionsController)
+      user_id = controller.try(:current_user).try(:id) 
       {
         host: controller.request.host,
         remote_ip: controller.request.remote_ip,

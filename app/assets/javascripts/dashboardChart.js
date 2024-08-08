@@ -33,23 +33,3 @@ function getChartOptions() {
   };
 }
 
-// eslint-disable-next-line
-function drawSuperAdminDashboard(data) {
-  var ctx = document.getElementById('dashboard-chart').getContext('2d');
-  var chartData = prepareData(data);
-  // eslint-disable-next-line
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: chartData.labels,
-      datasets: [
-        {
-          label: 'Conversations',
-          data: chartData.dataSet,
-          backgroundColor: '#1f93ff',
-        },
-      ],
-    },
-    options: getChartOptions(),
-  });
-}
