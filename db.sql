@@ -41,10 +41,6 @@ CREATE INDEX "index_account_users_on_account_id" ON "public"."account_users" USI
 
 CREATE INDEX "index_account_users_on_user_id" ON "public"."account_users" USING btree ("user_id");
 
-INSERT INTO "account_users" ("id", "account_id", "user_id", "role", "inviter_id", "created_at", "updated_at", "active_at", "availability", "auto_offline") VALUES
-(1,	1,	1,	1,	NULL,	'2024-08-07 08:27:31.53345',	'2024-08-08 07:34:58.036901',	'2024-08-08 07:34:58.013915',	0,	't'),
-(4,	1,	2,	1,	1,	'2024-08-08 19:34:50.63359',	'2024-08-08 19:35:56.89219',	NULL,	0,	't'),
-(5,	1,	3,	1,	1,	'2024-08-08 19:35:13.691924',	'2024-08-08 19:36:00.629084',	NULL,	0,	't');
 
 DROP TABLE IF EXISTS "accounts";
 DROP SEQUENCE IF EXISTS accounts_id_seq;
@@ -1477,6 +1473,10 @@ CREATE TABLE "public"."users" (
 
 CREATE INDEX "index_users_on_email" ON "public"."users" USING btree ("email");
 
+INSERT INTO "users" ("id", "provider", "uid", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "sign_in_count", "current_sign_in_at", "last_sign_in_at", "current_sign_in_ip", "last_sign_in_ip", "confirmation_token", "confirmed_at", "confirmation_sent_at", "unconfirmed_email", "name", "display_name", "email", "tokens", "created_at", "updated_at", "pubsub_token", "availability", "ui_settings", "custom_attributes", "type", "message_signature") VALUES
+(1,	'email',	'admin@chatwoot.com',	'$2a$11$FtIwlc0cdqKbSrRJVPuBYOHIvYjc7NylNLAfcjw0lfLHNWqARbQ36',	NULL,	NULL,	NULL,	12,	'2024-08-08 19:29:03.407769',	'2024-08-08 15:34:36.177332',	'47.231.131.141',	'47.231.131.141',	'ziPzDdGrZmz1zDfm9LQr',	'2024-08-07 08:27:31.496809',	'2024-08-07 08:27:31.496809',	NULL,	'Admin',	NULL,	'admin@chatwoot.com',	'"{\"37axtS1x5PhE5Hc8UmFK2A\":{\"token\":\"$2a$10$vBa6lVOcurYSmFYUz0amUOb0iYU6jM2AwSNrWR9.DTG0DCc2B616i\",\"expiry\":1728372057},\"w-9ezLW_NxQt7In0LBAbsQ\":{\"token\":\"$2a$10$BmsdWjTTAPvkaV3c22/QG.Yqn5cKsDatKK7L4iGxu7XE0dNuYACEy\",\"expiry\":1728373116},\"CK4gXouuMT493Gad1Gy8Vg\":{\"token\":\"$2a$10$2K/Xw3kPsAFAZ7tFeYQyyu0hod3fTq62d4z3UTKfTkK5BBgNAbTuu\",\"expiry\":1728415743}}"',	'2024-08-07 08:27:31.496601',	'2024-08-08 19:29:03.408432',	'KhhyuCY6g3n4DmnwNZ3b476W',	0,	'{"rtl_view": false, "conversation_display_type": "condensed", "previously_used_conversation_display_type": "condensed"}',	'{}',	NULL,	NULL),
+(3,	'email',	'rkpers2009@gmail.com',	'$2a$11$XfjTw7rjt9wVy2F43l54LetSsOYYqsdyZbhebWvUTYGXqZxcH5veW',	NULL,	NULL,	NULL,	1,	'2024-08-08 19:28:02.693907',	'2024-08-08 19:28:02.693907',	'47.231.131.141',	'47.231.131.141',	'2oXLVfmhxr8hVREvWtnZ',	'2024-08-08 19:26:38.457177',	'2024-08-08 19:26:38.457177',	NULL,	'rkpers2009',	NULL,	'rkpers2009@gmail.com',	'"{\"rY9qbbvpxqJt8JEYDrcktw\":{\"token\":\"$2a$10$nEYbGFKXuyoFWxImwEZ3OOzyWUyI0tZDuo2YpAoaBh4FxWVirGTpi\",\"expiry\":1728415682}}"',	'2024-08-08 19:26:38.457102',	'2024-08-08 19:28:47.893961',	'vfyG4vXqN4bcUBZSx16y3jvm',	0,	'{"rtl_view": false, "conversation_display_type": "condensed", "previously_used_conversation_display_type": "condensed"}',	'{}',	NULL,	NULL),
+(2,	'email',	'kumarbets@chatwoot.com',	'$2a$11$1HmIfxMJ5yOB9ioUo3yG7uNm1jl8gUBdVStiq3ZMqGPzFBOtUP5CK',	NULL,	NULL,	NULL,	1,	'2024-08-08 19:33:07.272966',	'2024-08-08 19:33:07.272966',	'47.231.131.141',	'47.231.131.141',	'Egjc8qh5FFe8b1Cy-5FZ',	'2024-08-08 19:25:23.953186',	'2024-08-08 19:25:23.953186',	NULL,	'Kumarbets',	NULL,	'kumarbets@chatwoot.com',	'"{\"q-55N1vxr2o4QdfqlY0d_A\":{\"token\":\"$2a$10$0fSdhfuFwN/NbUo4NEMPXOYX2Fd3mKJBPQ0VjUn5uGKKRQaUPesKu\",\"expiry\":1728415987}}"',	'2024-08-08 19:25:23.953008',	'2024-08-08 19:33:07.273347',	'wdmxqJpGLXr9Z9dScKjDfEkG',	0,	'{"rtl_view": false, "conversation_display_type": "condensed", "previously_used_conversation_display_type": "condensed"}',	'{}',	NULL,	NULL);
 
 DROP TABLE IF EXISTS "webhooks";
 DROP SEQUENCE IF EXISTS webhooks_id_seq;
@@ -1568,4 +1568,4 @@ CREATE VIEW "pg_stat_statements_info" AS SELECT pg_stat_statements_info.dealloc,
     pg_stat_statements_info.stats_reset
    FROM pg_stat_statements_info() pg_stat_statements_info(dealloc, stats_reset);
 
--- 2024-08-08 21:01:39.726782+00
+-- 2024-08-08 21:05:36.642098+00
