@@ -2,7 +2,6 @@ export const INBOX_TYPES = {
   WEB: 'Channel::WebWidget',
   FB: 'Channel::FacebookPage',
   TWITTER: 'Channel::TwitterProfile',
-  TWILIO: 'Channel::TwilioSms',
   WHATSAPP: 'Channel::Whatsapp',
   API: 'Channel::Api',
   EMAIL: 'Channel::Email',
@@ -62,9 +61,7 @@ export default {
     isAWebWidgetInbox() {
       return this.channelType === INBOX_TYPES.WEB;
     },
-    isATwilioChannel() {
-      return this.channelType === INBOX_TYPES.TWILIO;
-    },
+
     isALineChannel() {
       return this.channelType === INBOX_TYPES.LINE;
     },
@@ -74,17 +71,7 @@ export default {
     isATelegramChannel() {
       return this.channelType === INBOX_TYPES.TELEGRAM;
     },
-    isATwilioSMSChannel() {
-      const { medium: medium = '' } = this.inbox;
-      return this.isATwilioChannel && medium === 'sms';
-    },
-    isASmsInbox() {
-      return this.channelType === INBOX_TYPES.SMS || this.isATwilioSMSChannel;
-    },
-    isATwilioWhatsAppChannel() {
-      const { medium: medium = '' } = this.inbox;
-      return this.isATwilioChannel && medium === 'whatsapp';
-    },
+
     isAWhatsAppCloudChannel() {
       return (
         this.channelType === INBOX_TYPES.WHATSAPP &&
@@ -104,9 +91,7 @@ export default {
     isTwitterInboxTweet() {
       return this.chatAdditionalAttributes.type === 'tweet';
     },
-    twilioBadge() {
-      return `${this.isATwilioSMSChannel ? 'sms' : 'whatsapp'}`;
-    },
+
     twitterBadge() {
       return `${this.isTwitterInboxTweet ? 'twitter-tweet' : 'twitter-dm'}`;
     },
@@ -119,8 +104,6 @@ export default {
         badgeKey = this.twitterBadge;
       } else if (this.isAFacebookInbox) {
         badgeKey = this.facebookBadge;
-      } else if (this.isATwilioChannel) {
-        badgeKey = this.twilioBadge;
       } else if (this.isAWhatsAppChannel) {
         badgeKey = 'whatsapp';
       }
@@ -128,8 +111,7 @@ export default {
     },
     isAWhatsAppChannel() {
       return (
-        this.channelType === INBOX_TYPES.WHATSAPP ||
-        this.isATwilioWhatsAppChannel
+        this.channelType === INBOX_TYPES.WHATSAPP 
       );
     },
   },

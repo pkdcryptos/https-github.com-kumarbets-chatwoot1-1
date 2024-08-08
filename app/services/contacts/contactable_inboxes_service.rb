@@ -10,8 +10,6 @@ class Contacts::ContactableInboxesService
 
   def get_contactable_inbox(inbox)
     case inbox.channel_type
-    when 'Channel::TwilioSms'
-      twilio_contactable_inbox(inbox)
     when 'Channel::Whatsapp'
       whatsapp_contactable_inbox(inbox)
     when 'Channel::Sms'
@@ -60,14 +58,5 @@ class Contacts::ContactableInboxesService
     { source_id: @contact.phone_number, inbox: inbox }
   end
 
-  def twilio_contactable_inbox(inbox)
-    return if @contact.phone_number.blank?
 
-    case inbox.channel.medium
-    when 'sms'
-      { source_id: @contact.phone_number, inbox: inbox }
-    when 'whatsapp'
-      { source_id: "whatsapp:#{@contact.phone_number}", inbox: inbox }
-    end
-  end
 end

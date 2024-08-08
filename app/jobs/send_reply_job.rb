@@ -8,7 +8,6 @@ class SendReplyJob < ApplicationJob
 
     services = {
       'Channel::TwitterProfile' => ::Twitter::SendOnTwitterService,
-      'Channel::TwilioSms' => ::Twilio::SendOnTwilioService,
       'Channel::Line' => ::Line::SendOnLineService,
       'Channel::Telegram' => ::Telegram::SendOnTelegramService,
       'Channel::Whatsapp' => ::Whatsapp::SendOnWhatsappService,

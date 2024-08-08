@@ -13,8 +13,6 @@ class ContactInboxBuilder
 
   def generate_source_id
     case @inbox.channel_type
-    when 'Channel::TwilioSms'
-      twilio_source_id
     when 'Channel::Whatsapp'
       wa_source_id
     when 'Channel::Email'
@@ -47,16 +45,7 @@ class ContactInboxBuilder
     @contact.phone_number.delete('+').to_s
   end
 
-  def twilio_source_id
-    raise ActionController::ParameterMissing, 'contact phone number' unless @contact.phone_number
 
-    case @inbox.channel.medium
-    when 'sms'
-      @contact.phone_number
-    when 'whatsapp'
-      "whatsapp:#{@contact.phone_number}"
-    end
-  end
 
   def create_contact_inbox
     ::ContactInbox.create_with(hmac_verified: hmac_verified || false).find_or_create_by!(

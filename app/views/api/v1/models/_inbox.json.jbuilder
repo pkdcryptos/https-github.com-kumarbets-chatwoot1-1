@@ -53,10 +53,7 @@ if resource.facebook?
   json.reauthorization_required resource.channel.try(:reauthorization_required?)
 end
 
-## Twilio Attributes
-json.messaging_service_sid resource.channel.try(:messaging_service_sid)
-json.phone_number resource.channel.try(:phone_number)
-json.medium resource.channel.try(:medium) if resource.twilio?
+
 
 if resource.email?
   ## Email Channel Attributes

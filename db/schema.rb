@@ -284,29 +284,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
     t.index ["phone_number"], name: "index_channel_sms_on_phone_number", unique: true
   end
 
-  create_table "channel_telegram", force: :cascade do |t|
-    t.string "bot_name"
-    t.integer "account_id", null: false
-    t.string "bot_token", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["bot_token"], name: "index_channel_telegram_on_bot_token", unique: true
-  end
 
-  create_table "channel_twilio_sms", force: :cascade do |t|
-    t.string "phone_number"
-    t.string "auth_token", null: false
-    t.string "account_sid", null: false
-    t.integer "account_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "medium", default: 0
-    t.string "messaging_service_sid"
-    t.string "api_key_sid"
-    t.index ["account_sid", "phone_number"], name: "index_channel_twilio_sms_on_account_sid_and_phone_number", unique: true
-    t.index ["messaging_service_sid"], name: "index_channel_twilio_sms_on_messaging_service_sid", unique: true
-    t.index ["phone_number"], name: "index_channel_twilio_sms_on_phone_number", unique: true
-  end
 
   create_table "channel_twitter_profiles", force: :cascade do |t|
     t.string "profile_id", null: false
@@ -796,13 +774,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
     t.index ["name", "account_id"], name: "index_teams_on_name_and_account_id", unique: true
   end
 
-  create_table "telegram_bots", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.string "auth_key"
-    t.integer "account_id"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-  end
+
 
   create_table "users", id: :serial, force: :cascade do |t|
     t.string "provider", default: "email", null: false

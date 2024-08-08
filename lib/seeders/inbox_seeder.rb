@@ -24,7 +24,6 @@ class Seeders::InboxSeeder
     seed_sms_inbox
     seed_email_inbox
     seed_api_inbox
-    seed_telegram_inbox
     seed_line_inbox
   end
 
@@ -79,23 +78,7 @@ class Seeders::InboxSeeder
     Inbox.create!(channel: channel, account: @account, name: "#{@company_data['name']} API")
   end
 
-  def seed_telegram_inbox
-    # rubocop:disable Rails/SkipsModelValidations
-    bot_token = SecureRandom.hex
-    Channel::Telegram.insert(
-      {
-        account_id: @account.id,
-        bot_name: (@company_data['name']).to_s,
-        bot_token: bot_token,
-        created_at: Time.now.utc,
-        updated_at: Time.now.utc
-      },
-      returning: %w[id]
-    )
-    channel = Channel::Telegram.find_by(bot_token: bot_token)
-    Inbox.create!(channel: channel, account: @account, name: "#{@company_data['name']} Telegram")
-    # rubocop:enable Rails/SkipsModelValidations
-  end
+
 
   def seed_line_inbox
     channel = Channel::Line.create!(account: @account, line_channel_id: SecureRandom.hex, line_channel_secret: SecureRandom.hex,

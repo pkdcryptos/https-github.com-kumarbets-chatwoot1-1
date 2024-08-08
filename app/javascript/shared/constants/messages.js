@@ -36,7 +36,7 @@ export const CONVERSATION_PRIORITY_ORDER = {
 
 // Size in mega bytes
 export const MAXIMUM_FILE_UPLOAD_SIZE = 40;
-export const MAXIMUM_FILE_UPLOAD_SIZE_TWILIO_SMS_CHANNEL = 5;
+
 
 export const ALLOWED_FILE_TYPES =
   'image/*,' +
@@ -49,11 +49,7 @@ export const ALLOWED_FILE_TYPES =
   'application/vnd.openxmlformats-officedocument.presentationml.presentation, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,' +
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document,';
 
-export const ALLOWED_FILE_TYPES_FOR_TWILIO_WHATSAPP =
-  'image/png, image/jpeg,' +
-  'audio/mpeg, audio/opus, audio/ogg, audio/amr,' +
-  'video/mp4,' +
-  'application/pdf,';
+
 // https://developers.line.biz/en/reference/messaging-api/#image-message, https://developers.line.biz/en/reference/messaging-api/#video-message
 export const ALLOWED_FILE_TYPES_FOR_LINE = 'image/png, image/jpeg,video/mp4';
 

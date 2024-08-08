@@ -71,9 +71,7 @@ Rails.application.routes.draw do
             post :execute, on: :member
           end
          resources :dashboard_apps, only: [:index, :show, :create, :update, :destroy]
-          namespace :channels do
-            resource :twilio_channel, only: [:create]
-          end
+         
           resources :conversations, only: [:index, :create, :show, :update] do
             collection do
               get :meta
@@ -405,7 +403,6 @@ Rails.application.routes.draw do
   get 'webhooks/twitter', to: 'api/v1/webhooks#twitter_crc'
   post 'webhooks/twitter', to: 'api/v1/webhooks#twitter_events'
   post 'webhooks/line/:line_channel_id', to: 'webhooks/line#process_payload'
-  post 'webhooks/telegram/:bot_token', to: 'webhooks/telegram#process_payload'
   post 'webhooks/sms/:phone_number', to: 'webhooks/sms#process_payload'
   get 'webhooks/whatsapp/:phone_number', to: 'webhooks/whatsapp#verify'
   post 'webhooks/whatsapp/:phone_number', to: 'webhooks/whatsapp#process_payload'
@@ -416,10 +413,7 @@ Rails.application.routes.draw do
     resource :callback, only: [:show]
   end
 
-  namespace :twilio do
-    resources :callback, only: [:create]
-    resources :delivery_status, only: [:create]
-  end
+
 
   get 'microsoft/callback', to: 'microsoft/callbacks#show'
   get 'google/callback', to: 'google/callbacks#show'

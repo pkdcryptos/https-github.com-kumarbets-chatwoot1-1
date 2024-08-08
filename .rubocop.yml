@@ -122,7 +122,6 @@ Rails/UniqueValidationWithoutIndex:
     - 'app/models/webhook.rb'
     - 'app/models/contact.rb'
     - 'app/models/integrations/hook.rb'
-    - 'app/models/telegram_bot.rb'
 Rails/ThreeStateBooleanColumn:
   Exclude:
     - 'db/migrate/20230503101201_create_sla_policies.rb'

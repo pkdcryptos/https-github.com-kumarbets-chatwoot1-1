@@ -112,9 +112,7 @@ class Inbox < ApplicationRecord
     channel_type == 'Channel::Email'
   end
 
-  def twilio?
-    channel_type == 'Channel::TwilioSms'
-  end
+
 
   def twitter?
     channel_type == 'Channel::TwitterProfile'
@@ -154,9 +152,7 @@ class Inbox < ApplicationRecord
 
   def callback_webhook_url
     case channel_type
-    when 'Channel::TwilioSms'
-      "#{ENV.fetch('FRONTEND_URL', nil)}/twilio/callback"
-    when 'Channel::Sms'
+   when 'Channel::Sms'
       "#{ENV.fetch('FRONTEND_URL', nil)}/webhooks/sms/#{channel.phone_number.delete_prefix('+')}"
     when 'Channel::Line'
       "#{ENV.fetch('FRONTEND_URL', nil)}/webhooks/line/#{channel.line_channel_id}"
