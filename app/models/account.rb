@@ -23,7 +23,6 @@
 class Account < ApplicationRecord
   # used for single column multi flags
   include FlagShihTzu
-  include Reportable
   include Featurable
   include CacheKeys
 

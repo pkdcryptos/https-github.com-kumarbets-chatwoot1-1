@@ -42,8 +42,7 @@ class Integrations::BotProcessorService
   end
 
   def processable_message?(message)
-    # TODO: change from reportable and create a dedicated method for this?
-    return unless message.reportable?
+
     return if message.outgoing? && !processable_outgoing_message?(message)
 
     true
