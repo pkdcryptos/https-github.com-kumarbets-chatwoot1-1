@@ -6,7 +6,7 @@ import { messageStamp } from 'shared/helpers/timeHelper';
 import ImageBubble from 'widget/components/ImageBubble.vue';
 import VideoBubble from 'widget/components/VideoBubble.vue';
 import FileBubble from 'widget/components/FileBubble.vue';
-import Thumbnail from 'dashboard/components/widgets/Thumbnail.vue';
+
 import { MESSAGE_TYPE } from 'widget/helpers/constants';
 import configMixin from '../mixins/configMixin';
 import messageMixin from '../mixins/messageMixin';
@@ -22,7 +22,6 @@ export default {
     AgentMessageBubble,
     ImageBubble,
     VideoBubble,
-    Thumbnail,
     UserMessage,
     FileBubble,
     MessageReplyButton,
@@ -81,10 +80,8 @@ export default {
     },
     avatarUrl() {
       // eslint-disable-next-line
-      const BotImage = require('dashboard/assets/images/chatwoot_bot.png');
-      const displayImage = this.useInboxAvatarForBot
-        ? this.inboxAvatarUrl
-        : BotImage;
+
+      const displayImage = this.inboxAvatarUrl;
 
       if (this.message.message_type === MESSAGE_TYPE.TEMPLATE) {
         return displayImage;
@@ -168,12 +165,7 @@ export default {
   >
     <div v-if="!isASubmittedForm" class="agent-message">
       <div class="avatar-wrap">
-        <Thumbnail
-          v-if="message.showAvatar || hasRecordedResponse"
-          :src="avatarUrl"
-          size="24px"
-          :username="agentName"
-        />
+    
       </div>
       <div class="message-wrap">
         <div v-if="hasReplyTo" class="flex mt-2 mb-1 text-xs">

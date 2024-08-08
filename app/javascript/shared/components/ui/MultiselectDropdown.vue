@@ -1,9 +1,8 @@
 <script>
-import Thumbnail from 'dashboard/components/widgets/Thumbnail.vue';
+
 import MultiselectDropdownItems from 'shared/components/ui/MultiselectDropdownItems.vue';
 export default {
   components: {
-    Thumbnail,
     MultiselectDropdownItems,
   },
   props: {
@@ -15,10 +14,7 @@ export default {
       type: Object,
       default: () => ({}),
     },
-    hasThumbnail: {
-      type: Boolean,
-      default: true,
-    },
+
     multiselectorTitle: {
       type: String,
       default: '',
@@ -79,13 +75,7 @@ export default {
       @click="toggleDropdown"
     >
       <div class="flex gap-1">
-        <Thumbnail
-          v-if="hasValue && hasThumbnail"
-          :src="selectedItem.thumbnail"
-          size="24px"
-          :status="selectedItem.availability_status"
-          :username="selectedItem.name"
-        />
+       
         <div class="flex justify-between w-full min-w-0 items-center">
           <h4
             v-if="!hasValue"
@@ -130,7 +120,7 @@ export default {
         v-if="showSearchDropdown"
         :options="options"
         :selected-items="[selectedItem]"
-        :has-thumbnail="hasThumbnail"
+        :has-thumbnail="true"
         :input-placeholder="inputPlaceholder"
         :no-search-result="noSearchResult"
         @click="onClickSelectItem"

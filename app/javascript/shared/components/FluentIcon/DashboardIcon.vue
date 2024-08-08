@@ -1,6 +1,6 @@
 <script>
 import BaseIcon from './Icon.vue';
-import icons from './dashboard-icons.json';
+
 
 export default {
   name: 'FluentIcon',
@@ -30,7 +30,7 @@ export default {
     },
   },
   data() {
-    return { icons };
+    return {  };
   },
 };
 </script>
@@ -40,7 +40,7 @@ export default {
     :size="size"
     :icon="icon"
     :type="type"
-    :icons="icons"
+    :icons=""
     :view-box="viewBox"
     :icon-lib="iconLib"
   />

@@ -1,9 +1,5 @@
 <script>
-import {
-  appendSignature,
-  removeSignature,
-  extractTextFromMarkdown,
-} from 'dashboard/helper/editorHelper';
+
 import { createTypingIndicator } from '@chatwoot/utils';
 
 const TYPING_INDICATOR_IDLE_TIME = 4000;
@@ -53,13 +49,7 @@ export default {
       ),
     };
   },
-  computed: {
-    cleanedSignature() {
-      // clean the signature, this will ensure that we don't have
-      // any markdown formatted text in the signature
-      return extractTextFromMarkdown(this.signature);
-    },
-  },
+ 
   watch: {
     value() {
       this.resizeTextarea();
@@ -103,32 +93,13 @@ export default {
     // watcher, this means that if the value is true, the signature
     // is supposed to be added, else we remove it.
     toggleSignatureInEditor(signatureEnabled) {
-      const valueWithSignature = signatureEnabled
-        ? appendSignature(this.value, this.cleanedSignature)
-        : removeSignature(this.value, this.cleanedSignature);
 
-      this.$emit('input', valueWithSignature);
 
       this.$nextTick(() => {
         this.resizeTextarea();
-        this.setCursor();
       });
     },
-    setCursor() {
-      const bodyWithoutSignature = removeSignature(
-        this.value,
-        this.cleanedSignature
-      );
-
-      // only trim at end, so if there are spaces at the start, those are not removed
-      const bodyEndsAt = bodyWithoutSignature.trimEnd().length;
-      const textarea = this.$refs.textarea;
-
-      if (textarea) {
-        textarea.focus();
-        textarea.setSelectionRange(bodyEndsAt, bodyEndsAt);
-      }
-    },
+  
     onInput(event) {
       this.$emit('input', event.target.value);
       this.resizeTextarea();

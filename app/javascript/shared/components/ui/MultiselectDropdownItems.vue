@@ -1,13 +1,12 @@
 <script>
 import WootDropdownItem from 'shared/components/ui/dropdown/DropdownItem.vue';
 import WootDropdownMenu from 'shared/components/ui/dropdown/DropdownMenu.vue';
-import Thumbnail from 'dashboard/components/widgets/Thumbnail.vue';
+
 
 export default {
   components: {
     WootDropdownItem,
     WootDropdownMenu,
-    Thumbnail,
   },
 
   props: {
@@ -19,10 +18,7 @@ export default {
       type: Array,
       default: () => [],
     },
-    hasThumbnail: {
-      type: Boolean,
-      default: true,
-    },
+ 
     inputPlaceholder: {
       type: String,
       default: 'Search',
@@ -94,14 +90,7 @@ export default {
               @click="() => onclick(option)"
             >
               <div class="flex items-center gap-1.5">
-                <Thumbnail
-                  v-if="hasThumbnail"
-                  :src="option.thumbnail"
-                  size="24px"
-                  :username="option.name"
-                  :status="option.availability_status"
-                  has-border
-                />
+             
                 <div
                   class="flex items-center justify-between w-full min-w-0 gap-2"
                 >

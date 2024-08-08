@@ -1,9 +1,8 @@
 <script>
-import Thumbnail from 'dashboard/components/widgets/Thumbnail.vue';
 
 export default {
   name: 'GroupedAvatars',
-  components: { Thumbnail },
+  components: {  },
   props: {
     users: {
       type: Array,
@@ -22,12 +21,7 @@ export default {
         index ? '-ml-4' : ''
       } inline-block rounded-full text-white shadow-solid`"
     >
-      <Thumbnail
-        size="36px"
-        :username="user.name"
-        :src="user.avatar"
-        has-border
-      />
+    
     </span>
   </div>
 </template>

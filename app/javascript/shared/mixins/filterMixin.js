@@ -1,4 +1,4 @@
-import wootConstants from 'dashboard/constants/globals';
+import wootConstants from 'globals';
 
 export default {
   methods: {

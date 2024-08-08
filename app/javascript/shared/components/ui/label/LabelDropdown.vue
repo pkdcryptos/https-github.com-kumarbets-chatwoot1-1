@@ -1,15 +1,13 @@
 <script>
 import LabelDropdownItem from './LabelDropdownItem.vue';
-import Hotkey from 'dashboard/components/base/Hotkey.vue';
-import AddLabelModal from 'dashboard/routes/dashboard/settings/labels/AddLabel.vue';
+
+
 import { picoSearch } from '@scmmishra/pico-search';
 import { sanitizeLabel } from 'shared/helpers/sanitizeData';
 
 export default {
   components: {
     LabelDropdownItem,
-    AddLabelModal,
-    Hotkey,
   },
 
   props: {
@@ -115,11 +113,7 @@ export default {
       >
         {{ $t('CONTACT_PANEL.LABELS.LABEL_SELECT.TITLE') }}
       </h4>
-      <Hotkey
-        custom-class="border border-solid text-slate-800 dark:text-slate-100 bg-slate-50 dark:bg-slate-600 text-xxs border-slate-75 dark:border-slate-600"
-      >
-        {{ 'L' }}
-      </Hotkey>
+   
     </div>
     <div class="flex-auto flex-grow-0 flex-shrink-0 mb-2 max-h-8">
       <input
@@ -173,10 +167,7 @@ export default {
             :show.sync="createModalVisible"
             :on-close="hideCreateModal"
           >
-            <AddLabelModal
-              :prefill-title="parsedSearch"
-              @close="hideCreateModal"
-            />
+        
           </woot-modal>
         </div>
       </div>
