@@ -59,9 +59,7 @@ export default {
 
   mounted() {
     if (this.isRatingSubmitted) {
-      const {
-        csat_survey_response: { rating, feedback_message },
-      } = this.messageContentAttributes;
+     
       this.selectedRating = rating;
       this.feedback = feedback_message;
     }
@@ -81,10 +79,7 @@ export default {
       try {
         await this.$store.dispatch('message/update', {
           submittedValues: {
-            csat_survey_response: {
-              rating: this.selectedRating,
-              feedback_message: this.feedback,
-            },
+           
           },
           messageId: this.messageId,
         });

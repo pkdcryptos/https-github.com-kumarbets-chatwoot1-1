@@ -10,7 +10,6 @@ module.exports = {
     './app/javascript/dashboard/**/*.vue',
     './app/javascript/portal/**/*.vue',
     './app/javascript/shared/**/*.vue',
-    './app/javascript/survey/**/*.vue',
     './app/views/**/*.html.erb',
   ],
   theme: {

@@ -23,9 +23,7 @@ Rails.application.routes.draw do
     get '/app/accounts/:account_id/settings/inboxes/:inbox_id', to: 'dashboard#index', as: 'app_email_inbox_settings'
 
     resource :widget, only: [:show]
-    namespace :survey do
-      resources :responses, only: [:show]
-    end
+   
     resource :slack_uploads, only: [:show]
   end
 
@@ -140,12 +138,7 @@ Rails.application.routes.draw do
               resources :notes
             end
           end
-          resources :csat_survey_responses, only: [:index] do
-            collection do
-              get :metrics
-              get :download
-            end
-          end
+         
           resources :applied_slas, only: [:index] do
             collection do
               get :metrics
@@ -409,7 +402,7 @@ Rails.application.routes.draw do
           end
         end
 
-        resources :csat_survey, only: [:show, :update]
+      
       end
     end
   end

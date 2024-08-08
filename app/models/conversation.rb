@@ -98,7 +98,6 @@ class Conversation < ApplicationRecord
 
   has_many :mentions, dependent: :destroy_async
   has_many :messages, dependent: :destroy_async, autosave: true
-  has_one :csat_survey_response, dependent: :destroy_async
   has_many :conversation_participants, dependent: :destroy_async
   has_many :notifications, as: :primary_actor, dependent: :destroy_async
   has_many :attachments, through: :messages
@@ -191,9 +190,7 @@ class Conversation < ApplicationRecord
     messages.chat.last(5)
   end
 
-  def csat_survey_link
-    "#{ENV.fetch('FRONTEND_URL', nil)}/survey/responses/#{uuid}"
-  end
+ 
 
   def dispatch_conversation_updated_event(previous_changes = nil)
     dispatcher_dispatch(CONVERSATION_UPDATED, previous_changes)
