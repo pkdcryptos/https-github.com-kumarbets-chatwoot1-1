@@ -16,6 +16,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+  
 
 
   create_table "access_tokens", force: :cascade do |t|
