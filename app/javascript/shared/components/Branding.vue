@@ -78,7 +78,7 @@ export default {
 }
 
 .branding--link {
-
+  color: $color-light-gray;
   cursor: pointer;
   display: inline-flex;
   filter: grayscale(1);
