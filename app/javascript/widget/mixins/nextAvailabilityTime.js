@@ -147,50 +147,6 @@ export const timeZoneOptions = () => {
 
 const MINUTE_ROUNDING_FACTOR = 5;
 
-const defaultTimeSlot = [
-  {
-    day: 0,
-    to: '',
-    from: '',
-    valid: false,
-  },
-  {
-    day: 1,
-    to: '',
-    from: '',
-    valid: false,
-  },
-  {
-    day: 2,
-    to: '',
-    from: '',
-    valid: false,
-  },
-  {
-    day: 3,
-    to: '',
-    from: '',
-    valid: false,
-  },
-  {
-    day: 4,
-    to: '',
-    from: '',
-    valid: false,
-  },
-  {
-    day: 5,
-    to: '',
-    from: '',
-    valid: false,
-  },
-  {
-    day: 6,
-    to: '',
-    from: '',
-    valid: false,
-  },
-];
 
 export default {
   data() {
