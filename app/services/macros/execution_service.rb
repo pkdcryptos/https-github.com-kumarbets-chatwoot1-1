@@ -28,7 +28,6 @@ class Macros::ExecutionService < ActionService
   end
 
   def add_private_note(message)
-    return if conversation_a_tweet?
 
     params = { content: message[0], private: true }
 
@@ -38,7 +37,6 @@ class Macros::ExecutionService < ActionService
   end
 
   def send_message(message)
-    return if conversation_a_tweet?
 
     params = { content: message[0], private: false }
 
@@ -48,7 +46,6 @@ class Macros::ExecutionService < ActionService
   end
 
   def send_attachment(blob_ids)
-    return if conversation_a_tweet?
 
     return unless @macro.files.attached?
 

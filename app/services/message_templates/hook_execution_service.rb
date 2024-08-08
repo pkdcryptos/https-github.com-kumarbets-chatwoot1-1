@@ -20,8 +20,7 @@ class MessageTemplates::HookExecutionService
   end
 
   def should_send_out_of_office_message?
-    # should not send if its a tweet message
-    return false if conversation.tweet?
+
     # should not send for outbound messages
     return false unless message.incoming?
 
@@ -33,8 +32,7 @@ class MessageTemplates::HookExecutionService
   end
 
   def should_send_greeting?
-    # should not send if its a tweet message
-    return false if conversation.tweet?
+  
 
     first_message_from_contact? && inbox.greeting_enabled? && inbox.greeting_message.present?
   end

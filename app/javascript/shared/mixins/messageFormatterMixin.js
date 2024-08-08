@@ -10,8 +10,8 @@ export default {
       );
       return messageFormatter.formattedMessage;
     },
-    getPlainText(message, isATweet) {
-      const messageFormatter = new MessageFormatter(message, isATweet);
+    getPlainText(message) {
+      const messageFormatter = new MessageFormatter(message);
       return messageFormatter.plainText;
     },
     truncateMessage(description = '') {
