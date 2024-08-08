@@ -79,8 +79,7 @@
         "ERROR": "Message too short"
       }
     },
-    "CAMPAIGN_HEADER": "Please provide your name and email before starting the conversation",
-    "IS_REQUIRED": "is required",
+   "IS_REQUIRED": "is required",
     "REQUIRED": "Required",
     "REGEX_ERROR": "Please provide a valid input"
   },

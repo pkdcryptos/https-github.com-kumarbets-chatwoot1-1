@@ -38,13 +38,7 @@ const updateAuthCookie = (cookieContent, baseDomain = '') =>
     baseDomain,
   });
 
-const updateCampaignReadStatus = baseDomain => {
-  const expireBy = addHours(new Date(), 1);
-  setCookieWithDomain('cw_snooze_campaigns_till', Number(expireBy), {
-    expires: expireBy,
-    baseDomain,
-  });
-};
+
 
 export const IFrameHelper = {
   getUrl({ baseUrl, websiteToken }) {
@@ -151,7 +145,7 @@ export const IFrameHelper = {
     loaded: message => {
       updateAuthCookie(message.config.authToken, window.$chatwoot.baseDomain);
       window.$chatwoot.hasLoaded = true;
-      const campaignsSnoozedTill = Cookies.get('cw_snooze_campaigns_till');
+     
       IFrameHelper.sendMessage('config-set', {
         locale: window.$chatwoot.locale,
         position: window.$chatwoot.position,
@@ -160,7 +154,6 @@ export const IFrameHelper = {
         widgetStyle: window.$chatwoot.widgetStyle,
         darkMode: window.$chatwoot.darkMode,
         showUnreadMessagesDialog: window.$chatwoot.showUnreadMessagesDialog,
-        campaignsSnoozedTill,
       });
       IFrameHelper.onLoad({
         widgetColor: message.config.channelConfig.widgetColor,
@@ -199,9 +192,6 @@ export const IFrameHelper = {
       updateAuthCookie(widgetAuthToken, window.$chatwoot.baseDomain);
     },
 
-    setCampaignReadOn() {
-      updateCampaignReadStatus(window.$chatwoot.baseDomain);
-    },
 
     toggleBubble: state => {
       let bubbleState = {};

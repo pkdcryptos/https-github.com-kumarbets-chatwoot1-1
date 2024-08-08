@@ -208,8 +208,7 @@ class Message < ApplicationRecord
     return false if conversation.first_reply_created_at.present?
     return false if conversation.messages.outgoing
                                 .where.not(sender_type: 'AgentBot')
-                                .where.not(private: true)
-                                .where("(additional_attributes->'campaign_id') is null").count > 1
+                                .where.not(private: true).count > 1
 
     true
   end
@@ -294,7 +293,6 @@ class Message < ApplicationRecord
     # if campaign id is present, it's not a human response
     outgoing? &&
       content_attributes['automation_rule_id'].blank? &&
-      additional_attributes['campaign_id'].blank? &&
       sender.is_a?(User)
   end
 

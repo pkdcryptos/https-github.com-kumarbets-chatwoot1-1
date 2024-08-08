@@ -21,24 +21,11 @@ export default {
       fullName,
       emailAddress,
       message,
-      activeCampaignId,
       phoneNumber,
       contactCustomAttributes,
       conversationCustomAttributes,
     }) {
-      if (activeCampaignId) {
-        this.$emitter.emit('execute-campaign', {
-          campaignId: activeCampaignId,
-          customAttributes: conversationCustomAttributes,
-        });
-        this.$store.dispatch('contacts/update', {
-          user: {
-            email: emailAddress,
-            name: fullName,
-            phone_number: phoneNumber,
-          },
-        });
-      } else {
+      
         this.$store.dispatch('conversation/createConversation', {
           fullName: fullName,
           emailAddress: emailAddress,
@@ -46,7 +33,7 @@ export default {
           phoneNumber: phoneNumber,
           customAttributes: conversationCustomAttributes,
         });
-      }
+      
       if (!isEmptyObject(contactCustomAttributes)) {
         this.$store.dispatch(
           'contacts/setCustomAttributes',

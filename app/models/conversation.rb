@@ -94,7 +94,7 @@ class Conversation < ApplicationRecord
   belongs_to :contact
   belongs_to :contact_inbox
   belongs_to :team, optional: true
-  belongs_to :campaign, optional: true
+
 
   has_many :mentions, dependent: :destroy_async
   has_many :messages, dependent: :destroy_async, autosave: true
@@ -219,9 +219,7 @@ class Conversation < ApplicationRecord
   def determine_conversation_status
     self.status = :resolved and return if contact.blocked?
 
-    # Message template hooks aren't executed for conversations from campaigns
-    # So making these conversations open for agent visibility
-    return if campaign.present?
+
 
     # TODO: make this an inbox config instead of assuming bot conversations should start as pending
     self.status = :pending if inbox.active_bot?

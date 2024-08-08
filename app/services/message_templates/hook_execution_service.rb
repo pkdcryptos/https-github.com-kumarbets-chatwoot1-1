@@ -2,7 +2,7 @@ class MessageTemplates::HookExecutionService
   pattr_initialize [:message!]
 
   def perform
-    return if conversation.campaign.present?
+
     return if conversation.last_incoming_message.blank?
 
     trigger_templates

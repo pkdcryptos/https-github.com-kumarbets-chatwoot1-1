@@ -72,7 +72,6 @@ export default {
         :show-sender="!index"
         :sender="message.sender"
         :message="getMessageContent(message)"
-        :campaign-id="message.campaignId"
       />
     </div>
 

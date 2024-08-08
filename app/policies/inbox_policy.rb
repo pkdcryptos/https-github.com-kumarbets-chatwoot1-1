@@ -34,9 +34,6 @@ class InboxPolicy < ApplicationPolicy
     true
   end
 
-  def campaigns?
-    @account_user.administrator?
-  end
 
   def response_sources?
     @account_user.administrator?

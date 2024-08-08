@@ -12,11 +12,7 @@ export default new Router({
       name: 'unread-messages',
       component: () => import('./views/UnreadMessages.vue'),
     },
-    {
-      path: '/campaigns',
-      name: 'campaigns',
-      component: () => import('./views/Campaigns.vue'),
-    },
+ 
     {
       path: '/',
       component: ViewWithHeader,

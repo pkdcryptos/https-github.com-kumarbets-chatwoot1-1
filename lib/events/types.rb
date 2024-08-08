@@ -7,8 +7,7 @@ module Events::Types
   ACCOUNT_CACHE_INVALIDATED = 'account.cache_invalidated'
 
   #### Account Events ###
-  # campaign events
-  CAMPAIGN_TRIGGERED = 'campaign.triggered'
+
 
   # channel events
   WEBWIDGET_TRIGGERED = 'webwidget.triggered'

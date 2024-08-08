@@ -4,7 +4,7 @@ import messageFormatterMixin from 'shared/mixins/messageFormatterMixin';
 import configMixin from '../mixins/configMixin';
 import { isEmptyObject } from 'widget/helpers/utils';
 import {
-  ON_CAMPAIGN_MESSAGE_CLICK,
+
   ON_UNREAD_MESSAGE_CLICK,
 } from '../constants/widgetBusEvents';
 import darkModeMixin from 'widget/mixins/darkModeMixin';
@@ -25,10 +25,7 @@ export default {
       type: Object,
       default: () => {},
     },
-    campaignId: {
-      type: Number,
-      default: null,
-    },
+  
   },
   computed: {
     companyName() {
@@ -69,11 +66,9 @@ export default {
       return sender && !isEmptyObject(sender);
     },
     onClickMessage() {
-      if (this.campaignId) {
-        this.$emitter.emit(ON_CAMPAIGN_MESSAGE_CLICK, this.campaignId);
-      } else {
+     
         this.$emitter.emit(ON_UNREAD_MESSAGE_CLICK);
-      }
+      
     },
   },
 };

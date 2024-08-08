@@ -15,7 +15,6 @@ import {
 } from './helpers/IframeEventHelper';
 import {
   ON_AGENT_MESSAGE_RECEIVED,
-  ON_CAMPAIGN_MESSAGE_CLICK,
   ON_UNREAD_MESSAGE_CLICK,
 } from './constants/widgetBusEvents';
 import darkModeMixin from 'widget/mixins/darkModeMixin';
@@ -31,12 +30,10 @@ export default {
   data() {
     return {
       isMobile: false,
-      campaignsSnoozedTill: undefined,
     };
   },
   computed: {
     ...mapGetters({
-      activeCampaign: 'campaign/getActiveCampaign',
       conversationSize: 'conversation/getConversationSize',
       hideMessageBubble: 'appConfig/getHideMessageBubble',
       isFetchingList: 'conversation/getIsFetchingList',
@@ -55,9 +52,7 @@ export default {
     },
   },
   watch: {
-    activeCampaign() {
-      this.setCampaignView();
-    },
+
   },
   mounted() {
     const { websiteToken, locale, widgetColor } = window.chatwootWebChannel;
@@ -78,7 +73,6 @@ export default {
     }
     this.$store.dispatch('conversationAttributes/getAttributes');
     this.registerUnreadEvents();
-    this.registerCampaignEvents();
   },
   methods: {
     ...mapActions('appConfig', [
@@ -89,11 +83,7 @@ export default {
       'setColorScheme',
     ]),
     ...mapActions('conversation', ['fetchOldConversations']),
-    ...mapActions('campaign', [
-      'initCampaigns',
-      'executeCampaign',
-      'resetCampaign',
-    ]),
+
     ...mapActions('agent', ['fetchAvailableAgents']),
     scrollConversationToBottom() {
       const container = this.$el.querySelector('.conversation-wrap');
@@ -144,44 +134,8 @@ export default {
         this.replaceRoute('messages').then(() => this.unsetUnreadView());
       });
     },
-    registerCampaignEvents() {
-      emitter.on(ON_CAMPAIGN_MESSAGE_CLICK, () => {
-        if (this.shouldShowPreChatForm) {
-          this.replaceRoute('prechat-form');
-        } else {
-          this.replaceRoute('messages');
-          emitter.emit('execute-campaign', {
-            campaignId: this.activeCampaign.id,
-          });
-        }
-        this.unsetUnreadView();
-      });
-      emitter.on('execute-campaign', campaignDetails => {
-        const { customAttributes, campaignId } = campaignDetails;
-        const { websiteToken } = window.chatwootWebChannel;
-        this.executeCampaign({ campaignId, websiteToken, customAttributes });
-        this.replaceRoute('messages');
-      });
-      emitter.on('snooze-campaigns', () => {
-        const expireBy = addHours(new Date(), 1);
-        this.campaignsSnoozedTill = Number(expireBy);
-      });
-    },
-    setCampaignView() {
-      const { messageCount, activeCampaign } = this;
-      const shouldSnoozeCampaign =
-        this.campaignsSnoozedTill && this.campaignsSnoozedTill > Date.now();
-      const isCampaignReadyToExecute =
-        !isEmptyObject(activeCampaign) &&
-        !messageCount &&
-        !shouldSnoozeCampaign;
-      if (this.isIFrame && isCampaignReadyToExecute) {
-        this.replaceRoute('campaigns').then(() => {
-          this.setIframeHeight(true);
-          IFrameHelper.sendMessage({ event: 'setUnreadMode' });
-        });
-      }
-    },
+
+  
     setUnreadView() {
       const { unreadMessageCount } = this;
       if (!this.showUnreadMessagesDialog) {
@@ -219,7 +173,7 @@ export default {
       const isWidgetTriggerEvent = eventName === 'webwidget.triggered';
       if (
         isWidgetTriggerEvent &&
-        ['unread-messages', 'campaigns'].includes(this.$route.name)
+        ['unread-messages'].includes(this.$route.name)
       ) {
         return;
       }
@@ -239,16 +193,11 @@ export default {
           this.fetchAvailableAgents(websiteToken);
           this.setAppConfig(message);
           this.$store.dispatch('contacts/get');
-          this.setCampaignReadData(message.campaignsSnoozedTill);
         } else if (message.event === 'widget-visible') {
           this.scrollConversationToBottom();
         } else if (message.event === 'change-url') {
           const { referrerURL, referrerHost } = message;
-          this.initCampaigns({
-            currentURL: referrerURL,
-            websiteToken,
-            isInBusinessHours: this.isInBusinessHours,
-          });
+         
           window.referrerURL = referrerURL;
           this.setReferrerHost(referrerHost);
         } else if (message.event === 'toggle-close-button') {
@@ -295,7 +244,7 @@ export default {
             this.messageCount;
           const shouldShowHomeView =
             !message.isOpen &&
-            ['unread-messages', 'campaigns'].includes(this.$route.name);
+            ['unread-messages'].includes(this.$route.name);
 
           if (shouldShowMessageView) {
             this.replaceRoute('messages');
@@ -305,9 +254,7 @@ export default {
             this.unsetUnreadView();
             this.replaceRoute('home');
           }
-          if (!message.isOpen) {
-            this.resetCampaign();
-          }
+        
         } else if (message.event === SDK_SET_BUBBLE_VISIBILITY) {
           this.setBubbleVisibility(message.hideMessageBubble);
         }
@@ -319,11 +266,7 @@ export default {
     sendRNWebViewLoadedEvent() {
       RNHelper.sendMessage(loadedEventConfig());
     },
-    setCampaignReadData(snoozedTill) {
-      if (snoozedTill) {
-        this.campaignsSnoozedTill = Number(snoozedTill);
-      }
-    },
+
   },
 };
 </script>

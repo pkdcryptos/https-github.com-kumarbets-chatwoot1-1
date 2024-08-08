@@ -45,25 +45,20 @@ export default {
     ...mapGetters({
       widgetColor: 'appConfig/getWidgetColor',
       isCreating: 'conversation/getIsCreating',
-      activeCampaign: 'campaign/getActiveCampaign',
       currentUser: 'contacts/getCurrentUser',
     }),
     textColor() {
       return getContrastingTextColor(this.widgetColor);
     },
-    hasActiveCampaign() {
-      return !isEmptyObject(this.activeCampaign);
-    },
+ 
     shouldShowHeaderMessage() {
-      return this.hasActiveCampaign || this.preChatFormEnabled;
+      return  this.preChatFormEnabled;
     },
     headerMessage() {
       if (this.preChatFormEnabled) {
         return this.options.preChatMessage;
       }
-      if (this.hasActiveCampaign) {
-        return this.$t('PRE_CHAT_FORM.CAMPAIGN_HEADER');
-      }
+     
       return '';
     },
     preChatFields() {
@@ -245,7 +240,7 @@ export default {
         phoneNumber,
         emailAddress,
         message,
-        activeCampaignId: this.activeCampaign.id,
+
         conversationCustomAttributes: this.conversationCustomAttributes,
         contactCustomAttributes: this.contactCustomAttributes,
       });
@@ -291,8 +286,7 @@ export default {
       :has-error-in-phone-input="hasErrorInPhoneInput"
     />
     <FormulateInput
-      v-if="!hasActiveCampaign"
-      name="message"
+     name="message"
       type="textarea"
       :label-class="context => labelClass(context)"
       :input-class="context => inputClass(context)"

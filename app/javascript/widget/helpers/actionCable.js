@@ -46,7 +46,7 @@ class ActionCableConnector extends BaseActionCableConnector {
 
   onStatusChange = data => {
     if (data.status === 'resolved') {
-      this.app.$store.dispatch('campaign/resetCampaign');
+      
     }
     this.app.$store.dispatch('conversationAttributes/update', data);
   };

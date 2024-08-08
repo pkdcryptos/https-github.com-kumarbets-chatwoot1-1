@@ -9,7 +9,7 @@ import conversationLabels from 'widget/store/modules/conversationLabels';
 import events from 'widget/store/modules/events';
 import globalConfig from 'shared/store/globalConfig';
 import message from 'widget/store/modules/message';
-import campaign from 'widget/store/modules/campaign';
+
 import article from 'widget/store/modules/articles';
 
 Vue.use(Vuex);
@@ -24,7 +24,6 @@ export default new Vuex.Store({
     events,
     globalConfig,
     message,
-    campaign,
     article,
   },
 });

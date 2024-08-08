@@ -72,7 +72,6 @@ Rails.application.routes.draw do
             post :execute, on: :member
           end
           resources :sla_policies, only: [:index, :create, :show, :update, :destroy]
-          resources :campaigns, only: [:index, :create, :show, :update, :destroy]
           resources :dashboard_apps, only: [:index, :show, :create, :update, :destroy]
           namespace :channels do
             resource :twilio_channel, only: [:create]
@@ -149,7 +148,6 @@ Rails.application.routes.draw do
           resources :custom_filters, only: [:index, :show, :create, :update, :destroy]
           resources :inboxes, only: [:index, :show, :create, :update, :destroy] do
             get :assignable_agents, on: :member
-            get :campaigns, on: :member
             get :response_sources, on: :member
             get :agent_bot, on: :member
             post :set_agent_bot, on: :member
@@ -281,7 +279,6 @@ Rails.application.routes.draw do
       namespace :widget do
         resource :direct_uploads, only: [:create]
         resource :config, only: [:create]
-        resources :campaigns, only: [:index]
         resources :events, only: [:create]
         resources :messages, only: [:index, :create, :update]
         resources :conversations, only: [:index, :create] do
