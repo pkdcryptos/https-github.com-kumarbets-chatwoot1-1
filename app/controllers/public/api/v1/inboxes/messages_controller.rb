@@ -11,7 +11,8 @@ class Public::Api::V1::Inboxes::MessagesController < Public::Api::V1::InboxesCon
     @message.save!
   end
 
- 
+  def update
+    render json: { error: 'You cannot update the CSAT survey after 14 days' }, status: :unprocessable_entity and return if check_csat_locked
 
     @message.update!(message_update_params)
   rescue StandardError => e
@@ -44,7 +45,7 @@ class Public::Api::V1::Inboxes::MessagesController < Public::Api::V1::InboxesCon
   end
 
   def message_update_params
-    params.permit(submitted_values: [:name, :title, :value])
+    params.permit(submitted_values: [:name, :title, :value,])
   end
 
   def permitted_params
