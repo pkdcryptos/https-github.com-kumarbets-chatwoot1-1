@@ -49,7 +49,7 @@ export default {
 
 <style scoped lang="scss">
 @import '~widget/assets/scss/variables.scss';
-@import '~assets/scss/mixins.scss';
+@import '~dashboard/assets/scss/mixins.scss';
 
 .card-message {
   max-width: 220px;
