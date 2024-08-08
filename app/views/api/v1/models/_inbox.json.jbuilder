@@ -12,7 +12,6 @@ json.auto_assignment_config resource.auto_assignment_config
 json.out_of_office_message resource.out_of_office_message
 json.working_hours resource.weekly_schedule
 json.timezone resource.timezone
-json.callback_webhook_url resource.callback_webhook_url
 json.allow_messages_after_resolved resource.allow_messages_after_resolved
 json.lock_to_single_conversation resource.lock_to_single_conversation
 json.sender_name_type resource.sender_name_type
