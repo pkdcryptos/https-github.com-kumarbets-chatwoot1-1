@@ -53,6 +53,5 @@ class MessageTemplates::HookExecutionService
   end
 
  
-  end
 end
 MessageTemplates::HookExecutionService.prepend_mod_with('MessageTemplates::HookExecutionService')
