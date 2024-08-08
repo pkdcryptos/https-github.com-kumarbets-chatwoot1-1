@@ -179,9 +179,7 @@ class Conversation < ApplicationRecord
     true
   end
 
-  def tweet?
-    inbox.inbox_type == 'Twitter' && additional_attributes['type'] == 'tweet'
-  end
+
 
   def recent_messages
     messages.chat.last(5)

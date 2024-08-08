@@ -44,10 +44,6 @@ module Reauthorizable
     case self.class.name
     when 'Integrations::Hook'
       process_integration_hook_reauthorization_emails(mailer)
-    when 'Channel::FacebookPage'
-      mailer.facebook_disconnect(inbox).deliver_later
-    when 'Channel::Whatsapp'
-      mailer.whatsapp_disconnect(inbox).deliver_later
     when 'Channel::Email'
       mailer.email_disconnect(inbox).deliver_later
     when 'AutomationRule'

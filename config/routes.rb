@@ -16,8 +16,6 @@ Rails.application.routes.draw do
 
     get '/app', to: 'dashboard#index'
     get '/app/*params', to: 'dashboard#index'
-    get '/app/accounts/:account_id/settings/inboxes/new/twitter', to: 'dashboard#index', as: 'app_new_twitter_inbox'
-    get '/app/accounts/:account_id/settings/inboxes/new/microsoft', to: 'dashboard#index', as: 'app_new_microsoft_inbox'
     get '/app/accounts/:account_id/settings/inboxes/new/:inbox_id/agents', to: 'dashboard#index', as: 'app_twitter_inbox_agents'
     get '/app/accounts/:account_id/settings/inboxes/new/:inbox_id/agents', to: 'dashboard#index', as: 'app_email_inbox_agents'
     get '/app/accounts/:account_id/settings/inboxes/:inbox_id', to: 'dashboard#index', as: 'app_email_inbox_settings'
@@ -58,9 +56,6 @@ Rails.application.routes.draw do
           resource :audit_logs, only: [:show]
           resources :callbacks, only: [] do
             collection do
-              post :register_facebook_page
-              get :register_facebook_page
-              post :facebook_pages
               post :reauthorize_page
             end
           end
@@ -173,14 +168,7 @@ Rails.application.routes.draw do
             end
           end
 
-          namespace :twitter do
-            resource :authorization, only: [:create]
-          end
-
-          namespace :microsoft do
-            resource :authorization, only: [:create]
-          end
-
+        
           namespace :google do
             resource :authorization, only: [:create]
           end
@@ -380,22 +368,7 @@ Rails.application.routes.draw do
   end
 
   # ----------------------------------------------------------------------
-  # Routes for channel integrations
-  mount Facebook::Messenger::Server, at: 'bot'
-  get 'webhooks/twitter', to: 'api/v1/webhooks#twitter_crc'
-  post 'webhooks/twitter', to: 'api/v1/webhooks#twitter_events'
-  post 'webhooks/line/:line_channel_id', to: 'webhooks/line#process_payload'
-  post 'webhooks/sms/:phone_number', to: 'webhooks/sms#process_payload'
-  get 'webhooks/whatsapp/:phone_number', to: 'webhooks/whatsapp#verify'
-  post 'webhooks/whatsapp/:phone_number', to: 'webhooks/whatsapp#process_payload'
-  get 'webhooks/instagram', to: 'webhooks/instagram#verify'
-  post 'webhooks/instagram', to: 'webhooks/instagram#events'
-
-  namespace :twitter do
-    resource :callback, only: [:show]
-  end
-
-
+ 
 
   get 'microsoft/callback', to: 'microsoft/callbacks#show'
   get 'google/callback', to: 'google/callbacks#show'

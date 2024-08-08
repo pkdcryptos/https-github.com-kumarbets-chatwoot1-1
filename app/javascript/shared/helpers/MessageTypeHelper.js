@@ -4,5 +4,4 @@ export const isASubmittedFormMessage = (message = {}) =>
 
 export const MESSAGE_MAX_LENGTH = {
   GENERAL: 10000,
-  FACEBOOK: 1000,
 };

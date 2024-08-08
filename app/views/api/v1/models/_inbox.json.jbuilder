@@ -22,7 +22,6 @@ json.business_name resource.business_name
 ## Channel specific settings
 ## TODO : Clean up and move the attributes into channel sub section
 
-json.tweets_enabled resource.channel.try(:tweets_enabled) if resource.twitter?
 
 ## WebWidget Attributes
 json.widget_color resource.channel.try(:widget_color)
@@ -39,12 +38,6 @@ if resource.web_widget?
   json.pre_chat_form_enabled resource.channel.try(:pre_chat_form_enabled)
   json.pre_chat_form_options resource.channel.try(:pre_chat_form_options)
   json.continuity_via_email resource.channel.try(:continuity_via_email)
-end
-
-## Facebook Attributes
-if resource.facebook?
-  json.page_id resource.channel.try(:page_id)
-  json.reauthorization_required resource.channel.try(:reauthorization_required?)
 end
 
 

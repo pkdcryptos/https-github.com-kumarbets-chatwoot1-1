@@ -4,11 +4,6 @@
 - name: channel_email
   enabled: true
   help_url: https://chwt.app/hc/email
-- name: channel_facebook
-  enabled: true
-  help_url: https://chwt.app/hc/fb
-- name: channel_twitter
-  enabled: true
 - name: ip_lookup
   enabled: false
 - name: disable_branding

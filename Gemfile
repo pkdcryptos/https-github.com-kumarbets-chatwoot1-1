@@ -85,13 +85,9 @@ gem 'administrate-field-belongs_to_search', '>= 0.9.0'
 gem 'wisper', '2.0.0'
 
 ##--- gems for channels ---##
-gem 'facebook-messenger'
-gem 'line-bot-api'
 # twitty will handle subscription of twitter account events
 # gem 'twitty', git: 'https://github.com/chatwoot/twitty'
 gem 'twitty', '~> 0.1.5'
-# facebook client
-gem 'koala'
 # for dialogflow integrations
 gem 'google-cloud-dialogflow-v2'
 gem 'grpc'

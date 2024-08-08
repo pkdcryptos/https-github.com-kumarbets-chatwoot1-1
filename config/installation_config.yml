@@ -95,33 +95,7 @@
   locked: false
 # ------- End of Email Related Config ------- #
 
-# ------- Facebook Channel Related Config ------- #
-- name: FB_APP_ID
-  display_title: 'Facebook App ID'
-  locked: false
-- name: FB_VERIFY_TOKEN
-  display_title: 'Facebook Verify Token'
-  description: 'The verify token used for Facebook Messenger Webhook'
-  locked: false
-- name: FB_APP_SECRET
-  display_title: 'Facebook App Secret'
-  locked: false
-- name: IG_VERIFY_TOKEN
-  display_title: 'Instagram Verify Token'
-  description: 'The verify token used for Instagram Webhook'
-  locked: false
-- name: FACEBOOK_API_VERSION
-  display_title: 'Facebook API Version'
-  description: 'Configure this if you want to use a different Facebook API version. Make sure its prefixed with `v`'
-  value: 'v17.0'
-  locked: false
-- name: ENABLE_MESSENGER_CHANNEL_HUMAN_AGENT
-  display_title: 'Enable human agent'
-  value: false
-  locked: false
-  description: 'Enable human agent for messenger channel for longer message back period. Needs additional app approval: https://developers.facebook.com/docs/features-reference/human-agent/'
-  type: boolean
-# ------- End of Facebook Channel Related Config ------- #
+
 
 # MARK: Microsoft Email Channel Config
 - name: AZURE_APP_ID

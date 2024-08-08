@@ -89,13 +89,6 @@ class Inbox < ApplicationRecord
     member.try(:destroy)
   end
 
-  def facebook?
-    channel_type == 'Channel::FacebookPage'
-  end
-
-  def instagram?
-    facebook? && channel.instagram_id.present?
-  end
 
   def web_widget?
     channel_type == 'Channel::WebWidget'
@@ -111,13 +104,6 @@ class Inbox < ApplicationRecord
 
 
 
-  def twitter?
-    channel_type == 'Channel::TwitterProfile'
-  end
-
-  def whatsapp?
-    channel_type == 'Channel::Whatsapp'
-  end
 
   def assignable_agents
     (account.users.where(id: members.select(:user_id)) + account.administrators).uniq

@@ -118,7 +118,6 @@ Metrics/AbcSize:
     - 'app/controllers/concerns/auth_helper.rb'
 Rails/UniqueValidationWithoutIndex:
   Exclude:
-    - 'app/models/channel/twitter_profile.rb'
     - 'app/models/webhook.rb'
     - 'app/models/contact.rb'
     - 'app/models/integrations/hook.rb'

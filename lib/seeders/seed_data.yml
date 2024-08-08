@@ -204,28 +204,6 @@ contacts:
           - message_type: outgoing
             sender: michael_scott@paperlayer.test
             content: Hi! Sorry to hear that. Can you please provide me with your username and email address so I can look into it for you?
-    - name: "Tiffanie Cloughton"
-      email: "tcloughton1@newyorker.test"
-      gender: 'female'
-      conversations:
-        - channel: Channel::FacebookPage
-          messages:
-          - message_type: incoming
-            content: Hi, I need some help with my billing statement.
-          - message_type: outgoing
-            sender: michael_scott@paperlayer.test
-            content: Hello! I'd be happy to assist you with that. Can you please tell me which billing statement you're referring to?
-    - name: "Melonie Keatch"
-      email: "mkeatch2@reuters.test"
-      gender: 'female'
-      conversations:
-        - channel: Channel::TwitterProfile
-          messages:
-          - message_type: incoming
-            content: Hi, I think I accidentally deleted some important files. Can you help me recover them?
-          - message_type: outgoing
-            sender: michael_scott@paperlayer.test
-            content: Of course! Can you please tell me what type of files they were and where they were located on your device?
     - name: "Olin Canniffe"
       email: "ocanniffe3@feedburner.test"
       gender: 'male'
@@ -272,17 +250,6 @@ contacts:
           - message_type: outgoing
             sender: michael_scott@paperlayer.test
             content: No problem! Can you please tell me the make and model of your device and what specifically you need help with?
-    - name: "Bing Cusworth"
-      email: "bcusworth7@arstechnica.test"
-      gender: 'male'
-      conversations:
-        - channel: Channel::TwitterProfile
-          messages:
-          - message_type: incoming
-            content: Hi, I accidentally placed an order for the wrong item. Can I cancel it?
-          - message_type: outgoing
-            sender: michael_scott@paperlayer.test
-            content: I'm sorry to hear that. Can you please provide me with your order number and I'll see if I can cancel it for you?
     - name: "Claus Jira"
       email: "cjira8@comcast.net"
       gender: 'male'
@@ -307,17 +274,6 @@ contacts:
           - message_type: outgoing
             sender: michael_scott@paperlayer.test
             content: Sure! Can you please provide me with your username or email address and I'll send you a password reset link?
-    - name: "Coreen Mewett"
-      email: "cmewetta@home.pl"
-      gender: 'female'
-      conversations:
-        - channel: Channel::FacebookPage
-          messages:
-          - message_type: incoming
-            content: Hi, I think someone may have hacked into my account. What should I do?
-          - message_type: outgoing
-            sender: michael_scott@paperlayer.test
-            content: I'm sorry to hear that. Please change your password immediately and enable two-factor authentication if you haven't already done so. I can also assist you in reviewing your account activity if needed.
     - name: "Benyamin Janeway"
       email: "bjanewayb@ustream.tv"
       gender: 'male'
@@ -354,15 +310,6 @@ contacts:
           - message_type: outgoing
             sender: michael_scott@paperlayer.test
             content: I'm sorry to hear that. Can you please tell me which file you're having trouble accessing and who you shared it with? I'll do my best to help you regain access.
-    - name: "Nathaniel Vannuchi"
-      email: "nvannuchie@photobucket.test"
-      gender: 'male'
-      conversations:
-        - channel: Channel::FacebookPage
-          priority: high
-          messages:
-            - message_type: incoming
-              content: "Hey there,I need some help with billing, my card is not working on the website."
     - name: "Olia Olenchenko"
       email: "oolenchenkof@bluehost.test"
       gender: 'female'

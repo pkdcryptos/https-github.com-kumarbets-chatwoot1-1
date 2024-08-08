@@ -16,7 +16,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
-  
+
 
 
   create_table "access_tokens", force: :cascade do |t|
@@ -193,50 +193,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
     t.index ["forward_to_email"], name: "index_channel_email_on_forward_to_email", unique: true
   end
 
-  create_table "channel_facebook_pages", id: :serial, force: :cascade do |t|
-    t.string "page_id", null: false
-    t.string "user_access_token", null: false
-    t.string "page_access_token", null: false
-    t.integer "account_id", null: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.string "instagram_id"
-    t.index ["page_id", "account_id"], name: "index_channel_facebook_pages_on_page_id_and_account_id", unique: true
-    t.index ["page_id"], name: "index_channel_facebook_pages_on_page_id"
-  end
-
-  create_table "channel_line", force: :cascade do |t|
-    t.integer "account_id", null: false
-    t.string "line_channel_id", null: false
-    t.string "line_channel_secret", null: false
-    t.string "line_channel_token", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["line_channel_id"], name: "index_channel_line_on_line_channel_id", unique: true
-  end
-
-  create_table "channel_sms", force: :cascade do |t|
-    t.integer "account_id", null: false
-    t.string "phone_number", null: false
-    t.string "provider", default: "default"
-    t.jsonb "provider_config", default: {}
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["phone_number"], name: "index_channel_sms_on_phone_number", unique: true
-  end
 
 
-
-  create_table "channel_twitter_profiles", force: :cascade do |t|
-    t.string "profile_id", null: false
-    t.string "twitter_access_token", null: false
-    t.string "twitter_access_token_secret", null: false
-    t.integer "account_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "tweets_enabled", default: true
-    t.index ["account_id", "profile_id"], name: "index_channel_twitter_profiles_on_account_id_and_profile_id", unique: true
-  end
 
   create_table "channel_web_widgets", id: :serial, force: :cascade do |t|
     t.string "website_url"
@@ -258,17 +216,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
     t.index ["website_token"], name: "index_channel_web_widgets_on_website_token", unique: true
   end
 
-  create_table "channel_whatsapp", force: :cascade do |t|
-    t.integer "account_id", null: false
-    t.string "phone_number", null: false
-    t.string "provider", default: "default"
-    t.jsonb "provider_config", default: {}
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.jsonb "message_templates", default: {}
-    t.datetime "message_templates_last_updated", precision: nil
-    t.index ["phone_number"], name: "index_channel_whatsapp_on_phone_number", unique: true
-  end
 
   create_table "contact_inboxes", force: :cascade do |t|
     t.bigint "contact_id"
