@@ -60,8 +60,7 @@ Rails.application.routes.draw do
             end
           end
  
-        
-         resources :dashboard_apps, only: [:index, :show, :create, :update, :destroy]
+
          
           resources :conversations, only: [:index, :create, :show, :update] do
             collection do

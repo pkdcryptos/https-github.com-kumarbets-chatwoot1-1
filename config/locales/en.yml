@@ -47,9 +47,6 @@ en:
       email_already_exists: "You have already signed up for an account with %{email}"
       invalid_params: 'Invalid, please check the signup paramters and try again'
       failed: Signup failed
-    data_import:
-      data_type:
-        invalid: Invalid data type
     contacts:
       import:
         failed: File is blank
@@ -130,13 +127,6 @@ en:
     online:
       delete: "%{contact_name} is Online, please try again later"
   integration_apps:
-    dashboard_apps:
-      name: "Dashboard Apps"
-      description: "Dashboard Apps allow you to create and embed applications that display user information, orders, or payment history, providing more context to your customer support agents."
-    dyte:
-      name: "Dyte"
-      description: "Dyte is a product that integrates audio and video functionalities into your application. With this integration, your agents can start video/voice calls with your customers directly from Chatwoot."
-      meeting_name: "%{agent_name} has started a meeting"
     webhooks:
       name: "Webhooks"
       description: "Webhook events provide real-time updates about activities in your Chatwoot account. You can subscribe to your preferred events, and Chatwoot will send you HTTP callbacks with the updates."

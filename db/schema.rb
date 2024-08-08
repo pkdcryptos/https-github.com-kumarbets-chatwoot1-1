@@ -314,29 +314,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
     t.index ["user_id"], name: "index_custom_filters_on_user_id"
   end
 
-  create_table "dashboard_apps", force: :cascade do |t|
-    t.string "title", null: false
-    t.jsonb "content", default: []
-    t.bigint "account_id", null: false
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["account_id"], name: "index_dashboard_apps_on_account_id"
-    t.index ["user_id"], name: "index_dashboard_apps_on_user_id"
-  end
-
-  create_table "data_imports", force: :cascade do |t|
-    t.bigint "account_id", null: false
-    t.string "data_type", null: false
-    t.integer "status", default: 0, null: false
-    t.text "processing_errors"
-    t.integer "total_records"
-    t.integer "processed_records"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["account_id"], name: "index_data_imports_on_account_id"
-  end
-
   create_table "email_templates", force: :cascade do |t|
     t.string "name", null: false
     t.text "body", null: false
