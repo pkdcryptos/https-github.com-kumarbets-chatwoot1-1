@@ -219,17 +219,6 @@ Rails.application.routes.draw do
           end
           resources :working_hours, only: [:update]
 
-          resources :portals do
-            member do
-              patch :archive
-              put :add_members
-              delete :logo
-            end
-            resources :categories
-            resources :articles do
-              post :reorder, on: :collection
-            end
-          end
 
           resources :upload, only: [:create]
         end
@@ -380,14 +369,7 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'hc/:slug', to: 'public/api/v1/portals#show'
-  get 'hc/:slug/sitemap.xml', to: 'public/api/v1/portals#sitemap'
-  get 'hc/:slug/:locale', to: 'public/api/v1/portals#show'
-  get 'hc/:slug/:locale/articles', to: 'public/api/v1/portals/articles#index'
-  get 'hc/:slug/:locale/categories', to: 'public/api/v1/portals/categories#index'
-  get 'hc/:slug/:locale/categories/:category_slug', to: 'public/api/v1/portals/categories#show'
-  get 'hc/:slug/:locale/categories/:category_slug/articles', to: 'public/api/v1/portals/articles#index'
-  get 'hc/:slug/articles/:article_slug', to: 'public/api/v1/portals/articles#show'
+
 
   # ----------------------------------------------------------------------
   # Used in mailer templates

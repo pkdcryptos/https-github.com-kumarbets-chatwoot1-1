@@ -1,10 +1,9 @@
 <script>
-import ArticleSkeletonLoader from 'shared/components/ArticleSkeletonLoader.vue';
+
 
 export default {
   name: 'IframeLoader',
   components: {
-    ArticleSkeletonLoader,
   },
   props: {
     url: {
@@ -41,15 +40,12 @@ export default {
       @load="handleIframeLoad"
       @error="handleIframeError"
     />
-    <ArticleSkeletonLoader
-      v-if="isLoading"
-      class="absolute w-full h-full top-0 left-0"
-    />
+   
     <div
       v-if="showEmptyState"
       class="absolute w-full h-full top-0 left-0 flex justify-center items-center"
     >
-      <p>{{ $t('PORTAL.IFRAME_ERROR') }}</p>
+     
     </div>
   </div>
 </template>

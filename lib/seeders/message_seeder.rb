@@ -104,20 +104,5 @@ module Seeders::MessageSeeder
     }
   end
 
-  def self.create_sample_articles_message(conversation)
-    Message.create!(
-      account: conversation.account,
-      inbox: conversation.inbox,
-      conversation: conversation,
-      message_type: :template,
-      content: 'Tech Companies',
-      content_type: 'article',
-      content_attributes: {
-        items: [
-          { title: 'Acme Hardware', description: 'Hardware reimagined', link: 'http://acme-hardware.inc' },
-          { title: 'Acme Search', description: 'The best Search Engine', link: 'http://acme-search.inc' }
-        ]
-      }
-    )
-  end
+
 end

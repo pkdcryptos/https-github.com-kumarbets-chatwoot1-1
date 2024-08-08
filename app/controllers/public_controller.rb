@@ -10,8 +10,6 @@ class PublicController < ActionController::Base
     domain = request.host
     return if DomainHelper.chatwoot_domain?(domain)
 
-    @portal = ::Portal.find_by(custom_domain: domain)
-    return if @portal.present?
 
     render json: {
       error: "Domain: #{domain} is not registered with us. \

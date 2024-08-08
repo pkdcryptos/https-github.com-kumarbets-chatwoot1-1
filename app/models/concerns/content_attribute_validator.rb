@@ -17,9 +17,6 @@ class ContentAttributeValidator < ActiveModel::Validator
     when 'form'
       validate_items!(record)
       validate_item_attributes!(record, ALLOWED_FORM_ITEM_KEYS)
-    when 'article'
-      validate_items!(record)
-      validate_item_attributes!(record, ALLOWED_ARTICLE_KEYS)
     end
   end
 

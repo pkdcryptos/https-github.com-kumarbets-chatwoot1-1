@@ -3,7 +3,7 @@ import messageFormatterMixin from 'shared/mixins/messageFormatterMixin';
 import ChatCard from 'shared/components/ChatCard.vue';
 import ChatForm from 'shared/components/ChatForm.vue';
 import ChatOptions from 'shared/components/ChatOptions.vue';
-import ChatArticle from './template/Article.vue';
+
 import EmailInput from './template/EmailInput.vue';
 import CustomerSatisfaction from 'shared/components/CustomerSatisfaction.vue';
 import darkModeMixin from 'widget/mixins/darkModeMixin.js';
@@ -12,7 +12,6 @@ import IntegrationCard from './template/IntegrationCard.vue';
 export default {
   name: 'AgentMessageBubble',
   components: {
-    ChatArticle,
     ChatCard,
     ChatForm,
     ChatOptions,
@@ -47,12 +46,7 @@ export default {
     isForm() {
       return this.contentType === 'form';
     },
-    isArticle() {
-      return this.contentType === 'article';
-    },
-    isCSAT() {
-      return this.contentType === 'input_csat';
-    },
+    
     isIntegrations() {
       return this.contentType === 'integrations';
     },
@@ -85,7 +79,7 @@ export default {
   <div class="chat-bubble-wrap">
     <div
       v-if="
-        !isCards && !isOptions && !isForm && !isArticle && !isCards && !isCSAT
+        !isCards && !isOptions && !isForm &&  !isCards 
       "
       class="chat-bubble agent"
       :class="$dm('bg-white', 'dark:bg-slate-700 has-dark-mode')"
@@ -131,13 +125,6 @@ export default {
         :actions="item.actions"
       />
     </div>
-    <div v-if="isArticle">
-      <ChatArticle :items="messageContentAttributes.items" />
-    </div>
-    <CustomerSatisfaction
-      v-if="isCSAT"
-      :message-content-attributes="messageContentAttributes.submitted_values"
-      :message-id="messageId"
-    />
+ 
   </div>
 </template>

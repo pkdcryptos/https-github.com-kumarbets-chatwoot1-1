@@ -25,10 +25,7 @@ module SwitchLocale
     domain = request.host
     return if DomainHelper.chatwoot_domain?(domain)
 
-    @portal = Portal.find_by(custom_domain: domain)
-    return unless @portal
 
-    @portal.default_locale
   end
 
   def set_locale(locale, &)

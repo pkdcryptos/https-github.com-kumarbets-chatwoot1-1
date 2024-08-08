@@ -59,9 +59,6 @@ en:
         invalid: Invalid email
       phone_number:
         invalid: should be in e164 format
-    categories:
-      locale:
-        unique: should be unique in the category and portal
     dyte:
       invalid_message_type: "Invalid message type. Action not permitted"
     inboxes:
@@ -158,41 +155,6 @@ en:
     captain:
       name: "Captain"
       description: "Captain is a native AI assistant built for your product and trained on your company's knowledge base. It responds like a human and resolves customer queries effectively. Configure it to your inboxes easily."
-  public_portal:
-    search:
-      search_placeholder: Search for article by title or body...
-      empty_placeholder: No results found.
-      loading_placeholder: Searching...
-      results_title: Search results
-    toc_header: 'On this page'
-    hero:
-      sub_title: Search for the articles here or browse the categories below.
-    common:
-      home: Home
-      last_updated_on: Last updated on %{last_updated_on}
-      view_all_articles: View all
-      article: article
-      articles: articles
-      author: author
-      authors: authors
-      other: other
-      others: others
-      by: By
-      no_articles: There are no articles here
-    footer:
-      made_with: Made with
-    header:
-      go_to_homepage: Website
-      appearance:
-        system: System
-        light: Light
-        dark: Dark
-      featured_articles: Featured Articles
-      uncategorized: Uncategorized
-    404:
-      title: Page not found
-      description: We couldn't find the page you were looking for.
-      back_to_home: Go to home page
   time_units:
     days:
       one: "%{count} day"

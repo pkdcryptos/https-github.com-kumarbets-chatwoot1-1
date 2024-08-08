@@ -88,9 +88,6 @@ unless Rails.env.production?
   Seeders::MessageSeeder.create_sample_input_select_message conversation
   # form
   Seeders::MessageSeeder.create_sample_form_message conversation
-  # articles
-  Seeders::MessageSeeder.create_sample_articles_message conversation
-  # csat
-  Seeders::MessageSeeder.create_sample_csat_collect_message conversation
+
 
 end

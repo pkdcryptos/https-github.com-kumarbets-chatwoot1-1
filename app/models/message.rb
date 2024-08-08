@@ -49,7 +49,6 @@ class Message < ApplicationRecord
         'type': 'object',
         'properties': {
           'name': { 'type': 'string' },
-          'category': { 'type': 'string' },
           'language': { 'type': 'string' },
           'namespace': { 'type': 'string' },
           'processed_params': { 'type': 'object' }

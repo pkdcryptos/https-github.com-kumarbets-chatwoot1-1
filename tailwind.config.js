@@ -8,7 +8,6 @@ module.exports = {
     './app/javascript/widget/**/*.vue',
     './app/javascript/v3/**/*.vue',
     './app/javascript/dashboard/**/*.vue',
-    './app/javascript/portal/**/*.vue',
     './app/javascript/shared/**/*.vue',
     './app/views/**/*.html.erb',
   ],

@@ -22,11 +22,7 @@ export default {
     WAITING_SINCE_ASC: 'waiting_since_asc',
     WAITING_SINCE_DESC: 'waiting_since_desc',
   },
-  ARTICLE_STATUS_TYPES: {
-    DRAFT: 0,
-    PUBLISH: 1,
-    ARCHIVE: 2,
-  },
+
   LAYOUT_TYPES: {
     CONDENSED: 'condensed',
     EXPANDED: 'expanded',

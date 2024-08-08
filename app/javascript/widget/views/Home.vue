@@ -1,7 +1,6 @@
 <script>
 import TeamAvailability from 'widget/components/TeamAvailability.vue';
-import ArticleHero from 'widget/components/ArticleHero.vue';
-import ArticleCardSkeletonLoader from 'widget/components/ArticleCardSkeletonLoader.vue';
+
 
 import { mapGetters } from 'vuex';
 import darkModeMixin from 'widget/mixins/darkModeMixin';
@@ -11,9 +10,7 @@ import configMixin from 'widget/mixins/configMixin';
 export default {
   name: 'Home',
   components: {
-    ArticleHero,
     TeamAvailability,
-    ArticleCardSkeletonLoader,
   },
   mixins: [configMixin, routerMixin, darkModeMixin],
   computed: {
@@ -21,22 +18,11 @@ export default {
       availableAgents: 'agent/availableAgents',
       conversationSize: 'conversation/getConversationSize',
       unreadMessageCount: 'conversation/getUnreadMessageCount',
-      popularArticles: 'article/popularArticles',
-      articleUiFlags: 'article/uiFlags',
     }),
     widgetLocale() {
       return this.$i18n.locale || 'en';
     },
-    portal() {
-      return window.chatwootWebChannel.portal;
-    },
-    showArticles() {
-      return (
-        this.portal &&
-        !this.articleUiFlags.isFetching &&
-        this.popularArticles.length
-      );
-    },
+ 
     defaultLocale() {
       const widgetLocale = this.widgetLocale;
       const { allowed_locales: allowedLocales, default_locale: defaultLocale } =
@@ -52,13 +38,7 @@ export default {
     },
   },
   mounted() {
-    if (this.portal && this.popularArticles.length === 0) {
-      const locale = this.defaultLocale;
-      this.$store.dispatch('article/fetch', {
-        slug: this.portal.slug,
-        locale,
-      });
-    }
+  
   },
   methods: {
     startConversation() {
@@ -67,24 +47,8 @@ export default {
       }
       return this.replaceRoute('messages');
     },
-    openArticleInArticleViewer(link) {
-      let linkToOpen = `${link}?show_plain_layout=true`;
-      const isDark = this.prefersDarkMode;
-      if (isDark) {
-        linkToOpen = `${linkToOpen}&theme=dark`;
-      }
-      this.$router.push({
-        name: 'article-viewer',
-        params: { link: linkToOpen },
-      });
-    },
-    viewAllArticles() {
-      const locale = this.defaultLocale;
-      const {
-        portal: { slug },
-      } = window.chatwootWebChannel;
-      this.openArticleInArticleViewer(`/hc/${slug}/${locale}`);
-    },
+
+
   },
 };
 </script>
@@ -102,24 +66,7 @@ export default {
         @startConversation="startConversation"
       />
     </div>
-    <div v-if="showArticles" class="w-full px-4 py-2">
-      <div class="w-full p-4 bg-white rounded-md shadow-sm dark:bg-slate-700">
-        <ArticleHero
-          v-if="
-            !articleUiFlags.isFetching &&
-            !articleUiFlags.isError &&
-            popularArticles.length
-          "
-          :articles="popularArticles"
-          @view="openArticleInArticleViewer"
-          @viewAll="viewAllArticles"
-        />
-      </div>
-    </div>
-    <div v-if="articleUiFlags.isFetching" class="w-full px-4 py-2">
-      <div class="w-full p-4 bg-white rounded-md shadow-sm dark:bg-slate-700">
-        <ArticleCardSkeletonLoader />
-      </div>
-    </div>
+
+ 
   </div>
 </template>
