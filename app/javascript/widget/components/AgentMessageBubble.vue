@@ -5,7 +5,7 @@ import ChatForm from 'shared/components/ChatForm.vue';
 import ChatOptions from 'shared/components/ChatOptions.vue';
 
 import EmailInput from './template/EmailInput.vue';
-import CustomerSatisfaction from 'shared/components/CustomerSatisfaction.vue';
+
 import darkModeMixin from 'widget/mixins/darkModeMixin.js';
 import IntegrationCard from './template/IntegrationCard.vue';
 
@@ -16,7 +16,7 @@ export default {
     ChatForm,
     ChatOptions,
     EmailInput,
-    CustomerSatisfaction,
+
     IntegrationCard,
   },
   mixins: [messageFormatterMixin, darkModeMixin],
