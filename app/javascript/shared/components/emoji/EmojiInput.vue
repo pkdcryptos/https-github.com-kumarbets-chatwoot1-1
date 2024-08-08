@@ -208,7 +208,7 @@ export default {
 
     @media (prefers-color-scheme: dark) {
       $color-bg-dark: #26292b;
-      @include arrow(bottom, $color-bg-dark, $space-slab);
+      
     }
     @media (prefers-color-scheme: light) {
       $color-bg: #ebf0f5;

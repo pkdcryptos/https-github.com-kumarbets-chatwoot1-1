@@ -70,7 +70,6 @@ export default {
   }
 
   .media {
-    @include border-light;
     width: 100%;
     object-fit: contain;
     max-height: 150px;
