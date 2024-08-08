@@ -32,7 +32,7 @@ export default defineConfig({
       dashboard: path.resolve('./app/javascript/dashboard'),
       widget: path.resolve('./app/javascript/widget'),
       survey: path.resolve('./app/javascript/survey'),
-      assets: path.resolve('./app/javascript/dashboard/assets'),
+      assets: path.resolve('./app/javascript/assets'),
       components: path.resolve('./app/javascript/dashboard/components'),
       helpers: path.resolve('./app/javascript/shared/helpers'),
       v3: path.resolve('./app/javascript/v3'),
