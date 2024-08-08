@@ -9,7 +9,7 @@ gem 'rails', '~> 7.0.8.4'
 gem 'bootsnap', require: false
 
 ##-- rails application helper gems --##
-gem 'acts-as-taggable-on'
+
 gem 'attr_extras'
 gem 'browser'
 gem 'hashie'

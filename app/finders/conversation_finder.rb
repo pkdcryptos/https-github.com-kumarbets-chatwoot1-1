@@ -64,7 +64,6 @@ class ConversationFinder
     find_all_conversations
     filter_by_status unless params[:q]
     filter_by_team
-    filter_by_labels
     filter_by_query
     filter_by_source_id
   end
@@ -135,11 +134,6 @@ class ConversationFinder
     @conversations = @conversations.where(team: @team)
   end
 
-  def filter_by_labels
-    return unless params[:labels]
-
-    @conversations = @conversations.tagged_with(params[:labels], any: true)
-  end
 
   def filter_by_source_id
     return unless params[:source_id]
@@ -162,7 +156,7 @@ class ConversationFinder
 
   def conversations_base_query
     @conversations.includes(
-      :taggings, :inbox, { assignee: { avatar_attachment: [:blob] } }, { contact: { avatar_attachment: [:blob] } }, :team, :contact_inbox
+      :inbox, { assignee: { avatar_attachment: [:blob] } }, { contact: { avatar_attachment: [:blob] } }, :team, :contact_inbox
     )
   end
 

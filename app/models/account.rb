@@ -75,15 +75,6 @@ class Account < ApplicationRecord
     users.where(account_users: { role: :administrator })
   end
 
-  def all_conversation_tags
-    # returns array of tags
-    conversation_ids = conversations.pluck(:id)
-    ActsAsTaggableOn::Tagging.includes(:tag)
-                             .where(context: 'labels',
-                                    taggable_type: 'Conversation',
-                                    taggable_id: conversation_ids)
-                             .map { |tagging| tagging.tag.name }
-  end
 
 
 
