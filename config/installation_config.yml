@@ -85,15 +85,6 @@
   locked: false
 # ------- End of Account Related Config ------- #
 
-# ------- Email Related Config ------- #
-- name: MAILER_INBOUND_EMAIL_DOMAIN
-  value:
-  description: 'The domain name to be used for generating conversation continuity emails (reply+id@domain.com)'
-  locked: false
-- name: MAILER_SUPPORT_EMAIL
-  value:
-  locked: false
-# ------- End of Email Related Config ------- #
 
 
 

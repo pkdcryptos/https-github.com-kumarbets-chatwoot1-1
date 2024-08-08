@@ -101,7 +101,7 @@ class User < ApplicationRecord
   end
 
   def send_devise_notification(notification, *args)
-    devise_mailer.with(account: Current.account).send(notification, self, *args).deliver_later
+    
   end
 
   def set_password_and_uid

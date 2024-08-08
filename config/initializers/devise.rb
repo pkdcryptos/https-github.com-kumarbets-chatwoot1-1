@@ -8,17 +8,8 @@ Devise.setup do |config|
   # by default. You can change it below and use your own secret key.
   # config.secret_key = 'dff4665a082305d28b485d1d763d0d3e52e2577220eaa551836862a3dbca1aade309fe7ceed35180ac494cbc27bd2f5f84d45e1'
 
-  # ==> Mailer Configuration
-  # Configure the e-mail address which will be shown in Devise::Mailer,
-  # note that it will be overwritten if you use your own mailer class
-  # with default "from" parameter.
-  config.mailer_sender = ENV.fetch('MAILER_SENDER_EMAIL', 'Chatwoot <accounts@chatwoot.com>')
 
-  # Configure the class responsible to send e-mails.
-  # config.mailer = 'Devise::Mailer'
 
-  # Configure the parent class responsible to send e-mails.
-  config.parent_mailer = 'ApplicationMailer'
 
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and

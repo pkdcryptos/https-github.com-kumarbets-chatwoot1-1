@@ -39,13 +39,7 @@ module Reauthorizable
   def prompt_reauthorization!
     ::Redis::Alfred.set(reauthorization_required_key, true)
 
-    mailer = AdministratorNotifications::ChannelNotificationsMailer.with(account: account)
-
-    case self.class.name
-    when 'Channel::Email'
-      mailer.email_disconnect(inbox).deliver_later
-    end
-
+   
     invalidate_inbox_cache 
   end
 
