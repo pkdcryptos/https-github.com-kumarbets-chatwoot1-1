@@ -58,14 +58,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
     t.index ["status"], name: "index_accounts_on_status"
   end
 
-  create_table "action_mailbox_inbound_emails", force: :cascade do |t|
-    t.integer "status", default: 0, null: false
-    t.string "message_id", null: false
-    t.string "message_checksum", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["message_id", "message_checksum"], name: "index_action_mailbox_inbound_emails_uniqueness", unique: true
-  end
+
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -301,36 +294,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
     t.index ["attribute_key", "attribute_model", "account_id"], name: "attribute_key_model_index", unique: true
   end
 
-  create_table "custom_filters", force: :cascade do |t|
-    t.string "name", null: false
-    t.integer "filter_type", default: 0, null: false
-    t.jsonb "query", default: "{}", null: false
-    t.bigint "account_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["account_id"], name: "index_custom_filters_on_account_id"
-    t.index ["user_id"], name: "index_custom_filters_on_user_id"
-  end
 
-  create_table "email_templates", force: :cascade do |t|
-    t.string "name", null: false
-    t.text "body", null: false
-    t.integer "account_id"
-    t.integer "template_type", default: 1
-    t.integer "locale", default: 0, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["name", "account_id"], name: "index_email_templates_on_name_and_account_id", unique: true
-  end
 
-  create_table "folders", force: :cascade do |t|
-    t.integer "account_id", null: false
-    t.integer "category_id", null: false
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "inbox_members", id: :serial, force: :cascade do |t|
     t.integer "user_id", null: false
@@ -393,18 +358,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
 
 
 
-  create_table "mentions", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "conversation_id", null: false
-    t.bigint "account_id", null: false
-    t.datetime "mentioned_at", precision: nil, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["account_id"], name: "index_mentions_on_account_id"
-    t.index ["conversation_id"], name: "index_mentions_on_conversation_id"
-    t.index ["user_id", "conversation_id"], name: "index_mentions_on_user_id_and_conversation_id", unique: true
-    t.index ["user_id"], name: "index_mentions_on_user_id"
-  end
 
   create_table "messages", id: :serial, force: :cascade do |t|
     t.text "content"
@@ -438,17 +391,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
     t.index ["source_id"], name: "index_messages_on_source_id"
   end
 
-  create_table "notes", force: :cascade do |t|
-    t.text "content", null: false
-    t.bigint "account_id", null: false
-    t.bigint "contact_id", null: false
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["account_id"], name: "index_notes_on_account_id"
-    t.index ["contact_id"], name: "index_notes_on_contact_id"
-    t.index ["user_id"], name: "index_notes_on_user_id"
-  end
 
 
 

@@ -1,6 +1,4 @@
 # DO NOT change the order of features EVER
-- name: inbound_emails
-  enabled: true
 - name: channel_email
   enabled: true
   help_url: https://chwt.app/hc/email

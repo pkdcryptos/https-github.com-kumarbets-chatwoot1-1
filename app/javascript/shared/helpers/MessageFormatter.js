@@ -1,5 +1,5 @@
 import mila from 'markdown-it-link-attributes';
-import mentionPlugin from './markdownIt/link';
+
 
 const setImageHeight = inlineToken => {
   const imgSrc = inlineToken.attrGet('src');
@@ -40,7 +40,6 @@ const md = require('markdown-it')({
   quotes: '\u201c\u201d\u2018\u2019',
   maxNesting: 20,
 })
-  .use(mentionPlugin)
   .use(imgResizeManager)
   .use(mila, {
     attrs: {

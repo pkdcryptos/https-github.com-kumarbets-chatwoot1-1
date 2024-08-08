@@ -73,20 +73,6 @@ CREATE TRIGGER "camp_dpid_before_insert" AFTER INSERT ON "public"."accounts" FOR
 
 DELIMITER ;
 
-DROP TABLE IF EXISTS "action_mailbox_inbound_emails";
-DROP SEQUENCE IF EXISTS action_mailbox_inbound_emails_id_seq;
-CREATE SEQUENCE action_mailbox_inbound_emails_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."action_mailbox_inbound_emails" (
-    "id" bigint DEFAULT nextval('action_mailbox_inbound_emails_id_seq') NOT NULL,
-    "status" integer DEFAULT '0' NOT NULL,
-    "message_id" character varying NOT NULL,
-    "message_checksum" character varying NOT NULL,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    CONSTRAINT "action_mailbox_inbound_emails_pkey" PRIMARY KEY ("id"),
-    CONSTRAINT "index_action_mailbox_inbound_emails_uniqueness" UNIQUE ("message_id", "message_checksum")
-) WITH (oids = false);
 
 
 DROP TABLE IF EXISTS "active_storage_attachments";
@@ -208,35 +194,6 @@ CREATE TABLE "public"."ar_internal_metadata" (
 ) WITH (oids = false);
 
 
-DROP TABLE IF EXISTS "articles";
-DROP SEQUENCE IF EXISTS articles_id_seq;
-CREATE SEQUENCE articles_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."articles" (
-    "id" bigint DEFAULT nextval('articles_id_seq') NOT NULL,
-    "account_id" integer NOT NULL,
-    "portal_id" integer NOT NULL,
-    "category_id" integer,
-    "folder_id" integer,
-    "title" character varying,
-    "description" text,
-    "content" text,
-    "status" integer,
-    "views" integer,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    "author_id" bigint,
-    "associated_article_id" bigint,
-    "meta" jsonb DEFAULT '{}',
-    "slug" character varying NOT NULL,
-    "position" integer,
-    CONSTRAINT "articles_pkey" PRIMARY KEY ("id"),
-    CONSTRAINT "index_articles_on_slug" UNIQUE ("slug")
-) WITH (oids = false);
-
-CREATE INDEX "index_articles_on_associated_article_id" ON "public"."articles" USING btree ("associated_article_id");
-
-CREATE INDEX "index_articles_on_author_id" ON "public"."articles" USING btree ("author_id");
 
 
 DROP TABLE IF EXISTS "attachments";
@@ -737,26 +694,6 @@ CREATE TABLE "public"."custom_attribute_definitions" (
 CREATE INDEX "index_custom_attribute_definitions_on_account_id" ON "public"."custom_attribute_definitions" USING btree ("account_id");
 
 
-DROP TABLE IF EXISTS "custom_filters";
-DROP SEQUENCE IF EXISTS custom_filters_id_seq;
-CREATE SEQUENCE custom_filters_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."custom_filters" (
-    "id" bigint DEFAULT nextval('custom_filters_id_seq') NOT NULL,
-    "name" character varying NOT NULL,
-    "filter_type" integer DEFAULT '0' NOT NULL,
-    "query" jsonb DEFAULT '"{}"' NOT NULL,
-    "account_id" bigint NOT NULL,
-    "user_id" bigint NOT NULL,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    CONSTRAINT "custom_filters_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
-
-CREATE INDEX "index_custom_filters_on_account_id" ON "public"."custom_filters" USING btree ("account_id");
-
-CREATE INDEX "index_custom_filters_on_user_id" ON "public"."custom_filters" USING btree ("user_id");
-
 
 DROP TABLE IF EXISTS "dashboard_apps";
 DROP SEQUENCE IF EXISTS dashboard_apps_id_seq;
@@ -798,37 +735,7 @@ CREATE TABLE "public"."data_imports" (
 CREATE INDEX "index_data_imports_on_account_id" ON "public"."data_imports" USING btree ("account_id");
 
 
-DROP TABLE IF EXISTS "email_templates";
-DROP SEQUENCE IF EXISTS email_templates_id_seq;
-CREATE SEQUENCE email_templates_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
 
-CREATE TABLE "public"."email_templates" (
-    "id" bigint DEFAULT nextval('email_templates_id_seq') NOT NULL,
-    "name" character varying NOT NULL,
-    "body" text NOT NULL,
-    "account_id" integer,
-    "template_type" integer DEFAULT '1',
-    "locale" integer DEFAULT '0' NOT NULL,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    CONSTRAINT "email_templates_pkey" PRIMARY KEY ("id"),
-    CONSTRAINT "index_email_templates_on_name_and_account_id" UNIQUE ("name", "account_id")
-) WITH (oids = false);
-
-
-DROP TABLE IF EXISTS "folders";
-DROP SEQUENCE IF EXISTS folders_id_seq;
-CREATE SEQUENCE folders_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."folders" (
-    "id" bigint DEFAULT nextval('folders_id_seq') NOT NULL,
-    "account_id" integer NOT NULL,
-    "category_id" integer NOT NULL,
-    "name" character varying,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    CONSTRAINT "folders_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
 
 
 DROP TABLE IF EXISTS "inbox_members";
@@ -962,28 +869,6 @@ CREATE TABLE "public"."macros" (
 CREATE INDEX "index_macros_on_account_id" ON "public"."macros" USING btree ("account_id");
 
 
-DROP TABLE IF EXISTS "mentions";
-DROP SEQUENCE IF EXISTS mentions_id_seq;
-CREATE SEQUENCE mentions_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."mentions" (
-    "id" bigint DEFAULT nextval('mentions_id_seq') NOT NULL,
-    "user_id" bigint NOT NULL,
-    "conversation_id" bigint NOT NULL,
-    "account_id" bigint NOT NULL,
-    "mentioned_at" timestamp NOT NULL,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    CONSTRAINT "index_mentions_on_user_id_and_conversation_id" UNIQUE ("user_id", "conversation_id"),
-    CONSTRAINT "mentions_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
-
-CREATE INDEX "index_mentions_on_account_id" ON "public"."mentions" USING btree ("account_id");
-
-CREATE INDEX "index_mentions_on_conversation_id" ON "public"."mentions" USING btree ("conversation_id");
-
-CREATE INDEX "index_mentions_on_user_id" ON "public"."mentions" USING btree ("user_id");
-
 
 DROP TABLE IF EXISTS "messages";
 DROP SEQUENCE IF EXISTS messages_id_seq;
@@ -1034,27 +919,7 @@ CREATE INDEX "index_messages_on_sender_type_and_sender_id" ON "public"."messages
 
 CREATE INDEX "index_messages_on_source_id" ON "public"."messages" USING btree ("source_id");
 
-
-DROP TABLE IF EXISTS "notes";
-DROP SEQUENCE IF EXISTS notes_id_seq;
-CREATE SEQUENCE notes_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."notes" (
-    "id" bigint DEFAULT nextval('notes_id_seq') NOT NULL,
-    "content" text NOT NULL,
-    "account_id" bigint NOT NULL,
-    "contact_id" bigint NOT NULL,
-    "user_id" bigint,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    CONSTRAINT "notes_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
-
-CREATE INDEX "index_notes_on_account_id" ON "public"."notes" USING btree ("account_id");
-
-CREATE INDEX "index_notes_on_contact_id" ON "public"."notes" USING btree ("contact_id");
-
-CREATE INDEX "index_notes_on_user_id" ON "public"."notes" USING btree ("user_id");
+;
 
 
 DROP TABLE IF EXISTS "notification_settings";

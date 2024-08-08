@@ -96,7 +96,7 @@ class Conversation < ApplicationRecord
   belongs_to :team, optional: true
 
 
-  has_many :mentions, dependent: :destroy_async
+
   has_many :messages, dependent: :destroy_async, autosave: true
   has_many :conversation_participants, dependent: :destroy_async
 
