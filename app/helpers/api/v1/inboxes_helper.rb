@@ -1,6 +1,6 @@
 module Api::V1::InboxesHelper
   def inbox_name(channel)
-    return channel.try(:bot_name) if channel.is_a?(Channel::Telegram)
+
 
     permitted_params[:name]
   end

@@ -19,9 +19,6 @@
 - name: help_center
   enabled: true
   help_url: https://chwt.app/hc/help-center
-- name: agent_bots
-  enabled: false
-  help_url: https://chwt.app/hc/agent-bots
 - name: macros
   enabled: true
 - name: agent_management
@@ -60,9 +57,6 @@
 - name: custom_reply_domain
   enabled: false
 - name: audit_logs
-  enabled: false
-  premium: true
-- name: response_bot
   enabled: false
   premium: true
 - name: message_reply_to

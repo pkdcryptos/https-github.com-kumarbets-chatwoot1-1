@@ -1,7 +1,6 @@
 class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
   include Api::V1::InboxesHelper
   before_action :fetch_inbox, except: [:index, :create]
-  before_action :fetch_agent_bot, only: [:set_agent_bot]
   before_action :validate_limit, only: [:create]
   # we are already handling the authorization in fetch inbox
   before_action :check_authorization, except: [:show]
@@ -45,20 +44,7 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
     update_channel if channel_update_required?
   end
 
-  def agent_bot
-    @agent_bot = @inbox.agent_bot
-  end
 
-  def set_agent_bot
-    if @agent_bot
-      agent_bot_inbox = @inbox.agent_bot_inbox || AgentBotInbox.new(inbox: @inbox)
-      agent_bot_inbox.agent_bot = @agent_bot
-      agent_bot_inbox.save!
-    elsif @inbox.agent_bot_inbox.present?
-      @inbox.agent_bot_inbox.destroy!
-    end
-    head :ok
-  end
 
   def destroy
     ::DeleteObjectJob.perform_later(@inbox, Current.user, request.ip) if @inbox.present?
@@ -72,9 +58,6 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
     authorize @inbox, :show?
   end
 
-  def fetch_agent_bot
-    @agent_bot = AgentBot.find(params[:agent_bot]) if params[:agent_bot]
-  end
 
   def create_channel
     return unless %w[web_widget api email line telegram whatsapp sms].include?(permitted_params[:channel][:type])

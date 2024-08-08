@@ -27,8 +27,7 @@ class ConversationDrop < BaseDrop
   private
 
   def message_sender_name(sender)
-    return 'Bot' if sender.blank?
-    return contact_name if sender.instance_of?(Contact)
+   return contact_name if sender.instance_of?(Contact)
 
     sender&.available_name || sender&.name
   end

@@ -20,9 +20,7 @@ class InboxPolicy < ApplicationPolicy
   end
 
   def show?
-    # FIXME: for agent bots, lets bring this validation to policies as well in future
-    return true if @user.is_a?(AgentBot)
-
+   
     Current.user.assigned_inboxes.include? record
   end
 
@@ -30,9 +28,6 @@ class InboxPolicy < ApplicationPolicy
     true
   end
 
-  def agent_bot?
-    true
-  end
 
 
   def response_sources?
@@ -51,9 +46,6 @@ class InboxPolicy < ApplicationPolicy
     @account_user.administrator?
   end
 
-  def set_agent_bot?
-    @account_user.administrator?
-  end
 
   def avatar?
     @account_user.administrator?

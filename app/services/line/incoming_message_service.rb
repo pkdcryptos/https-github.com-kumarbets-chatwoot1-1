@@ -97,9 +97,7 @@ class Line::IncomingMessageService
     event['type'] == 'message' || event['type'] == 'sticker'
   end
 
-  def message_type_non_text?(type)
-    [Line::Bot::Event::MessageType::Video, Line::Bot::Event::MessageType::Audio, Line::Bot::Event::MessageType::Image].include?(type)
-  end
+
 
   def account
     @account ||= inbox.account

@@ -163,8 +163,7 @@ class Message < ApplicationRecord
   end
 
   def merge_sender_attributes(data)
-    data[:sender] = sender.push_event_data if sender && !sender.is_a?(AgentBot)
-    data[:sender] = sender.push_event_data(inbox) if sender.is_a?(AgentBot)
+    data[:sender] = sender.push_event_data if sender 
     data
   end
 
@@ -206,7 +205,6 @@ class Message < ApplicationRecord
     return false unless outgoing? && human_response? && !private?
     return false if conversation.first_reply_created_at.present?
     return false if conversation.messages.outgoing
-                                .where.not(sender_type: 'AgentBot')
                                 .where.not(private: true).count > 1
 
     true
@@ -332,9 +330,7 @@ class Message < ApplicationRecord
 
   def reopen_resolved_conversation
     # mark resolved bot conversation as pending to be reopened by bot processor service
-    if conversation.inbox.active_bot?
-      conversation.pending!
-    elsif conversation.inbox.api?
+    if  conversation.inbox.api?
       Current.executed_by = sender if reopened_by_contact?
       conversation.open!
     else

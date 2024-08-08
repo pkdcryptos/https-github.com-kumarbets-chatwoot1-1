@@ -95,26 +95,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "agent_bot_inboxes", force: :cascade do |t|
-    t.integer "inbox_id"
-    t.integer "agent_bot_id"
-    t.integer "status", default: 0
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "account_id"
-  end
 
-  create_table "agent_bots", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
-    t.string "outgoing_url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "account_id"
-    t.integer "bot_type", default: 0
-    t.jsonb "bot_config", default: {}
-    t.index ["account_id"], name: "index_agent_bots_on_account_id"
-  end
 
 
 

@@ -152,7 +152,6 @@ AllCops:
     - 'bin/**/*'
     - 'db/schema.rb'
     - 'public/**/*'
-    - 'config/initializers/bot.rb'
     - 'vendor/**/*'
     - 'node_modules/**/*'
     - 'lib/tasks/auto_annotate_models.rake'

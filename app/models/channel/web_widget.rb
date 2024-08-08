@@ -49,7 +49,6 @@ class Channel::WebWidget < ApplicationRecord
   has_flags 1 => :attachments,
             2 => :emoji_picker,
             3 => :end_conversation,
-            4 => :use_inbox_avatar_for_bot,
             :column => 'feature_flags',
             :check_for_column => false
 

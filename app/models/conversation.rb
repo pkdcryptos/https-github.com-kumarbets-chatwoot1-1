@@ -157,10 +157,7 @@ class Conversation < ApplicationRecord
     save
   end
 
-  def bot_handoff!
-    open!
-    dispatcher_dispatch(CONVERSATION_BOT_HANDOFF)
-  end
+
 
   def unread_messages
     agent_last_seen_at.present? ? messages.created_since(agent_last_seen_at) : messages
@@ -221,8 +218,6 @@ class Conversation < ApplicationRecord
 
 
 
-    # TODO: make this an inbox config instead of assuming bot conversations should start as pending
-    self.status = :pending if inbox.active_bot?
   end
 
   def notify_conversation_creation

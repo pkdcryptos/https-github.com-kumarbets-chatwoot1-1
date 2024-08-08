@@ -72,11 +72,7 @@ export default {
         return this.message.sender.available_name || this.message.sender.name;
       }
 
-      if (this.useInboxAvatarForBot) {
-        return this.channelConfig.websiteName;
-      }
-
-      return this.$t('UNREAD_VIEW.BOT');
+    
     },
     avatarUrl() {
       // eslint-disable-next-line
