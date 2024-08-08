@@ -67,8 +67,7 @@ class Inbox < ApplicationRecord
   has_many :conversations, dependent: :destroy_async
   has_many :messages, dependent: :destroy_async
 
-  has_many :webhooks, dependent: :destroy_async
-  has_many :hooks, dependent: :destroy_async, class_name: 'Integrations::Hook'
+
 
   enum sender_name_type: { friendly: 0, professional: 1 }
 
@@ -111,24 +110,12 @@ class Inbox < ApplicationRecord
 
   
 
-  def captain_enabled?
-    captain_hook = account.hooks.where(
-      app_id: %w[captain], status: 'enabled'
-    ).first
-
-    captain_hook.present? && captain_hook.settings['inbox_ids'].split(',').include?(id.to_s)
-  end
 
   def inbox_type
     channel.name
   end
 
-  def webhook_data
-    {
-      id: id,
-      name: name
-    }
-  end
+
 
 
 

@@ -144,20 +144,7 @@ class Contact < ApplicationRecord
     }
   end
 
-  def webhook_data
-    {
-      account: account.webhook_data,
-      additional_attributes: additional_attributes,
-      avatar: avatar_url,
-      custom_attributes: custom_attributes,
-      email: email,
-      id: id,
-      identifier: identifier,
-      name: name,
-      phone_number: phone_number,
-      thumbnail: avatar_url
-    }
-  end
+
 
   def self.resolved_contacts
     where("contacts.email <> '' OR contacts.phone_number <> '' OR contacts.identifier <> ''")

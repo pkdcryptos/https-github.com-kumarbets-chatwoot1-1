@@ -7,7 +7,7 @@ import ChatOptions from 'shared/components/ChatOptions.vue';
 import EmailInput from './template/EmailInput.vue';
 
 import darkModeMixin from 'widget/mixins/darkModeMixin.js';
-import IntegrationCard from './template/IntegrationCard.vue';
+
 
 export default {
   name: 'AgentMessageBubble',
@@ -17,7 +17,6 @@ export default {
     ChatOptions,
     EmailInput,
 
-    IntegrationCard,
   },
   mixins: [messageFormatterMixin, darkModeMixin],
   props: {
@@ -47,9 +46,7 @@ export default {
       return this.contentType === 'form';
     },
     
-    isIntegrations() {
-      return this.contentType === 'integrations';
-    },
+
   },
   methods: {
     onResponse(messageResponse) {
@@ -94,11 +91,7 @@ export default {
         :message-content-attributes="messageContentAttributes"
       />
 
-      <IntegrationCard
-        v-if="isIntegrations"
-        :message-id="messageId"
-        :meeting-data="messageContentAttributes.data"
-      />
+
     </div>
     <div v-if="isOptions">
       <ChatOptions

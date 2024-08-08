@@ -41,7 +41,6 @@ export default {
     UNTIL_CUSTOM_TIME: 'until_custom_time',
   },
   EXAMPLE_URL: 'https://example.com',
-  EXAMPLE_WEBHOOK_URL: 'https://example/api/webhook',
   INBOX_SORT_BY: {
     NEWEST: 'desc',
     OLDEST: 'asc',

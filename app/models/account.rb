@@ -45,7 +45,7 @@ class Account < ApplicationRecord
   has_many :custom_attribute_definitions, dependent: :destroy_async
   has_many :custom_filters, dependent: :destroy_async
   has_many :email_channels, dependent: :destroy_async, class_name: '::Channel::Email'
-  has_many :hooks, dependent: :destroy_async, class_name: 'Integrations::Hook'
+
   has_many :inboxes, dependent: :destroy_async
   has_many :labels, dependent: :destroy_async
   has_many :mentions, dependent: :destroy_async
@@ -56,7 +56,7 @@ class Account < ApplicationRecord
   has_many :teams, dependent: :destroy_async
   has_many :users, through: :account_users
   has_many :web_widgets, dependent: :destroy_async, class_name: '::Channel::WebWidget'
-  has_many :webhooks, dependent: :destroy_async
+
   has_many :working_hours, dependent: :destroy_async
 
 
@@ -86,12 +86,7 @@ class Account < ApplicationRecord
                              .map { |tagging| tagging.tag.name }
   end
 
-  def webhook_data
-    {
-      id: id,
-      name: name
-    }
-  end
+
 
   def inbound_email_domain
     domain.presence || GlobalConfig.get('MAILER_INBOUND_EMAIL_DOMAIN')['MAILER_INBOUND_EMAIL_DOMAIN'] || ENV.fetch('MAILER_INBOUND_EMAIL_DOMAIN',

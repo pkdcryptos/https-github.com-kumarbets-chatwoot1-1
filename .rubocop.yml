@@ -118,9 +118,7 @@ Metrics/AbcSize:
     - 'app/controllers/concerns/auth_helper.rb'
 Rails/UniqueValidationWithoutIndex:
   Exclude:
-    - 'app/models/webhook.rb'
     - 'app/models/contact.rb'
-    - 'app/models/integrations/hook.rb'
 Rails/ThreeStateBooleanColumn:
   Exclude:
     - 'db/migrate/20230503101201_create_sla_policies.rb'

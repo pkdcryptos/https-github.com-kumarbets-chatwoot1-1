@@ -160,25 +160,7 @@ class Message < ApplicationRecord
     data
   end
 
-  def webhook_data
-    data = {
-      account: account.webhook_data,
-      additional_attributes: additional_attributes,
-      content_attributes: content_attributes,
-      content_type: content_type,
-      content: content,
-      conversation: conversation.webhook_data,
-      created_at: created_at,
-      id: id,
-      inbox: inbox.webhook_data,
-      message_type: message_type,
-      private: private,
-      sender: sender.try(:webhook_data),
-      source_id: source_id
-    }
-    data[:attachments] = attachments.map(&:push_event_data) if attachments.present?
-    data
-  end
+ 
 
   def content
     # move this to a presenter
@@ -249,7 +231,6 @@ class Message < ApplicationRecord
     notify_via_mail
     set_conversation_activity
     dispatch_create_events
-    execute_message_template_hooks
     update_contact_activity
   end
 
@@ -320,9 +301,6 @@ class Message < ApplicationRecord
     incoming? && !private? && Current.user.class != sender.class && sender.instance_of?(Contact)
   end
 
-  def execute_message_template_hooks
-    ::MessageTemplates::HookExecutionService.new(message: self).perform
-  end
 
   def email_notifiable_webwidget?
     inbox.web_widget? && inbox.channel.continuity_via_email

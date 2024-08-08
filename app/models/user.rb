@@ -129,14 +129,7 @@ class User < ApplicationRecord
     }
   end
 
-  def webhook_data
-    {
-      id: id,
-      name: name,
-      email: email,
-      type: 'user'
-    }
-  end
+
 
   # https://github.com/lynndylanhurley/devise_token_auth/blob/6d7780ee0b9750687e7e2871b9a1c6368f2085a9/app/models/devise_token_auth/concerns/user.rb#L45
   # Since this method is overriden in devise_token_auth it breaks the email reconfirmation flow.

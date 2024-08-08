@@ -9,8 +9,4 @@ if Current.account_user&.administrator?
   json.button resource.action
 end
 
-json.hooks do
-  json.array! @current_account.hooks.where(app_id: resource.id) do |hook|
-    json.partial! 'api/v1/models/hook', formats: [:json], resource: hook
-  end
-end
+

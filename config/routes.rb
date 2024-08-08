@@ -168,38 +168,8 @@ Rails.application.routes.draw do
             resource :authorization, only: [:create]
           end
 
-          resources :webhooks, only: [:index, :create, :update, :destroy]
-          namespace :integrations do
-            resources :apps, only: [:index, :show]
-            resource :captain, controller: 'captain', only: [] do
-              collection do
-                get :sso_url
-              end
-            end
-            resources :hooks, only: [:show, :create, :update, :destroy] do
-              member do
-                post :process_event
-              end
-            end
-           
-            resource :dyte, controller: 'dyte', only: [] do
-              collection do
-                post :create_a_meeting
-                post :add_participant_to_meeting
-              end
-            end
-            resource :linear, controller: 'linear', only: [] do
-              collection do
-                get :teams
-                get :team_entities
-                post :create_issue
-                post :link_issue
-                post :unlink_issue
-                get :search_issue
-                get :linked_issues
-              end
-            end
-          end
+         
+        
           resources :working_hours, only: [:update]
 
 
@@ -209,9 +179,7 @@ Rails.application.routes.draw do
       # end of account scoped api routes
       # ----------------------------------
 
-      namespace :integrations do
-        resources :webhooks, only: [:create]
-      end
+     
 
       resource :profile, only: [:show, :update] do
         delete :avatar, on: :collection
@@ -247,13 +215,7 @@ Rails.application.routes.draw do
         end
         resources :inbox_members, only: [:index]
         resources :labels, only: [:create, :destroy]
-        namespace :integrations do
-          resource :dyte, controller: 'dyte', only: [] do
-            collection do
-              post :add_participant_to_meeting
-            end
-          end
-        end
+       
       end
     end
 
@@ -298,7 +260,7 @@ Rails.application.routes.draw do
         end
       end
 
-      post 'webhooks/stripe', to: 'webhooks/stripe#process_payload'
+      
     end
   end
 

@@ -379,18 +379,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
     t.index ["name"], name: "index_installation_configs_on_name", unique: true
   end
 
-  create_table "integrations_hooks", force: :cascade do |t|
-    t.integer "status", default: 1
-    t.integer "inbox_id"
-    t.integer "account_id"
-    t.string "app_id"
-    t.integer "hook_type", default: 0
-    t.string "reference_id"
-    t.string "access_token"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.jsonb "settings", default: {}
-  end
 
   create_table "labels", force: :cascade do |t|
     t.string "title"
@@ -573,16 +561,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
-  create_table "webhooks", force: :cascade do |t|
-    t.integer "account_id"
-    t.integer "inbox_id"
-    t.string "url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "webhook_type", default: 0
-    t.jsonb "subscriptions", default: ["conversation_status_changed", "conversation_updated", "conversation_created", "contact_created", "contact_updated", "message_created", "message_updated", "webwidget_triggered"]
-    t.index ["account_id", "url"], name: "index_webhooks_on_account_id_and_url", unique: true
-  end
+
 
   create_table "working_hours", force: :cascade do |t|
     t.bigint "inbox_id"

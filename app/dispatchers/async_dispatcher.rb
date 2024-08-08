@@ -10,10 +10,7 @@ class AsyncDispatcher < BaseDispatcher
 
   def listeners
     [
-      HookListener.instance,
-      InstallationWebhookListener.instance,
-      ParticipationListener.instance,
-      WebhookListener.instance
+       ParticipationListener.instance,
     ]
   end
 end

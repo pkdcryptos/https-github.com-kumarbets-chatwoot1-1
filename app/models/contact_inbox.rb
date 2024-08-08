@@ -40,16 +40,6 @@ class ContactInbox < ApplicationRecord
       .where(conversations: { contact_id: nil })
   }
 
-  def webhook_data
-    {
-      id: id,
-      contact: contact.try(:webhook_data),
-      inbox: inbox.webhook_data,
-      account: inbox.account.webhook_data,
-      current_conversation: current_conversation.try(:webhook_data),
-      source_id: source_id
-    }
-  end
 
   def current_conversation
     conversations.last

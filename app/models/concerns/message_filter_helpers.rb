@@ -2,10 +2,6 @@ module MessageFilterHelpers
   extend ActiveSupport::Concern
 
 
-  def webhook_sendable?
-    incoming? || outgoing? || template?
-  end
-
 
   def notifiable?
     incoming? || outgoing?

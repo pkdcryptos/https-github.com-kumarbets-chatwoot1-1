@@ -42,8 +42,6 @@ module Reauthorizable
     mailer = AdministratorNotifications::ChannelNotificationsMailer.with(account: account)
 
     case self.class.name
-    when 'Integrations::Hook'
-      process_integration_hook_reauthorization_emails(mailer)
     when 'Channel::Email'
       mailer.email_disconnect(inbox).deliver_later
     end
@@ -51,11 +49,7 @@ module Reauthorizable
     invalidate_inbox_cache 
   end
 
-  def process_integration_hook_reauthorization_emails(mailer)
-    if dialogflow?
-      mailer.dialogflow_disconnect.deliver_later
-    end
-  end
+
 
   # call this after you successfully Reauthorized the object in UI
   def reauthorized!
