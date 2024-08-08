@@ -130,16 +130,7 @@ class Inbox < ApplicationRecord
     }
   end
 
-  def callback_webhook_url
-    case channel_type
-   when 'Channel::Sms'
-      "#{ENV.fetch('FRONTEND_URL', nil)}/webhooks/sms/#{channel.phone_number.delete_prefix('+')}"
-    when 'Channel::Line'
-      "#{ENV.fetch('FRONTEND_URL', nil)}/webhooks/line/#{channel.line_channel_id}"
-    when 'Channel::Whatsapp'
-      "#{ENV.fetch('FRONTEND_URL', nil)}/webhooks/whatsapp/#{channel.phone_number}"
-    end
-  end
+
 
   def member_ids_with_assignment_capacity
     members.ids

@@ -27,12 +27,8 @@ export default {
     channelType() {
       return this.inbox.channel_type;
     },
-    whatsAppAPIProvider() {
-      return this.inbox.provider || '';
-    },
-    isAMicrosoftInbox() {
-      return this.isAnEmailChannel && this.inbox.provider === 'microsoft';
-    },
+
+
     isAGoogleInbox() {
       return this.isAnEmailChannel && this.inbox.provider === 'google';
     },
@@ -44,28 +40,12 @@ export default {
       return this.channelType === INBOX_TYPES.WEB;
     },
 
-    isALineChannel() {
-      return this.channelType === INBOX_TYPES.LINE;
-    },
+
     isAnEmailChannel() {
       return this.channelType === INBOX_TYPES.EMAIL;
     },
-    isATelegramChannel() {
-      return this.channelType === INBOX_TYPES.TELEGRAM;
-    },
 
-    isAWhatsAppCloudChannel() {
-      return (
-        this.channelType === INBOX_TYPES.WHATSAPP &&
-        this.whatsAppAPIProvider === 'whatsapp_cloud'
-      );
-    },
-    is360DialogWhatsAppChannel() {
-      return (
-        this.channelType === INBOX_TYPES.WHATSAPP &&
-        this.whatsAppAPIProvider === 'default'
-      );
-    },
+
     chatAdditionalAttributes() {
       const { additional_attributes: additionalAttributes } = this.chat || {};
       return additionalAttributes || {};
@@ -76,11 +56,7 @@ export default {
   
       return badgeKey || this.channelType;
     },
-    isAWhatsAppChannel() {
-      return (
-        this.channelType === INBOX_TYPES.WHATSAPP 
-      );
-    },
+ 
   },
   methods: {
     inboxHasFeature(feature) {

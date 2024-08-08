@@ -204,30 +204,6 @@ contacts:
           - message_type: outgoing
             sender: michael_scott@paperlayer.test
             content: Hi! Sorry to hear that. Can you please provide me with your username and email address so I can look into it for you?
-    - name: "Olin Canniffe"
-      email: "ocanniffe3@feedburner.test"
-      gender: 'male'
-      conversations:
-        - channel: Channel::Whatsapp
-          source_id: "123456723"
-          messages:
-          - message_type: incoming
-            content: Hi, I'm having trouble connecting to the internet.
-          - message_type: outgoing
-            sender: michael_scott@paperlayer.test
-            content: I'm sorry to hear that. Have you tried restarting your modem/router? If that doesn't work, please let me know and I can provide further assistance.
-    - name: "Viviene Corp"
-      email: "vcorp4@instagram.test"
-      gender: 'female'
-      conversations:
-        - channel: Channel::Sms
-          source_id: "+1234567"
-          messages:
-          - message_type: incoming
-            content: Hi, I'm having trouble with the mobile app. It keeps crashing.
-          - message_type: outgoing
-            sender: michael_scott@paperlayer.test
-            content: I'm sorry to hear that. Can you please try uninstalling and reinstalling the app and see if that helps? If not, please let me know and I can look into it further.
     - name: "Drake Pittway"
       email: "dpittway5@chron.test"
       gender: 'male'
@@ -250,30 +226,6 @@ contacts:
           - message_type: outgoing
             sender: michael_scott@paperlayer.test
             content: No problem! Can you please tell me the make and model of your device and what specifically you need help with?
-    - name: "Claus Jira"
-      email: "cjira8@comcast.net"
-      gender: 'male'
-      conversations:
-        - channel: Channel::Whatsapp
-          source_id: "12323432"
-          messages:
-          - message_type: incoming
-            content: Hi, I'm having trouble with my email. I can't seem to send or receive any messages.
-          - message_type: outgoing
-            sender: michael_scott@paperlayer.test
-            content: I'm sorry to hear that. Can you please tell me what email client you're using and if you're receiving any error messages?
-    - name: "Quent Dalliston"
-      email: "qdalliston9@zimbio.test"
-      gender: 'male'
-      conversations:
-        - channel: Channel::Whatsapp
-          source_id: "12342234324"
-          messages:
-          - message_type: incoming
-            content: Hi, I need some help resetting my password.
-          - message_type: outgoing
-            sender: michael_scott@paperlayer.test
-            content: Sure! Can you please provide me with your username or email address and I'll send you a password reset link?
     - name: "Benyamin Janeway"
       email: "bjanewayb@ustream.tv"
       gender: 'male'
@@ -320,21 +272,6 @@ contacts:
           messages:
             - message_type: incoming
               content: "Billing section is not working, it throws some error."
-    - name: "Elisabeth Derington"
-      email: "ederingtong@printfriendly.test"
-      gender: 'female'
-      conversations:
-        - channel: Channel::Whatsapp
-          priority: high
-          source_id: "1223423567"
-          labels:
-            - billing
-            - delivery
-            - ops-handover
-            - premium-customer
-          messages:
-            - message_type: incoming
-              content: "Hey \n I didn't get the product delivered, but it shows it is delivered to my address. Please check"
     - name: "Willy Castelot"
       email: "wcasteloth@exblog.jp"
       gender: 'male'

@@ -21,12 +21,7 @@ google:
   credentials: <%= ENV.fetch('GCS_CREDENTIALS', '') %>
   bucket: <%= ENV.fetch('GCS_BUCKET', '') %>
 
-# Use rails credentials:edit to set the Azure Storage secret (as azure_storage:storage_access_key)
-microsoft:
-  service: AzureStorage
-  storage_account_name: <%= ENV.fetch('AZURE_STORAGE_ACCOUNT_NAME', '') %>
-  storage_access_key: <%= ENV.fetch('AZURE_STORAGE_ACCESS_KEY', '') %>
-  container: <%= ENV.fetch('AZURE_STORAGE_CONTAINER', '') %>
+
 
 # s3 compatible service such as DigitalOcean Spaces, Minio.
 s3_compatible:
@@ -38,7 +33,3 @@ s3_compatible:
   endpoint: <%= ENV.fetch('STORAGE_ENDPOINT', '') %>
   force_path_style: <%= ENV.fetch('STORAGE_FORCE_PATH_STYLE', false) %>
 
-# mirror:
-#   service: Mirror
-#   primary: local
-#   mirrors: [ amazon, google, microsoft ]

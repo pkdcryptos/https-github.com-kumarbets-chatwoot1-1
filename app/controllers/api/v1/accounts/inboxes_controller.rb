@@ -123,10 +123,6 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
       'web_widget' => Channel::WebWidget,
       'api' => Channel::Api,
       'email' => Channel::Email,
-      'line' => Channel::Line,
-      'telegram' => Channel::Telegram,
-      'whatsapp' => Channel::Whatsapp,
-      'sms' => Channel::Sms
     }[permitted_params[:channel][:type]]
   end
 

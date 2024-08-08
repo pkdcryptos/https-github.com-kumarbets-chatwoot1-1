@@ -13,12 +13,8 @@ class ContactInboxBuilder
 
   def generate_source_id
     case @inbox.channel_type
-    when 'Channel::Whatsapp'
-      wa_source_id
     when 'Channel::Email'
       email_source_id
-    when 'Channel::Sms'
-      phone_source_id
     when 'Channel::Api', 'Channel::WebWidget'
       SecureRandom.uuid
     else

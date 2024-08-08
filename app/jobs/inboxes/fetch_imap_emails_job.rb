@@ -28,9 +28,7 @@ class Inboxes::FetchImapEmailsJob < MutexApplicationJob
   end
 
   def process_email_for_channel(channel, interval)
-    inbound_emails = if channel.microsoft?
-                       Imap::MicrosoftFetchEmailService.new(channel: channel, interval: interval).perform
-                     elsif channel.google?
+    inbound_emails = if channel.google?
                        Imap::GoogleFetchEmailService.new(channel: channel, interval: interval).perform
                      else
                        Imap::FetchEmailService.new(channel: channel, interval: interval).perform

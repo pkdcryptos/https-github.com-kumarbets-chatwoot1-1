@@ -370,14 +370,14 @@ Rails.application.routes.draw do
   # ----------------------------------------------------------------------
  
 
-  get 'microsoft/callback', to: 'microsoft/callbacks#show'
+
   get 'google/callback', to: 'google/callbacks#show'
 
   # ----------------------------------------------------------------------
   # Routes for external service verifications
   get 'apple-app-site-association' => 'apple_app#site_association'
   get '.well-known/assetlinks.json' => 'android_app#assetlinks'
-  get '.well-known/microsoft-identity-association.json' => 'microsoft#identity_association'
+
 
   # ----------------------------------------------------------------------
   # Internal Monitoring Routes

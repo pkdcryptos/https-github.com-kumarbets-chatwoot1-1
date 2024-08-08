@@ -10,10 +10,6 @@ class Contacts::ContactableInboxesService
 
   def get_contactable_inbox(inbox)
     case inbox.channel_type
-    when 'Channel::Whatsapp'
-      whatsapp_contactable_inbox(inbox)
-    when 'Channel::Sms'
-      sms_contactable_inbox(inbox)
     when 'Channel::Email'
       email_contactable_inbox(inbox)
     when 'Channel::Api'
@@ -45,18 +41,6 @@ class Contacts::ContactableInboxesService
     { source_id: @contact.email, inbox: inbox }
   end
 
-  def whatsapp_contactable_inbox(inbox)
-    return unless @contact.phone_number
-
-    # Remove the plus since thats the format 360 dialog uses
-    { source_id: @contact.phone_number.delete('+'), inbox: inbox }
-  end
-
-  def sms_contactable_inbox(inbox)
-    return unless @contact.phone_number
-
-    { source_id: @contact.phone_number, inbox: inbox }
-  end
 
 
 end

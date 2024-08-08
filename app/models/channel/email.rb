@@ -53,9 +53,6 @@ class Channel::Email < ApplicationRecord
     'Email'
   end
 
-  def microsoft?
-    provider == 'microsoft'
-  end
 
   def google?
     provider == 'google'

@@ -6,5 +6,4 @@ module RegexHelper
   # shouldn't start with a underscore or hyphen
   UNICODE_CHARACTER_NUMBER_HYPHEN_UNDERSCORE = Regexp.new('\A[\p{L}\p{N}]+[\p{L}\p{N}_-]+\Z')
   MENTION_REGEX = Regexp.new('\[(@[\w_. ]+)\]\(mention://(?:user|team)/\d+/(.*?)+\)')
-  WHATSAPP_CHANNEL_REGEX = Regexp.new('^\d{1,15}\z')
 end

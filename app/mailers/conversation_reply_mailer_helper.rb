@@ -84,7 +84,7 @@ module ConversationReplyMailerHelper
   end
 
   def email_oauth_enabled
-    @inbox.inbox_type == 'Email' && (@channel.microsoft? || @channel.google?)
+    @inbox.inbox_type == 'Email' && ( @channel.google?)
   end
 
   def email_from
