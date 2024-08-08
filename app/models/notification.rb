@@ -40,9 +40,6 @@ class Notification < ApplicationRecord
     assigned_conversation_new_message: 3,
     conversation_mention: 4,
     participating_conversation_new_message: 5,
-    sla_missed_first_response: 6,
-    sla_missed_next_response: 7,
-    sla_missed_resolution: 8
   }.freeze
 
   enum notification_type: NOTIFICATION_TYPES
@@ -97,9 +94,6 @@ class Notification < ApplicationRecord
       'assigned_conversation_new_message' => 'notifications.notification_title.assigned_conversation_new_message',
       'participating_conversation_new_message' => 'notifications.notification_title.assigned_conversation_new_message',
       'conversation_mention' => 'notifications.notification_title.conversation_mention',
-      'sla_missed_first_response' => 'notifications.notification_title.sla_missed_first_response',
-      'sla_missed_next_response' => 'notifications.notification_title.sla_missed_next_response',
-      'sla_missed_resolution' => 'notifications.notification_title.sla_missed_resolution'
     }
 
     i18n_key = notification_title_map[notification_type]
@@ -118,11 +112,11 @@ class Notification < ApplicationRecord
 
   def push_message_body
     case notification_type
-    when 'conversation_creation', 'sla_missed_first_response'
+    when 'conversation_creation'
       message_body(conversation.messages.first)
     when 'assigned_conversation_new_message', 'participating_conversation_new_message', 'conversation_mention'
       message_body(secondary_actor)
-    when 'conversation_assignment', 'sla_missed_next_response', 'sla_missed_resolution'
+    when 'conversation_assignment'
       message_body(conversation.messages.incoming.last)
     else
       ''

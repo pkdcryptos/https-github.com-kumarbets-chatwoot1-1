@@ -64,8 +64,6 @@ en:
         unique: should be unique in the category and portal
     dyte:
       invalid_message_type: "Invalid message type. Action not permitted"
-    slack:
-      invalid_channel_id: "Invalid slack channel. Please try again"
     inboxes:
       imap:
         socket_error: Please check the network connection, IMAP address and try again.
@@ -110,26 +108,6 @@ en:
       avg_customer_waiting_time: Avg customer waiting time
     conversation_traffic_csv:
       timezone: Timezone
-    sla_csv:
-      conversation_id: Conversation ID
-      sla_policy_breached: SLA Policy
-      assignee: Assignee
-      team: Team
-      inbox: Inbox
-      labels: Labels
-      conversation_link: Link to the Conversation
-      breached_events: Breached Events
-    default_group_by: day
-    csat:
-      headers:
-        contact_name: Contact Name
-        contact_email_address: Contact Email Address
-        contact_phone_number: Contact Phone Number
-        link_to_the_conversation: Link to the conversation
-        agent_name: Agent Name
-        rating: Rating
-        feedback: Feedback Comment
-        recorded_at: Recorded date
 
   notifications:
     notification_title:
@@ -137,9 +115,6 @@ en:
       conversation_assignment: "A conversation (#%{display_id}) has been assigned to you"
       assigned_conversation_new_message: "A new message is created in conversation (#%{display_id})"
       conversation_mention: "You have been mentioned in conversation (#%{display_id})"
-      sla_missed_first_response: "SLA target first response missed for conversation (#%{display_id})"
-      sla_missed_next_response: "SLA target next response missed for conversation (#%{display_id})"
-      sla_missed_resolution: "SLA target resolution missed for conversation (#%{display_id})"
     attachment: "Attachment"
     no_content: "No content"
   conversations:
@@ -173,9 +148,6 @@ en:
       labels:
         added: "%{user_name} added %{labels}"
         removed: "%{user_name} removed %{labels}"
-      sla:
-        added: "%{user_name} added SLA policy %{sla_name}"
-        removed: "%{user_name} removed SLA policy %{sla_name}"
       muted: "%{user_name} has muted the conversation"
       unmuted: "%{user_name} has unmuted the conversation"
     templates:
@@ -207,9 +179,6 @@ en:
       name: "Dyte"
       description: "Dyte is a product that integrates audio and video functionalities into your application. With this integration, your agents can start video/voice calls with your customers directly from Chatwoot."
       meeting_name: "%{agent_name} has started a meeting"
-    slack:
-      name: "Slack"
-      description: "Integrate Chatwoot with Slack to keep your team in sync. This integration allows you to receive notifications for new conversations and respond to them directly within Slack's interface."
     webhooks:
       name: "Webhooks"
       description: "Webhook events provide real-time updates about activities in your Chatwoot account. You can subscribe to your preferred events, and Chatwoot will send you HTTP callbacks with the updates."
@@ -263,15 +232,6 @@ en:
       title: Page not found
       description: We couldn't find the page you were looking for.
       back_to_home: Go to home page
-  slack_unfurl:
-    fields:
-     name: Name
-     email: Email
-     phone_number: Phone
-     company_name: Company
-     inbox_name: Inbox
-     inbox_type: Inbox Type
-    button: Open conversation
   time_units:
     days:
       one: "%{count} day"

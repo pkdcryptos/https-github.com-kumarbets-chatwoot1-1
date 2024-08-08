@@ -5,8 +5,6 @@ class HookJob < ApplicationJob
     return if hook.disabled?
 
     case hook.app_id
-    when 'slack'
-      process_slack_integration(hook, event_name, event_data)
     when 'dialogflow'
       process_dialogflow_integration(hook, event_name, event_data)
     when 'captain'
@@ -20,16 +18,6 @@ class HookJob < ApplicationJob
 
   private
 
-  def process_slack_integration(hook, event_name, event_data)
-    return unless ['message.created'].include?(event_name)
-
-    message = event_data[:message]
-    if message.attachments.blank?
-      ::SendOnSlackJob.perform_later(message, hook)
-    else
-      ::SendOnSlackJob.set(wait: 2.seconds).perform_later(message, hook)
-    end
-  end
 
   def process_dialogflow_integration(hook, event_name, event_data)
     return unless ['message.created', 'message.updated'].include?(event_name)

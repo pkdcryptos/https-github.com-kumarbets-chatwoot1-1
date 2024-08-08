@@ -26,18 +26,12 @@ class Integrations::App
   end
 
   def action
-    case params[:id]
-    when 'slack'
-      "#{params[:action]}&client_id=#{ENV.fetch('SLACK_CLIENT_ID', nil)}&redirect_uri=#{self.class.slack_integration_url}"
-    else
-      params[:action]
-    end
+    params[:action]
+    
   end
 
   def active?(account)
     case params[:id]
-    when 'slack'
-      ENV['SLACK_CLIENT_SECRET'].present?
     when 'linear'
       account.feature_enabled?('linear_integration')
     when 'captain'
@@ -62,9 +56,6 @@ class Integrations::App
     Current.account.hooks.where(app_id: id)
   end
 
-  def self.slack_integration_url
-    "#{ENV.fetch('FRONTEND_URL', nil)}/app/accounts/#{Current.account.id}/settings/integrations/slack"
-  end
 
   class << self
     def apps

@@ -39,9 +39,6 @@ class Integrations::Hook < ApplicationRecord
     @app ||= Integrations::App.find(id: app_id)
   end
 
-  def slack?
-    app_id == 'slack'
-  end
 
   def dialogflow?
     app_id == 'dialogflow'

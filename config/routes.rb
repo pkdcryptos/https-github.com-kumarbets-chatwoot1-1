@@ -24,7 +24,7 @@ Rails.application.routes.draw do
 
     resource :widget, only: [:show]
    
-    resource :slack_uploads, only: [:show]
+   
   end
 
   get '/api', to: 'api#index'
@@ -71,8 +71,7 @@ Rails.application.routes.draw do
           resources :macros, only: [:index, :create, :show, :update, :destroy] do
             post :execute, on: :member
           end
-          resources :sla_policies, only: [:index, :create, :show, :update, :destroy]
-          resources :dashboard_apps, only: [:index, :show, :create, :update, :destroy]
+         resources :dashboard_apps, only: [:index, :show, :create, :update, :destroy]
           namespace :channels do
             resource :twilio_channel, only: [:create]
           end
@@ -138,12 +137,7 @@ Rails.application.routes.draw do
             end
           end
          
-          resources :applied_slas, only: [:index] do
-            collection do
-              get :metrics
-              get :download
-            end
-          end
+          
           resources :custom_attribute_definitions, only: [:index, :show, :create, :update, :destroy]
           resources :custom_filters, only: [:index, :show, :create, :update, :destroy]
           resources :inboxes, only: [:index, :show, :create, :update, :destroy] do
@@ -217,11 +211,7 @@ Rails.application.routes.draw do
                 post :process_event
               end
             end
-            resource :slack, only: [:create, :update, :destroy], controller: 'slack' do
-              member do
-                get :list_all_channels
-              end
-            end
+           
             resource :dyte, controller: 'dyte', only: [] do
               collection do
                 post :create_a_meeting

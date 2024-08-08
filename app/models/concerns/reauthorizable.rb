@@ -59,9 +59,7 @@ module Reauthorizable
   end
 
   def process_integration_hook_reauthorization_emails(mailer)
-    if slack?
-      mailer.slack_disconnect.deliver_later
-    elsif dialogflow?
+    if dialogflow?
       mailer.dialogflow_disconnect.deliver_later
     end
   end

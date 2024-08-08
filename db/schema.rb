@@ -115,18 +115,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
     t.index ["account_id"], name: "index_agent_bots_on_account_id"
   end
 
-  create_table "applied_slas", force: :cascade do |t|
-    t.bigint "account_id", null: false
-    t.bigint "sla_policy_id", null: false
-    t.bigint "conversation_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "sla_status", default: 0
-    t.index ["account_id", "sla_policy_id", "conversation_id"], name: "index_applied_slas_on_account_sla_policy_conversation", unique: true
-    t.index ["account_id"], name: "index_applied_slas_on_account_id"
-    t.index ["conversation_id"], name: "index_applied_slas_on_conversation_id"
-    t.index ["sla_policy_id"], name: "index_applied_slas_on_sla_policy_id"
-  end
 
   create_table "articles", force: :cascade do |t|
     t.integer "account_id", null: false
@@ -845,35 +833,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
     t.index ["user_id"], name: "index_reporting_events_on_user_id"
   end
 
-  create_table "sla_events", force: :cascade do |t|
-    t.bigint "applied_sla_id", null: false
-    t.bigint "conversation_id", null: false
-    t.bigint "account_id", null: false
-    t.bigint "sla_policy_id", null: false
-    t.bigint "inbox_id", null: false
-    t.integer "event_type"
-    t.jsonb "meta", default: {}
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["account_id"], name: "index_sla_events_on_account_id"
-    t.index ["applied_sla_id"], name: "index_sla_events_on_applied_sla_id"
-    t.index ["conversation_id"], name: "index_sla_events_on_conversation_id"
-    t.index ["inbox_id"], name: "index_sla_events_on_inbox_id"
-    t.index ["sla_policy_id"], name: "index_sla_events_on_sla_policy_id"
-  end
 
-  create_table "sla_policies", force: :cascade do |t|
-    t.string "name", null: false
-    t.float "first_response_time_threshold"
-    t.float "next_response_time_threshold"
-    t.boolean "only_during_business_hours", default: false
-    t.bigint "account_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "description"
-    t.float "resolution_time_threshold"
-    t.index ["account_id"], name: "index_sla_policies_on_account_id"
-  end
+
 
   create_table "taggings", id: :serial, force: :cascade do |t|
     t.integer "tag_id"
