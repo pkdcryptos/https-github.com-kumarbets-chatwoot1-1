@@ -53,18 +53,14 @@ Rails.application.routes.draw do
             end
           end
           resources :assignable_agents, only: [:index]
-          resource :audit_logs, only: [:show]
+          
           resources :callbacks, only: [] do
             collection do
               post :reauthorize_page
             end
           end
-         resources :automation_rules, only: [:index, :create, :show, :update, :destroy] do
-            post :clone
-          end
-          resources :macros, only: [:index, :create, :show, :update, :destroy] do
-            post :execute, on: :member
-          end
+ 
+        
          resources :dashboard_apps, only: [:index, :show, :create, :update, :destroy]
          
           resources :conversations, only: [:index, :create, :show, :update] do

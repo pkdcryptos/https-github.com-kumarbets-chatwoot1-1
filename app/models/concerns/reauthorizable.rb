@@ -46,12 +46,9 @@ module Reauthorizable
       process_integration_hook_reauthorization_emails(mailer)
     when 'Channel::Email'
       mailer.email_disconnect(inbox).deliver_later
-    when 'AutomationRule'
-      update!(active: false)
-      mailer.automation_rule_disabled(self).deliver_later
     end
 
-    invalidate_inbox_cache unless instance_of?(::AutomationRule)
+    invalidate_inbox_cache 
   end
 
   def process_integration_hook_reauthorization_emails(mailer)
@@ -65,7 +62,7 @@ module Reauthorizable
     ::Redis::Alfred.delete(authorization_error_count_key)
     ::Redis::Alfred.delete(reauthorization_required_key)
 
-    invalidate_inbox_cache unless instance_of?(::AutomationRule)
+    invalidate_inbox_cache 
   end
 
   private

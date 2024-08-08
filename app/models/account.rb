@@ -37,8 +37,7 @@ class Account < ApplicationRecord
   has_many :account_users, dependent: :destroy_async
   has_many :api_channels, dependent: :destroy_async, class_name: '::Channel::Api'
 
-  has_many :automation_rules, dependent: :destroy_async
-  has_many :macros, dependent: :destroy_async
+
 
 
   has_many :contacts, dependent: :destroy_async
@@ -138,4 +137,4 @@ end
 
 Account.prepend_mod_with('Account')
 Account.include_mod_with('Concerns::Account')
-Account.include_mod_with('Audit::Account')
+

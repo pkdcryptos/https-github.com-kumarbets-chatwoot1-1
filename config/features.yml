@@ -14,8 +14,6 @@
 - name: help_center
   enabled: true
   help_url: https://chwt.app/hc/help-center
-- name: macros
-  enabled: true
 - name: agent_management
   enabled: true
 - name: team_management
@@ -29,8 +27,6 @@
 - name: custom_attributes
   enabled: true
   help_url: https://chwt.app/hc/custom-attributes
-- name: automations
-  enabled: true
 - name: integrations
   enabled: true
   help_url: https://chwt.app/hc/integrations
@@ -51,9 +47,6 @@
   enabled: false
 - name: custom_reply_domain
   enabled: false
-- name: audit_logs
-  enabled: false
-  premium: true
 - name: message_reply_to
   enabled: false
   help_url: https://chwt.app/hc/reply-to

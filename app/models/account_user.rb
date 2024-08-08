@@ -72,4 +72,4 @@ class AccountUser < ApplicationRecord
   end
 end
 
-AccountUser.include_mod_with('Audit::AccountUser')
+

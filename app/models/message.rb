@@ -182,14 +182,14 @@ class Message < ApplicationRecord
 
   def content
     # move this to a presenter
-    return self[:content] if !input_csat? || inbox.web_widget?
+    return self[:content] if inbox.web_widget?
 
   end
 
   def email_notifiable_message?
     return false if private?
     return false if %w[outgoing template].exclude?(message_type)
-    return false if template? && %w[input_csat text].exclude?(content_type)
+    return false if template? 
 
     true
   end

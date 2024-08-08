@@ -10,7 +10,6 @@ class AsyncDispatcher < BaseDispatcher
 
   def listeners
     [
-      AutomationRuleListener.instance,
       HookListener.instance,
       InstallationWebhookListener.instance,
       ParticipationListener.instance,

@@ -1,7 +1,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import Spinner from 'shared/components/Spinner.vue';
-import { CSAT_RATINGS } from 'shared/constants/messages';
+
 import FluentIcon from 'shared/components/FluentIcon/Index.vue';
 import darkModeMixin from 'widget/mixins/darkModeMixin';
 import { getContrastingTextColor } from '@chatwoot/utils';
@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       email: '',
-      ratings: CSAT_RATINGS,
+      ratings: '',
       selectedRating: null,
       isUpdating: false,
       feedback: '',
@@ -34,11 +34,10 @@ export default {
   computed: {
     ...mapGetters({ widgetColor: 'appConfig/getWidgetColor' }),
     isRatingSubmitted() {
-      return this.messageContentAttributes?.csat_survey_response?.rating;
+      return false;
     },
     isFeedbackSubmitted() {
-      return this.messageContentAttributes?.csat_survey_response
-        ?.feedback_message;
+      return false;
     },
     isButtonDisabled() {
       return !(this.selectedRating && this.feedback);
@@ -51,9 +50,7 @@ export default {
       return getContrastingTextColor(this.widgetColor);
     },
     title() {
-      return this.isRatingSubmitted
-        ? this.$t('CSAT.SUBMITTED_TITLE')
-        : this.$t('CSAT.TITLE');
+      return '';
     },
   },
 
@@ -125,7 +122,7 @@ export default {
         v-model="feedback"
         class="form-input"
         :class="inputColor"
-        :placeholder="$t('CSAT.PLACEHOLDER')"
+        :placeholder=""
         @keydown.enter="onSubmit"
       />
       <button

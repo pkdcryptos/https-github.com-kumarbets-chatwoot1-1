@@ -16,7 +16,7 @@ module MessageFilterHelpers
   end
 
   def email_reply_summarizable?
-    incoming? || outgoing? || input_csat?
+    incoming? || outgoing? 
   end
 
 

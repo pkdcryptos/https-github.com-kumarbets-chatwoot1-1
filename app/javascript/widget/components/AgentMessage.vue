@@ -89,9 +89,7 @@ export default {
     },
     hasRecordedResponse() {
       return (
-        this.messageContentAttributes.submitted_email ||
-        (this.messageContentAttributes.submitted_values &&
-          !['form', 'input_csat'].includes(this.contentType))
+        this.messageContentAttributes.submitted_email 
       );
     },
     responseMessage() {

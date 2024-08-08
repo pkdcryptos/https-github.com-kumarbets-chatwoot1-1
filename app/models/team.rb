@@ -52,4 +52,4 @@ class Team < ApplicationRecord
   end
 end
 
-Team.include_mod_with('Audit::Team')
+

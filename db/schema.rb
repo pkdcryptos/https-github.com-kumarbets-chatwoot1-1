@@ -114,40 +114,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
     t.index ["message_id"], name: "index_attachments_on_message_id"
   end
 
-  create_table "audits", force: :cascade do |t|
-    t.bigint "auditable_id"
-    t.string "auditable_type"
-    t.bigint "associated_id"
-    t.string "associated_type"
-    t.bigint "user_id"
-    t.string "user_type"
-    t.string "username"
-    t.string "action"
-    t.jsonb "audited_changes"
-    t.integer "version", default: 0
-    t.string "comment"
-    t.string "remote_address"
-    t.string "request_uuid"
-    t.datetime "created_at", precision: nil
-    t.index ["associated_type", "associated_id"], name: "associated_index"
-    t.index ["auditable_type", "auditable_id", "version"], name: "auditable_index"
-    t.index ["created_at"], name: "index_audits_on_created_at"
-    t.index ["request_uuid"], name: "index_audits_on_request_uuid"
-    t.index ["user_id", "user_type"], name: "user_index"
-  end
-
-  create_table "automation_rules", force: :cascade do |t|
-    t.bigint "account_id", null: false
-    t.string "name", null: false
-    t.text "description"
-    t.string "event_name", null: false
-    t.jsonb "conditions", default: "{}", null: false
-    t.jsonb "actions", default: "{}", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "active", default: true, null: false
-    t.index ["account_id"], name: "index_automation_rules_on_account_id"
-  end
 
 
 
@@ -316,22 +282,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
     t.index ["waiting_since"], name: "index_conversations_on_waiting_since"
   end
 
-  create_table "csat_survey_responses", force: :cascade do |t|
-    t.bigint "account_id", null: false
-    t.bigint "conversation_id", null: false
-    t.bigint "message_id", null: false
-    t.integer "rating", null: false
-    t.text "feedback_message"
-    t.bigint "contact_id", null: false
-    t.bigint "assigned_agent_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["account_id"], name: "index_csat_survey_responses_on_account_id"
-    t.index ["assigned_agent_id"], name: "index_csat_survey_responses_on_assigned_agent_id"
-    t.index ["contact_id"], name: "index_csat_survey_responses_on_contact_id"
-    t.index ["conversation_id"], name: "index_csat_survey_responses_on_conversation_id"
-    t.index ["message_id"], name: "index_csat_survey_responses_on_message_id", unique: true
-  end
+
 
   create_table "custom_attribute_definitions", force: :cascade do |t|
     t.string "attribute_display_name"
@@ -475,17 +426,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
     t.index ["title", "account_id"], name: "index_labels_on_title_and_account_id", unique: true
   end
 
-  create_table "macros", force: :cascade do |t|
-    t.bigint "account_id", null: false
-    t.string "name", null: false
-    t.integer "visibility", default: 0
-    t.bigint "created_by_id"
-    t.bigint "updated_by_id"
-    t.jsonb "actions", default: {}, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["account_id"], name: "index_macros_on_account_id"
-  end
+
 
   create_table "mentions", force: :cascade do |t|
     t.bigint "user_id", null: false

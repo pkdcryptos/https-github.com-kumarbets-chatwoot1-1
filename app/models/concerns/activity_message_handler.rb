@@ -28,7 +28,6 @@ module ActivityMessageHandler
   def handle_priority_change(user_name)
     return unless saved_change_to_priority?
 
-    priority_change_activity(user_name)
   end
 
   def handle_label_change(user_name)
@@ -39,11 +38,8 @@ module ActivityMessageHandler
 
 
   def status_change_activity(user_name)
-    content = if Current.executed_by.present?
-                automation_status_change_activity_content
-              else
-                user_status_change_activity_content(user_name)
-              end
+    content = user_status_change_activity_content(user_name)
+              
 
     ::Conversations::ActivityMessageJob.perform_later(self, activity_message_params(content)) if content
   end
@@ -58,14 +54,7 @@ module ActivityMessageHandler
     end
   end
 
-  def automation_status_change_activity_content
-    if Current.executed_by.instance_of?(AutomationRule)
-      I18n.t("conversations.activity.status.#{status}", user_name: 'Automation System')
-    elsif Current.executed_by.instance_of?(Contact)
-      Current.executed_by = nil
-      I18n.t('conversations.activity.status.system_auto_open')
-    end
-  end
+
 
   def activity_message_params(content)
     { account_id: account_id, inbox_id: inbox_id, message_type: :activity, content: content }

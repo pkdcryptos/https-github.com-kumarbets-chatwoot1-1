@@ -20,4 +20,4 @@ class TeamMember < ApplicationRecord
   validates :user_id, uniqueness: { scope: :team_id }
 end
 
-TeamMember.include_mod_with('Audit::TeamMember')
+

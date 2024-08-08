@@ -23,7 +23,7 @@ class ConversationReplyMailer < ApplicationMailer
     return if conversation_already_viewed?
 
     @messages = @conversation.messages.chat.where(message_type: [:outgoing, :template]).where('id >= ?', last_queued_id)
-    @messages = @messages.reject { |m| m.template? && !m.input_csat? }
+    @messages = @messages.reject { |m| m.template?  }
     return false if @messages.count.zero?
 
     prepare_mail(false)

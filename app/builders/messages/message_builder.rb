@@ -9,7 +9,6 @@ class Messages::MessageBuilder
     @user = user
     @message_type = params[:message_type] || 'outgoing'
     @attachments = params[:attachments]
-    @automation_rule = content_attributes&.dig(:automation_rule_id)
     return unless params.instance_of?(ActionController::Parameters)
 
     @in_reply_to = content_attributes&.dig(:in_reply_to)
@@ -120,10 +119,6 @@ class Messages::MessageBuilder
     @params[:external_created_at].present? ? { external_created_at: @params[:external_created_at] } : {}
   end
 
-  def automation_rule_id
-    @automation_rule.present? ? { content_attributes: { automation_rule_id: @automation_rule } } : {}
-  end
-
 
   def template_params
     @params[:template_params].present? ? { additional_attributes: { template_params: JSON.parse(@params[:template_params].to_json) } } : {}
@@ -147,6 +142,6 @@ class Messages::MessageBuilder
       in_reply_to: @in_reply_to,
       echo_id: @params[:echo_id],
       source_id: @params[:source_id]
-    }.merge(external_created_at).merge(automation_rule_id).merge(template_params)
+    }.merge(external_created_at).merge(template_params)
   end
 end
