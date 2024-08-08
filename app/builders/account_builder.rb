@@ -74,6 +74,7 @@ class AccountBuilder
     @user = User.new(email: @email,
                      password: user_password,
                      password_confirmation: user_password,
+                     name: user_full_name)
 
     @user.confirm if @confirmed
     @user.save!
