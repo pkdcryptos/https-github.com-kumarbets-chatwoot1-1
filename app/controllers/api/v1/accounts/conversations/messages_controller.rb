@@ -22,7 +22,7 @@ class Api::V1::Accounts::Conversations::MessagesController < Api::V1::Accounts::
     return if message.blank?
 
     message.update!(status: :sent, content_attributes: {})
-    ::SendReplyJob.perform_later(message.id)
+
   rescue StandardError => e
     render_could_not_create_error(e.message)
   end

@@ -249,7 +249,6 @@ class Message < ApplicationRecord
     notify_via_mail
     set_conversation_activity
     dispatch_create_events
-    send_reply
     execute_message_template_hooks
     update_contact_activity
   end
@@ -297,11 +296,6 @@ class Message < ApplicationRecord
                                                                             previous_changes: previous_changes)
   end
 
-  def send_reply
-    # FIXME: Giving it few seconds for the attachment to be uploaded to the service
-    # active storage attaches the file only after commit
-    attachments.blank? ? ::SendReplyJob.perform_later(id) : ::SendReplyJob.set(wait: 2.seconds).perform_later(id)
-  end
 
   def reopen_conversation
     return if conversation.muted?
