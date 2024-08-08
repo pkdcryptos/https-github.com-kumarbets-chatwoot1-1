@@ -515,11 +515,6 @@ Rails.application.routes.draw do
     post 'onboarding', to: 'onboarding#create'
   end
 
-  # ---------------------------------------------------------------------
-  # Routes for swagger docs
-  get '/swagger/*path', to: 'swagger#respond'
-  get '/swagger', to: 'swagger#respond'
-
   # ----------------------------------------------------------------------
   # Routes for testing
   resources :widget_tests, only: [:index] unless Rails.env.production?
