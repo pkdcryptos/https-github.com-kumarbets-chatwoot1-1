@@ -1,5 +1,4 @@
 json.availability_status resource.availability_status
-json.email resource.email
 json.id resource.id
 json.name resource.name
 json.phone_number resource.phone_number

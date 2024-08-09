@@ -41,43 +41,9 @@ end
 
 
 
-if resource.email?
-  ## Email Channel Attributes
-  json.forward_to_email resource.channel.try(:forward_to_email)
-  json.email resource.channel.try(:email)
-
-  ## IMAP
-  if Current.account_user&.administrator?
-    json.imap_login resource.channel.try(:imap_login)
-    json.imap_password resource.channel.try(:imap_password)
-    json.imap_address resource.channel.try(:imap_address)
-    json.imap_port resource.channel.try(:imap_port)
-    json.imap_enabled resource.channel.try(:imap_enabled)
-    json.imap_enable_ssl resource.channel.try(:imap_enable_ssl)
 
 
-  end
 
-  ## SMTP
-  if Current.account_user&.administrator?
-    json.smtp_login resource.channel.try(:smtp_login)
-    json.smtp_password resource.channel.try(:smtp_password)
-    json.smtp_address resource.channel.try(:smtp_address)
-    json.smtp_port resource.channel.try(:smtp_port)
-    json.smtp_enabled resource.channel.try(:smtp_enabled)
-    json.smtp_domain resource.channel.try(:smtp_domain)
-    json.smtp_enable_ssl_tls resource.channel.try(:smtp_enable_ssl_tls)
-    json.smtp_enable_starttls_auto resource.channel.try(:smtp_enable_starttls_auto)
-    json.smtp_openssl_verify_mode resource.channel.try(:smtp_openssl_verify_mode)
-    json.smtp_authentication resource.channel.try(:smtp_authentication)
-  end
-end
-
-## API Channel Attributes
-if resource.api?
-  json.hmac_token resource.channel.try(:hmac_token) if Current.account_user&.administrator?
-  json.inbox_identifier resource.channel.try(:identifier)
-end
 
 json.provider resource.channel.try(:provider)
 

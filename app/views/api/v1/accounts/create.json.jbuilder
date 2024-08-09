@@ -4,7 +4,6 @@ json.data do
   json.uid resource.uid
   json.name resource.name
   json.display_name resource.display_name
-  json.email resource.email
   json.account_id @account.id
   json.created_at resource.created_at
   json.pubsub_token resource.pubsub_token

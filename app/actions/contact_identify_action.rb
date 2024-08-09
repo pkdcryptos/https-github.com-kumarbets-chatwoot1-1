@@ -13,7 +13,6 @@ class ContactIdentifyAction
 
     ActiveRecord::Base.transaction do
       merge_if_existing_identified_contact
-      merge_if_existing_email_contact
       merge_if_existing_phone_number_contact
     end
     @contact
