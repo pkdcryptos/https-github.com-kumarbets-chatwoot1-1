@@ -50,12 +50,7 @@ class BulkActionsJob < ApplicationJob
     conversation.snoozed_until = parse_date_time(@params[:snoozed_until].to_s) if @params[:snoozed_until]
   end
 
-  def remove_labels(conversation)
-    return unless @params[:labels] && @params[:labels][:remove]
 
-    labels = conversation.label_list - @params[:labels][:remove]
-    conversation.update(label_list: labels)
-  end
 
   def records_to_updated(ids)
     current_model = @params[:type].camelcase

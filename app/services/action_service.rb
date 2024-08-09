@@ -42,12 +42,7 @@ class ActionService
     @conversation.update!(assignee_id: @agent.id) if @agent.present?
   end
 
-  def remove_label(labels)
-    return if labels.empty?
 
-    labels = @conversation.label_list - labels
-    @conversation.update(label_list: labels)
-  end
 
   def assign_team(team_ids = [])
     # FIXME: The explicit checks for zero or nil (string) is bad. Move

@@ -50,7 +50,7 @@
 #
 
 class Conversation < ApplicationRecord
-  include Labelable
+
   include AssignmentHandler
   include AutoAssignmentHandler
   include ActivityMessageHandler
@@ -156,9 +156,7 @@ class Conversation < ApplicationRecord
     unread_messages.where(account_id: account_id).incoming.last(10)
   end
 
-  def cached_label_list_array
-    (cached_label_list || '').split(',').map(&:strip)
-  end
+
 
   def notifiable_assignee_change?
     return false unless saved_change_to_assignee_id?
@@ -184,7 +182,6 @@ class Conversation < ApplicationRecord
 
   def execute_after_update_commit_callbacks
     notify_status_change
-    create_activity
     notify_conversation_updation
   end
 
@@ -218,7 +215,7 @@ class Conversation < ApplicationRecord
   end
 
   def list_of_keys
-    %w[team_id assignee_id status snoozed_until custom_attributes label_list waiting_since first_reply_created_at
+    %w[team_id assignee_id status snoozed_until custom_attributes  waiting_since first_reply_created_at
        priority]
   end
 
@@ -266,17 +263,6 @@ class Conversation < ApplicationRecord
     return true if previous_changes.key?(:id) || saved_change_to_status?
   end
 
-  def create_label_change(user_name)
-    return unless user_name
-
-    previous_labels, current_labels = previous_changes[:label_list]
-    return unless (previous_labels.is_a? Array) && (current_labels.is_a? Array)
-
-    dispatcher_dispatch(CONVERSATION_UPDATED, previous_changes)
-
-    create_label_added(user_name, current_labels - previous_labels)
-    create_label_removed(user_name, previous_labels - current_labels)
-  end
 
   def validate_referer_url
     return unless additional_attributes['referer']

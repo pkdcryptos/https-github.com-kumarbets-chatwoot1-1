@@ -2,18 +2,11 @@ module ActivityMessageHandler
   extend ActiveSupport::Concern
 
   include PriorityActivityMessageHandler
-  include LabelActivityMessageHandler
+
   include TeamActivityMessageHandler
 
   private
 
-  def create_activity
-    user_name = determine_user_name
-
-    handle_status_change(user_name)
-    handle_priority_change(user_name)
-    handle_label_change(user_name)
-  end
 
   def determine_user_name
     Current.user&.name
@@ -30,11 +23,7 @@ module ActivityMessageHandler
 
   end
 
-  def handle_label_change(user_name)
-    return unless saved_change_to_label_list?
 
-    create_label_change(activity_message_owner(user_name))
-  end
 
 
   def status_change_activity(user_name)
