@@ -57,8 +57,6 @@ class Api::V1::Widget::BaseController < ApplicationController
       browser_name: browser.name,
       browser_version: browser.full_version,
       device_name: browser.device.name,
-      platform_name: browser.platform.name,
-      platform_version: browser.platform.version
     }
   end
 

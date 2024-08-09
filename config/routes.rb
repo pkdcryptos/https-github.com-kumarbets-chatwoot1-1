@@ -259,29 +259,6 @@ Rails.application.routes.draw do
     end
   end
 
-  # ----------------------------------------------------------------------
-  # Routes for platform APIs
-  namespace :platform, defaults: { format: 'json' } do
-    namespace :api do
-      namespace :v1 do
-        resources :users, only: [:create, :show, :update, :destroy] do
-          member do
-            get :login
-          end
-        end
-        resources :agent_bots, only: [:index, :create, :show, :update, :destroy] do
-          delete :avatar, on: :member
-        end
-        resources :accounts, only: [:create, :show, :update, :destroy] do
-          resources :account_users, only: [:index, :create] do
-            collection do
-              delete :destroy
-            end
-          end
-        end
-      end
-    end
-  end
 
   # ----------------------------------------------------------------------
   # Routes for inbox APIs Exposed to contacts
@@ -364,7 +341,7 @@ Rails.application.routes.draw do
       resources :agent_bots, only: [:index, :new, :create, :show, :edit, :update] do
         delete :avatar, on: :member, action: :destroy_avatar
       end
-      resources :platform_apps, only: [:index, :new, :create, :show, :edit, :update]
+
       resource :instance_status, only: [:show]
 
       resource :settings, only: [:show] do

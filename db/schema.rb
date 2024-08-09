@@ -123,33 +123,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
     t.index ["identifier"], name: "index_channel_api_on_identifier", unique: true
   end
 
-  create_table "channel_email", force: :cascade do |t|
-    t.integer "account_id", null: false
-    t.string "email", null: false
-    t.string "forward_to_email", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "imap_enabled", default: false
-    t.string "imap_address", default: ""
-    t.integer "imap_port", default: 0
-    t.string "imap_login", default: ""
-    t.string "imap_password", default: ""
-    t.boolean "imap_enable_ssl", default: true
-    t.boolean "smtp_enabled", default: false
-    t.string "smtp_address", default: ""
-    t.integer "smtp_port", default: 0
-    t.string "smtp_login", default: ""
-    t.string "smtp_password", default: ""
-    t.string "smtp_domain", default: ""
-    t.boolean "smtp_enable_starttls_auto", default: true
-    t.string "smtp_authentication", default: "login"
-    t.string "smtp_openssl_verify_mode", default: "none"
-    t.boolean "smtp_enable_ssl_tls", default: false
-    t.jsonb "provider_config", default: {}
-    t.string "provider"
-    t.index ["email"], name: "index_channel_email_on_email", unique: true
-    t.index ["forward_to_email"], name: "index_channel_email_on_forward_to_email", unique: true
-  end
 
 
 
@@ -360,30 +333,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
     t.index ["sender_type", "sender_id"], name: "index_messages_on_sender_type_and_sender_id"
     t.index ["source_id"], name: "index_messages_on_source_id"
   end
-
-
-
-
-
-
-  create_table "platform_app_permissibles", force: :cascade do |t|
-    t.bigint "platform_app_id", null: false
-    t.string "permissible_type", null: false
-    t.bigint "permissible_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["permissible_type", "permissible_id"], name: "index_platform_app_permissibles_on_permissibles"
-    t.index ["platform_app_id", "permissible_id", "permissible_type"], name: "unique_permissibles_index", unique: true
-    t.index ["platform_app_id"], name: "index_platform_app_permissibles_on_platform_app_id"
-  end
-
-  create_table "platform_apps", force: :cascade do |t|
-    t.string "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-
 
 
 
