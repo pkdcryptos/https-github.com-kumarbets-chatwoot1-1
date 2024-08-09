@@ -1,7 +1,5 @@
 export const INBOX_TYPES = {
   WEB: 'Channel::WebWidget',
-  API: 'Channel::Api',
-  EMAIL: 'Channel::Email',
 };
 
 export const INBOX_FEATURES = {

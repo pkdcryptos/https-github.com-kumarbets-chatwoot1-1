@@ -10,10 +10,6 @@ class Contacts::ContactableInboxesService
 
   def get_contactable_inbox(inbox)
     case inbox.channel_type
-    when 'Channel::Email'
-      email_contactable_inbox(inbox)
-    when 'Channel::Api'
-      api_contactable_inbox(inbox)
     when 'Channel::WebWidget'
       website_contactable_inbox(inbox)
     end

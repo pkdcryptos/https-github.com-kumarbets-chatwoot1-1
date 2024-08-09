@@ -18,8 +18,6 @@ class Seeders::InboxSeeder
 
   def perform!
     seed_website_inbox
-    seed_email_inbox
-    seed_api_inbox
   end
 
   def seed_website_inbox
@@ -29,11 +27,7 @@ class Seeders::InboxSeeder
 
 
 
-  def seed_email_inbox
-    channel = Channel::Email.create!(account: @account, email: "test#{SecureRandom.hex}@#{@company_data['domain']}",
-                                     forward_to_email: "test_fwd#{SecureRandom.hex}@#{@company_data['domain']}")
-    Inbox.create!(channel: channel, account: @account, name: "#{@company_data['name']} Email")
-  end
+
 
   def seed_api_inbox
     channel = Channel::Api.create!(account: @account)

@@ -121,8 +121,6 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
   def channel_type_from_params
     {
       'web_widget' => Channel::WebWidget,
-      'api' => Channel::Api,
-      'email' => Channel::Email,
     }[permitted_params[:channel][:type]]
   end
 

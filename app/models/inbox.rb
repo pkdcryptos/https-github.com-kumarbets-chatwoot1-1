@@ -93,14 +93,7 @@ class Inbox < ApplicationRecord
     channel_type == 'Channel::WebWidget'
   end
 
-  def api?
-    channel_type == 'Channel::Api'
-  end
-
-  def email?
-    channel_type == 'Channel::Email'
-  end
-
+  
 
 
 
@@ -146,7 +139,7 @@ class Inbox < ApplicationRecord
   end
 
   def check_channel_type?
-    ['Channel::Email', 'Channel::Api', 'Channel::WebWidget'].include?(channel_type)
+    [ 'Channel::WebWidget'].include?(channel_type)
   end
 end
 

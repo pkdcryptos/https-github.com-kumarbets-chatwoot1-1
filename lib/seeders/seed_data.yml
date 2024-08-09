@@ -237,31 +237,6 @@ contacts:
           - message_type: outgoing
             sender: michael_scott@paperlayer.test
             content: Sure thing! What specific feature are you interested in learning more about?
-    - name: "Cordell Dalinder"
-      email: "cdalinderc@msn.test"
-      gender: 'male'
-      conversations:
-        - channel: Channel::Email
-          source_id: "cdalinderc@msn.test"
-          messages:
-          - message_type: incoming
-            content: Hi, I need help setting up my new printer.
-          - message_type: outgoing
-            sender: michael_scott@paperlayer.test
-            content: No problem! Can you please provide me with the make and model of your printer and what type of device you'll be connecting it to?
-    - name: "Merrile Petruk"
-      email: "mpetrukd@wunderground.test"
-      gender: 'female'
-      conversations:
-        - channel: Channel::Email
-          source_id: "mpetrukd@wunderground.test"
-          priority: urgent
-          messages:
-          - message_type: incoming
-            content: Hi, I'm having trouble accessing a file that I shared with someone.
-          - message_type: outgoing
-            sender: michael_scott@paperlayer.test
-            content: I'm sorry to hear that. Can you please tell me which file you're having trouble accessing and who you shared it with? I'll do my best to help you regain access.
     - name: "Olia Olenchenko"
       email: "oolenchenkof@bluehost.test"
       gender: 'female'
@@ -298,24 +273,4 @@ contacts:
           messages:
             - message_type: incoming
               content: "Hey, \n My card is not working on your website. Please help"
-    - name: "Candice Matherson"
-      email: "cmathersonj@va.test"
-      gender: 'female'
-      conversations:
-        - channel: Channel::Email
-          priority: urgent
-          source_id: "cmathersonj@va.test"
-          assignee: michael_scott@paperlayer.test
-          labels:
-            - billing
-            - lead
-          messages:
-            - message_type: incoming
-              content: "Hey, \n I'm looking for some help to figure out if it is the right product for me."
-            - message_type: outgoing
-              sender: michael_scott@paperlayer.test
-              content: Welcome to PaperLayer. Our Team will be getting back you shortly.
-            - message_type: outgoing
-              sender: michael_scott@paperlayer.test
-              content: How may i help you ?
-              sender: michael_scott@paperlayer.test
+    

@@ -13,9 +13,7 @@ class ContactInboxBuilder
 
   def generate_source_id
     case @inbox.channel_type
-    when 'Channel::Email'
-      email_source_id
-    when 'Channel::Api', 'Channel::WebWidget'
+    when  'Channel::WebWidget'
       SecureRandom.uuid
     else
       raise "Unsupported operation for this channel: #{@inbox.channel_type}"
