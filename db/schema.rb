@@ -110,20 +110,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
 
 
 
-  create_table "channel_api", force: :cascade do |t|
-    t.integer "account_id", null: false
-    t.string "webhook_url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "identifier"
-    t.string "hmac_token"
-    t.boolean "hmac_mandatory", default: false
-    t.jsonb "additional_attributes", default: {}
-    t.index ["hmac_token"], name: "index_channel_api_on_hmac_token", unique: true
-    t.index ["identifier"], name: "index_channel_api_on_identifier", unique: true
-  end
-
-
 
 
 
