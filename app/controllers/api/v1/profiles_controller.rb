@@ -10,8 +10,6 @@ class Api::V1::ProfilesController < Api::BaseController
       @user.update!(password_params.except(:current_password))
     end
 
-    @user.assign_attributes(profile_params)
-    @user.custom_attributes.merge!(custom_attributes_params)
     @user.save!
   end
 
@@ -64,9 +62,7 @@ class Api::V1::ProfilesController < Api::BaseController
     )
   end
 
-  def custom_attributes_params
-    params.require(:profile).permit(:phone_number)
-  end
+
 
   def password_params
     params.require(:profile).permit(

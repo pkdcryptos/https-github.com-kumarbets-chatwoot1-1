@@ -62,11 +62,9 @@ class Conversation < ApplicationRecord
   validates :account_id, presence: true
   validates :inbox_id, presence: true
   validates :contact_id, presence: true
-  before_validation :validate_additional_attributes
-  validates :additional_attributes, jsonb_attributes_length: true
-  validates :custom_attributes, jsonb_attributes_length: true
+
   validates :uuid, uniqueness: true
-  validate :validate_referer_url
+
 
   enum status: { open: 0, resolved: 1, pending: 2, snoozed: 3 }
   enum priority: { low: 0, medium: 1, high: 2, urgent: 3 }
@@ -118,7 +116,7 @@ class Conversation < ApplicationRecord
    
     return true unless channel&.messaging_window_enabled?
 
-    messaging_window = inbox.api? ? channel.additional_attributes['agent_reply_time_window'].to_i : 24
+    messaging_window =  24
     last_message_in_messaging_window?(messaging_window)
   end
 
@@ -193,9 +191,6 @@ class Conversation < ApplicationRecord
     self.waiting_since = created_at
   end
 
-  def validate_additional_attributes
-    self.additional_attributes = {} unless additional_attributes.is_a?(Hash)
-  end
 
   def determine_conversation_status
     self.status = :resolved and return if contact.blocked?
@@ -215,14 +210,13 @@ class Conversation < ApplicationRecord
   end
 
   def list_of_keys
-    %w[team_id assignee_id status snoozed_until custom_attributes  waiting_since first_reply_created_at
+    %w[team_id assignee_id status snoozed_until   waiting_since first_reply_created_at
        priority]
   end
 
   def allowed_keys?
     (
-      previous_changes.keys.intersect?(list_of_keys) ||
-      (previous_changes['additional_attributes'].present? && previous_changes['additional_attributes'][1].keys.intersect?(%w[conversation_language]))
+      previous_changes.keys.intersect?(list_of_keys) 
     )
   end
 
@@ -264,11 +258,6 @@ class Conversation < ApplicationRecord
   end
 
 
-  def validate_referer_url
-    return unless additional_attributes['referer']
-
-    self['additional_attributes']['referer'] = nil unless url_valid?(additional_attributes['referer'])
-  end
 
   # creating db triggers
   trigger.before(:insert).for_each(:row) do

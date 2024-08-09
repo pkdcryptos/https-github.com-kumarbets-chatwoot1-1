@@ -47,7 +47,7 @@ class WidgetsController < ActionController::Base
   def build_contact
     return if @contact.present?
 
-    @contact_inbox, @token = build_contact_inbox_with_token(@web_widget, additional_attributes)
+    @contact_inbox, @token = build_contact_inbox_with_token(@web_widget, {})
     @contact = @contact_inbox.contact
   end
 
@@ -57,13 +57,7 @@ class WidgetsController < ActionController::Base
 
   def ensure_location_is_supported; end
 
-  def additional_attributes
-    if @web_widget.inbox.account.feature_enabled?('ip_lookup')
-      { created_at_ip: request.remote_ip }
-    else
-      {}
-    end
-  end
+ 
 
   def permitted_params
     params.permit(:website_token, :cw_conversation)

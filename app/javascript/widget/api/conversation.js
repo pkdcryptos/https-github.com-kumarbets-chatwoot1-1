@@ -49,23 +49,6 @@ const toggleStatus = async () => {
   );
 };
 
-const setCustomAttributes = async customAttributes => {
-  return API.post(
-    `/api/v1/widget/conversations/set_custom_attributes${window.location.search}`,
-    {
-      custom_attributes: customAttributes,
-    }
-  );
-};
-
-const deleteCustomAttribute = async customAttribute => {
-  return API.post(
-    `/api/v1/widget/conversations/destroy_custom_attributes${window.location.search}`,
-    {
-      custom_attribute: [customAttribute],
-    }
-  );
-};
 
 export {
   createConversationAPI,
@@ -77,6 +60,4 @@ export {
   setUserLastSeenAt,
   sendEmailTranscript,
   toggleStatus,
-  setCustomAttributes,
-  deleteCustomAttribute,
 };

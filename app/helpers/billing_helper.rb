@@ -7,8 +7,7 @@ module BillingHelper
 
     # Return false if not plans are configured, so that no checks are enforced
     return false if default_plan.blank?
-
-    account.custom_attributes['plan_name'].nil? || account.custom_attributes['plan_name'] == default_plan['name']
+return true
   end
 
   def conversations_this_month(account)

@@ -98,30 +98,8 @@ export default {
               : this.findFieldType(field.type),
         }));
     },
-    conversationCustomAttributes() {
-      let conversationAttributes = {};
-      this.enabledPreChatFields.forEach(field => {
-        if (field.field_type === 'conversation_attribute') {
-          conversationAttributes = {
-            ...conversationAttributes,
-            [field.name]: this.getValue(field),
-          };
-        }
-      });
-      return conversationAttributes;
-    },
-    contactCustomAttributes() {
-      let contactAttributes = {};
-      this.enabledPreChatFields.forEach(field => {
-        if (field.field_type === 'contact_attribute') {
-          contactAttributes = {
-            ...contactAttributes,
-            [field.name]: this.getValue(field),
-          };
-        }
-      });
-      return contactAttributes;
-    },
+   
+  
     inputStyles() {
       return `mt-1 border rounded w-full py-2 px-3 text-slate-700 outline-none`;
     },
@@ -241,8 +219,6 @@ export default {
         emailAddress,
         message,
 
-        conversationCustomAttributes: this.conversationCustomAttributes,
-        contactCustomAttributes: this.contactCustomAttributes,
       });
     },
   },

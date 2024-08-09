@@ -13,7 +13,7 @@ class Api::V1::Accounts::ContactsController < Api::V1::Accounts::BaseController
 
   before_action :check_authorization
   before_action :set_current_page, only: [:index, :active, :search, :filter]
-  before_action :fetch_contact, only: [:show, :update, :destroy, :avatar, :contactable_inboxes, :destroy_custom_attributes]
+  before_action :fetch_contact, only: [:show, :update, :destroy, :avatar, :contactable_inboxes]
   before_action :set_include_contact_inboxes, only: [:index, :search, :filter]
 
   def index
@@ -26,7 +26,7 @@ class Api::V1::Accounts::ContactsController < Api::V1::Accounts::BaseController
 
     contacts = resolved_contacts.where(
       'name ILIKE :search OR email ILIKE :search OR phone_number ILIKE :search OR contacts.identifier LIKE :search
-        OR contacts.additional_attributes->>\'company_name\' ILIKE :search',
+        ',
       search: "%#{params[:q].strip}%"
     )
     @contacts_count = contacts.count
@@ -62,11 +62,7 @@ class Api::V1::Accounts::ContactsController < Api::V1::Accounts::BaseController
     @contactable_inboxes = @all_contactable_inboxes.select { |contactable_inbox| policy(contactable_inbox[:inbox]).show? }
   end
 
-  # TODO : refactor this method into dedicated contacts/custom_attributes controller class and routes
-  def destroy_custom_attributes
-    @contact.custom_attributes = @contact.custom_attributes.excluding(params[:custom_attributes])
-    @contact.save!
-  end
+ 
 
   def create
     ActiveRecord::Base.transaction do
@@ -138,19 +134,12 @@ class Api::V1::Accounts::ContactsController < Api::V1::Accounts::BaseController
   end
 
   def permitted_params
-    params.permit(:name, :identifier, :email, :phone_number, :avatar, :blocked, :avatar_url, additional_attributes: {}, custom_attributes: {})
+    params.permit(:name, :identifier, :email, :phone_number, :avatar, :blocked, :avatar_url)
   end
 
-  def contact_custom_attributes
-    return @contact.custom_attributes.merge(permitted_params[:custom_attributes]) if permitted_params[:custom_attributes]
 
-    @contact.custom_attributes
-  end
 
-  def contact_update_params
-    # we want the merged custom attributes not the original one
-    permitted_params.except(:custom_attributes, :avatar_url).merge({ custom_attributes: contact_custom_attributes })
-  end
+  
 
   def set_include_contact_inboxes
     @include_contact_inboxes = if params[:include_contact_inboxes].present?

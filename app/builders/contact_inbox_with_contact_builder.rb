@@ -20,7 +20,6 @@ class ContactInboxWithContactBuilder
     ActiveRecord::Base.transaction(requires_new: true) do
       build_contact_with_contact_inbox
     end
-    update_contact_avatar(@contact) unless @contact.avatar.attached?
     @contact_inbox
   end
 
@@ -44,9 +43,7 @@ class ContactInboxWithContactBuilder
     ).perform
   end
 
-  def update_contact_avatar(contact)
-    ::Avatar::AvatarFromUrlJob.perform_later(contact, contact_attributes[:avatar_url]) if contact_attributes[:avatar_url]
-  end
+
 
   def create_contact
     account.contacts.create!(
@@ -54,8 +51,6 @@ class ContactInboxWithContactBuilder
       phone_number: contact_attributes[:phone_number],
       email: contact_attributes[:email],
       identifier: contact_attributes[:identifier],
-      additional_attributes: contact_attributes[:additional_attributes],
-      custom_attributes: contact_attributes[:custom_attributes]
     )
   end
 

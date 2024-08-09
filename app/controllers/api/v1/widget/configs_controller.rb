@@ -22,7 +22,7 @@ class Api::V1::Widget::ConfigsController < Api::V1::Widget::BaseController
   def build_contact
     return if @contact.present?
 
-    @contact_inbox = @web_widget.create_contact_inbox(additional_attributes)
+    @contact_inbox = @web_widget.create_contact_inbox({})
     @contact = @contact_inbox.contact
   end
 
@@ -31,11 +31,5 @@ class Api::V1::Widget::ConfigsController < Api::V1::Widget::BaseController
     @token = ::Widget::TokenService.new(payload: payload).generate_token
   end
 
-  def additional_attributes
-    if @web_widget.inbox.account.feature_enabled?('ip_lookup')
-      { created_at_ip: request.remote_ip }
-    else
-      {}
-    end
-  end
+ 
 end

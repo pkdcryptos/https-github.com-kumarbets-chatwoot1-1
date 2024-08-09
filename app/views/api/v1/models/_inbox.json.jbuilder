@@ -77,7 +77,6 @@ end
 if resource.api?
   json.hmac_token resource.channel.try(:hmac_token) if Current.account_user&.administrator?
   json.inbox_identifier resource.channel.try(:identifier)
-  json.additional_attributes resource.channel.try(:additional_attributes)
 end
 
 json.provider resource.channel.try(:provider)

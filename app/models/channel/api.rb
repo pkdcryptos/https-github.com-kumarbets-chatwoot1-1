@@ -34,14 +34,13 @@ class Channel::Api < ApplicationRecord
   end
 
   def messaging_window_enabled?
-    additional_attributes.present? && additional_attributes['agent_reply_time_window'].present?
+true
   end
 
   private
 
   def ensure_valid_agent_reply_time_window
-    return if additional_attributes['agent_reply_time_window'].blank?
-    return if additional_attributes['agent_reply_time_window'].to_i.positive?
+ return
 
     errors.add(:agent_reply_time_window, 'agent_reply_time_window must be greater than 0')
   end

@@ -123,51 +123,9 @@ const runSDK = ({ baseUrl, websiteToken }) => {
       });
     },
 
-    setCustomAttributes(customAttributes = {}) {
-      if (!customAttributes || !Object.keys(customAttributes).length) {
-        throw new Error('Custom attributes should have atleast one key');
-      } else {
-        IFrameHelper.sendMessage('set-custom-attributes', { customAttributes });
-      }
-    },
 
-    deleteCustomAttribute(customAttribute = '') {
-      if (!customAttribute) {
-        throw new Error('Custom attribute is required');
-      } else {
-        IFrameHelper.sendMessage('delete-custom-attribute', {
-          customAttribute,
-        });
-      }
-    },
 
-    setConversationCustomAttributes(customAttributes = {}) {
-      if (!customAttributes || !Object.keys(customAttributes).length) {
-        throw new Error('Custom attributes should have atleast one key');
-      } else {
-        IFrameHelper.sendMessage('set-conversation-custom-attributes', {
-          customAttributes,
-        });
-      }
-    },
 
-    deleteConversationCustomAttribute(customAttribute = '') {
-      if (!customAttribute) {
-        throw new Error('Custom attribute is required');
-      } else {
-        IFrameHelper.sendMessage('delete-conversation-custom-attribute', {
-          customAttribute,
-        });
-      }
-    },
-
-    setLabel(label = '') {
-      IFrameHelper.sendMessage('set-label', { label });
-    },
-
-    removeLabel(label = '') {
-      IFrameHelper.sendMessage('remove-label', { label });
-    },
 
     setLocale(localeToBeUsed = 'en') {
       IFrameHelper.sendMessage('set-locale', { locale: localeToBeUsed });

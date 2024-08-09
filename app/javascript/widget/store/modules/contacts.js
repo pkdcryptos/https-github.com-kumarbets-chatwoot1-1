@@ -54,7 +54,6 @@ export const actions = {
         city,
         country_code,
         description,
-        custom_attributes,
         social_profiles,
       } = userObject;
       const user = {
@@ -63,14 +62,7 @@ export const actions = {
         avatar_url,
         identifier_hash: identifierHash,
         phone_number,
-        additional_attributes: {
-          company_name,
-          city,
-          description,
-          country_code,
-          social_profiles,
-        },
-        custom_attributes,
+        additional_attributes: {},
       };
       const {
         data: { widget_auth_token: widgetAuthToken },
@@ -87,20 +79,7 @@ export const actions = {
       sendMessage({ event: 'error', errorType: SET_USER_ERROR, data });
     }
   },
-  setCustomAttributes: async (_, customAttributes = {}) => {
-    try {
-      await ContactsAPI.setCustomAttributes(customAttributes);
-    } catch (error) {
-      // Ignore error
-    }
-  },
-  deleteCustomAttribute: async (_, customAttribute) => {
-    try {
-      await ContactsAPI.deleteCustomAttribute(customAttribute);
-    } catch (error) {
-      // Ignore error
-    }
-  },
+ 
 };
 
 export const mutations = {

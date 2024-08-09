@@ -24,12 +24,7 @@ class Api::V1::Widget::ContactsController < Api::V1::Widget::BaseController
     identify_contact(contact)
   end
 
-  # TODO : clean up this with proper routes delete contacts/custom_attributes
-  def destroy_custom_attributes
-    @contact.custom_attributes = @contact.custom_attributes.excluding(params[:custom_attributes])
-    @contact.save!
-    render json: @contact
-  end
+
 
   private
 
@@ -56,7 +51,7 @@ class Api::V1::Widget::ContactsController < Api::V1::Widget::BaseController
     return false if params[:identifier_hash].blank? && !@web_widget.hmac_mandatory
 
     # Taking an extra caution that the hmac is triggered whenever identifier is present
-    return false if params[:custom_attributes].present? && params[:identifier].blank?
+    return false if  params[:identifier].blank?
 
     true
   end
@@ -70,7 +65,6 @@ class Api::V1::Widget::ContactsController < Api::V1::Widget::BaseController
   end
 
   def permitted_params
-    params.permit(:website_token, :identifier, :identifier_hash, :email, :name, :avatar_url, :phone_number, custom_attributes: {},
-                                                                                                            additional_attributes: {})
+    params.permit(:website_token, :identifier, :identifier_hash, :email, :name, :avatar_url, :phone_number)
   end
 end

@@ -15,14 +15,5 @@ export default {
       ...userObject,
     });
   },
-  setCustomAttributes(customAttributes = {}) {
-    return API.patch(buildUrl('widget/contact'), {
-      custom_attributes: customAttributes,
-    });
-  },
-  deleteCustomAttribute(customAttribute) {
-    return API.post(buildUrl('widget/contact/destroy_custom_attributes'), {
-      custom_attributes: [customAttribute],
-    });
-  },
+ 
 };

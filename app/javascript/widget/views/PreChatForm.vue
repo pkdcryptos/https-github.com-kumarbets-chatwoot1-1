@@ -22,8 +22,6 @@ export default {
       emailAddress,
       message,
       phoneNumber,
-      contactCustomAttributes,
-      conversationCustomAttributes,
     }) {
       
         this.$store.dispatch('conversation/createConversation', {
@@ -31,15 +29,9 @@ export default {
           emailAddress: emailAddress,
           message: message,
           phoneNumber: phoneNumber,
-          customAttributes: conversationCustomAttributes,
         });
       
-      if (!isEmptyObject(contactCustomAttributes)) {
-        this.$store.dispatch(
-          'contacts/setCustomAttributes',
-          contactCustomAttributes
-        );
-      }
+ 
     },
   },
 };

@@ -67,9 +67,7 @@ class Message < ApplicationRecord
   validates :inbox_id, presence: true
   validates :conversation_id, presence: true
   validates_with ContentAttributeValidator
-  validates_with JsonSchemaValidator,
-                 schema: TEMPLATE_PARAMS_SCHEMA,
-                 attribute_resolver: ->(record) { record.additional_attributes }
+
 
   validates :content_type, presence: true
   validates :content, length: { maximum: 150_000 }
@@ -231,12 +229,8 @@ class Message < ApplicationRecord
     notify_via_mail
     set_conversation_activity
     dispatch_create_events
-    update_contact_activity
   end
 
-  def update_contact_activity
-    sender.update(last_activity_at: DateTime.now) if sender.is_a?(Contact)
-  end
 
   def update_waiting_since
     if human_response? && !private && conversation.waiting_since.present?

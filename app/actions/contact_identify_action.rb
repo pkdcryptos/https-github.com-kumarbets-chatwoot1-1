@@ -15,7 +15,6 @@ class ContactIdentifyAction
       merge_if_existing_identified_contact
       merge_if_existing_email_contact
       merge_if_existing_phone_number_contact
-      update_contact
     end
     @contact
   end
@@ -96,16 +95,6 @@ class ContactIdentifyAction
     true
   end
 
-  def update_contact
-    @contact.attributes = params.slice(*@attributes_to_update).reject do |_k, v|
-      v.blank?
-    end.merge({ custom_attributes: custom_attributes, additional_attributes: additional_attributes })
-    # blank identifier or email will throw unique index error
-    # TODO: replace reject { |_k, v| v.blank? } with compact_blank when rails is upgraded
-    @contact.discard_invalid_attrs if discard_invalid_attrs
-    @contact.save!
-    Avatar::AvatarFromUrlJob.perform_later(@contact, params[:avatar_url]) if params[:avatar_url].present? && !@contact.avatar.attached?
-  end
 
   def merge_contact(base_contact, merge_contact)
     return base_contact if base_contact.id == merge_contact.id
@@ -117,15 +106,7 @@ class ContactIdentifyAction
     ).perform
   end
 
-  def custom_attributes
-    return @contact.custom_attributes if params[:custom_attributes].blank?
 
-    (@contact.custom_attributes || {}).deep_merge(params[:custom_attributes].stringify_keys)
-  end
 
-  def additional_attributes
-    return @contact.additional_attributes if params[:additional_attributes].blank?
 
-    (@contact.additional_attributes || {}).deep_merge(params[:additional_attributes].stringify_keys)
-  end
 end

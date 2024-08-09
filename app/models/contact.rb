@@ -81,36 +81,6 @@ class Contact < ApplicationRecord
       )
     )
   }
-  scope :order_on_company_name, lambda { |direction|
-    order(
-      Arel::Nodes::SqlLiteral.new(
-        sanitize_sql_for_order(
-          "\"contacts\".\"additional_attributes\"->>'company_name' #{direction}
-          NULLS LAST"
-        )
-      )
-    )
-  }
-  scope :order_on_city, lambda { |direction|
-    order(
-      Arel::Nodes::SqlLiteral.new(
-        sanitize_sql_for_order(
-          "\"contacts\".\"additional_attributes\"->>'city' #{direction}
-          NULLS LAST"
-        )
-      )
-    )
-  }
-  scope :order_on_country_name, lambda { |direction|
-    order(
-      Arel::Nodes::SqlLiteral.new(
-        sanitize_sql_for_order(
-          "\"contacts\".\"additional_attributes\"->>'country' #{direction}
-          NULLS LAST"
-        )
-      )
-    )
-  }
 
   scope :order_on_name, lambda { |direction|
     order(
@@ -132,8 +102,7 @@ class Contact < ApplicationRecord
 
   def push_event_data
     {
-      additional_attributes: additional_attributes,
-      custom_attributes: custom_attributes,
+ 
       email: email,
       id: id,
       identifier: identifier,
@@ -187,11 +156,6 @@ class Contact < ApplicationRecord
   def prepare_email_attribute
     # So that the db unique constraint won't throw error when email is ''
     self.email = email.present? ? email.downcase : nil
-  end
-
-  def prepare_jsonb_attributes
-    self.additional_attributes = {} if additional_attributes.blank?
-    self.custom_attributes = {} if custom_attributes.blank?
   end
 
   def sync_contact_attributes

@@ -90,7 +90,6 @@ Rails.application.routes.draw do
               post :toggle_typing_status
               post :update_last_seen
               post :unread
-              post :custom_attributes
               get :attachments
             end
           end
@@ -113,7 +112,6 @@ Rails.application.routes.draw do
             end
             member do
               get :contactable_inboxes
-              post :destroy_custom_attributes
               delete :avatar
             end
             scope module: :contacts do
@@ -124,9 +122,7 @@ Rails.application.routes.draw do
           end
          
           
-          resources :custom_attribute_definitions, only: [:index, :show, :create, :update, :destroy]
-          resources :custom_filters, only: [:index, :show, :create, :update, :destroy]
-          resources :inboxes, only: [:index, :show, :create, :update, :destroy] do
+         resources :inboxes, only: [:index, :show, :create, :update, :destroy] do
             get :assignable_agents, on: :member
             get :response_sources, on: :member
             get :agent_bot, on: :member

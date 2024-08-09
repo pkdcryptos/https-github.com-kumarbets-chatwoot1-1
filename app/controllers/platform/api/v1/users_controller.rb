@@ -34,22 +34,15 @@ class Platform::Api::V1::UsersController < PlatformController
 
   private
 
-  def user_custom_attributes
-    return @resource.custom_attributes.merge(user_params[:custom_attributes]) if user_params[:custom_attributes]
 
-    @resource.custom_attributes
-  end
 
-  def user_update_params
-    # we want the merged custom attributes not the original one
-    user_params.except(:custom_attributes).merge({ custom_attributes: user_custom_attributes })
-  end
+ 
 
   def set_resource
     @resource = User.find(params[:id])
   end
 
   def user_params
-    params.permit(:name, :display_name, :email, :password, custom_attributes: {})
+    params.permit(:name, :display_name, :email, :password)
   end
 end

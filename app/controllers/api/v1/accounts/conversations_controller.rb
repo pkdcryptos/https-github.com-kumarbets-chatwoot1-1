@@ -103,10 +103,7 @@ class Api::V1::Accounts::ConversationsController < Api::V1::Accounts::BaseContro
     update_last_seen_on_conversation(last_seen_at, true)
   end
 
-  def custom_attributes
-    @conversation.custom_attributes = params.permit(custom_attributes: {})[:custom_attributes]
-    @conversation.save!
-  end
+
 
   private
 

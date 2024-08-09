@@ -36,7 +36,7 @@ class Api::V2::AccountsController < Api::BaseController
 
   def account_attributes
     {
-      custom_attributes: @account.custom_attributes.merge({ 'onboarding_step' => 'profile_update' })
+
     }
   end
 

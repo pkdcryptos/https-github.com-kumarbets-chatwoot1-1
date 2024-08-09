@@ -46,11 +46,6 @@ export default {
     },
 
 
-    chatAdditionalAttributes() {
-      const { additional_attributes: additionalAttributes } = this.chat || {};
-      return additionalAttributes || {};
-    },
-
     inboxBadge() {
       let badgeKey = '';
   
