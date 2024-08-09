@@ -102,8 +102,6 @@ module Api::V1::InboxesHelper
   def account_channels_method
     {
       'web_widget' => Current.account.web_widgets,
-      'api' => Current.account.api_channels,
-      'email' => Current.account.email_channels,
     }[permitted_params[:channel][:type]]
   end
 

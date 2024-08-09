@@ -43,7 +43,7 @@ class Account < ApplicationRecord
   has_many :contacts, dependent: :destroy_async
   has_many :conversations, dependent: :destroy_async
 
-  has_many :email_channels, dependent: :destroy_async, class_name: '::Channel::Email'
+
 
   has_many :inboxes, dependent: :destroy_async
   has_many :labels, dependent: :destroy_async
