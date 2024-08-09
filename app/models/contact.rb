@@ -57,7 +57,6 @@ class Contact < ApplicationRecord
   has_many :inboxes, through: :contact_inboxes
   has_many :messages, as: :sender, dependent: :destroy_async
 
-  before_validation :prepare_contact_attributes
   after_create_commit :dispatch_create_event, :ip_lookup
   after_update_commit :dispatch_update_event
   after_destroy_commit :dispatch_destroy_event
@@ -133,7 +132,6 @@ class Contact < ApplicationRecord
   def ip_lookup
     return unless account.feature_enabled?('ip_lookup')
 
-    ContactIpLookupJob.perform_later(self)
   end
 
   def phone_number_format
@@ -148,10 +146,7 @@ class Contact < ApplicationRecord
     self.email = email_was unless email.match(Devise.email_regexp)
   end
 
-  def prepare_contact_attributes
-    prepare_email_attribute
-    prepare_jsonb_attributes
-  end
+
 
   def prepare_email_attribute
     # So that the db unique constraint won't throw error when email is ''
