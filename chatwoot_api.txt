@@ -1,0 +1,47 @@
+1. create account
+
+curl --location --request POST 'http://66.94.113.42:3000/api/v1/accounts' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+   "email": "user1@test.com",
+   "account_name": "Test",
+   "user_full_name": "user1",
+   "password": "Password1!"
+}'
+
+"access_token":"ogQCpzxSyCvYeVPh4wnKvaQZ"
+"pubsub_token":"iqApVwSkhZZGk1ZSMn9WZxko",
+"role":"administrator",
+account_id: 5
+
+2. Update user confirmation from database.
+
+3. Create another user like above:
+
+curl --location --request POST 'http://66.94.113.42:3000/api/v1/accounts' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+   "email": "user2@test.com",
+   "account_name": "Test",
+   "user_full_name": "user2",
+   "password": "Password2@"
+}'
+
+,"pubsub_token":"gVYsKZjyy46Y53RNxMLKzrmr","role":"administrator",
+"access_token":"6JPsQaC6kWvW2vApULVYQU8M","
+account_id: 7
+
+
+4. create agent
+
+curl --location --request POST 'http://66.94.113.42:3000/api/v1/accounts/5/agents' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "name": "agent1",
+  "email": "agent1@test.com",
+  "role": "agent",
+  "availability_status": "available",
+  "auto_offline": true
+}'
+
+
