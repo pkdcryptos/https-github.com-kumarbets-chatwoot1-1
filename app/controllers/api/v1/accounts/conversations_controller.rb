@@ -133,11 +133,6 @@ class Api::V1::Accounts::ConversationsController < Api::V1::Accounts::BaseContro
 
   
 
-  def contact
-    return if params[:contact_id].blank?
-
-    @contact = Current.account.contacts.find(params[:contact_id])
-  end
 
   
 
