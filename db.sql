@@ -17,6 +17,10 @@ CREATE TABLE "public"."access_tokens" (
 
 CREATE INDEX "index_access_tokens_on_owner_type_and_owner_id" ON "public"."access_tokens" USING btree ("owner_type", "owner_id");
 
+INSERT INTO "access_tokens" ("id", "owner_type", "owner_id", "token", "created_at", "updated_at") VALUES
+(1,	'User',	1,	'JiYFxaJUDR7NoiQt7vwfp4gn',	'2024-08-10 16:31:37.017134',	'2024-08-10 16:31:37.017134'),
+(2,	'User',	2,	'SXLLwouq5rLTYtL823UbDZeC',	'2024-08-10 16:31:45.853874',	'2024-08-10 16:31:45.853874'),
+(3,	'User',	3,	'U1Np3xKGhzAkySxdpQkYJo9W',	'2024-08-10 16:31:53.998455',	'2024-08-10 16:31:53.998455');
 
 DROP TABLE IF EXISTS "account_users";
 DROP SEQUENCE IF EXISTS account_users_id_seq;
@@ -41,6 +45,10 @@ CREATE INDEX "index_account_users_on_account_id" ON "public"."account_users" USI
 
 CREATE INDEX "index_account_users_on_user_id" ON "public"."account_users" USING btree ("user_id");
 
+INSERT INTO "account_users" ("id", "account_id", "user_id", "role", "inviter_id", "created_at", "updated_at", "active_at", "availability", "auto_offline") VALUES
+(1,	1,	1,	1,	NULL,	'2024-08-10 16:31:37.037353',	'2024-08-10 16:31:37.037353',	NULL,	0,	't'),
+(2,	1,	2,	1,	NULL,	'2024-08-10 16:31:45.859646',	'2024-08-10 16:31:45.859646',	NULL,	0,	't'),
+(3,	1,	3,	1,	NULL,	'2024-08-10 16:31:54.005903',	'2024-08-10 16:31:54.005903',	NULL,	0,	't');
 
 DROP TABLE IF EXISTS "accounts";
 DROP SEQUENCE IF EXISTS accounts_id_seq;
@@ -64,6 +72,8 @@ CREATE TABLE "public"."accounts" (
 
 CREATE INDEX "index_accounts_on_status" ON "public"."accounts" USING btree ("status");
 
+INSERT INTO "accounts" ("id", "name", "created_at", "updated_at", "locale", "domain", "support_email", "feature_flags", "auto_resolve_duration", "limits", "custom_attributes", "status") VALUES
+(1,	'Test',	'2024-08-10 16:31:36.848864',	'2024-08-10 16:31:36.848864',	0,	NULL,	NULL,	0,	NULL,	'{}',	'{}',	0);
 
 DELIMITER ;;
 
@@ -72,22 +82,6 @@ CREATE TRIGGER "accounts_after_insert_row_tr" AFTER INSERT ON "public"."accounts
 CREATE TRIGGER "camp_dpid_before_insert" AFTER INSERT ON "public"."accounts" FOR EACH ROW EXECUTE FUNCTION camp_dpid_before_insert();;
 
 DELIMITER ;
-
-DROP TABLE IF EXISTS "action_mailbox_inbound_emails";
-DROP SEQUENCE IF EXISTS action_mailbox_inbound_emails_id_seq;
-CREATE SEQUENCE action_mailbox_inbound_emails_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."action_mailbox_inbound_emails" (
-    "id" bigint DEFAULT nextval('action_mailbox_inbound_emails_id_seq') NOT NULL,
-    "status" integer DEFAULT '0' NOT NULL,
-    "message_id" character varying NOT NULL,
-    "message_checksum" character varying NOT NULL,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    CONSTRAINT "action_mailbox_inbound_emails_pkey" PRIMARY KEY ("id"),
-    CONSTRAINT "index_action_mailbox_inbound_emails_uniqueness" UNIQUE ("message_id", "message_checksum")
-) WITH (oids = false);
-
 
 DROP TABLE IF EXISTS "active_storage_attachments";
 DROP SEQUENCE IF EXISTS active_storage_attachments_id_seq;
@@ -139,65 +133,6 @@ CREATE TABLE "public"."active_storage_variant_records" (
 ) WITH (oids = false);
 
 
-DROP TABLE IF EXISTS "agent_bot_inboxes";
-DROP SEQUENCE IF EXISTS agent_bot_inboxes_id_seq;
-CREATE SEQUENCE agent_bot_inboxes_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."agent_bot_inboxes" (
-    "id" bigint DEFAULT nextval('agent_bot_inboxes_id_seq') NOT NULL,
-    "inbox_id" integer,
-    "agent_bot_id" integer,
-    "status" integer DEFAULT '0',
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    "account_id" integer,
-    CONSTRAINT "agent_bot_inboxes_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
-
-
-DROP TABLE IF EXISTS "agent_bots";
-DROP SEQUENCE IF EXISTS agent_bots_id_seq;
-CREATE SEQUENCE agent_bots_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."agent_bots" (
-    "id" bigint DEFAULT nextval('agent_bots_id_seq') NOT NULL,
-    "name" character varying,
-    "description" character varying,
-    "outgoing_url" character varying,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    "account_id" bigint,
-    "bot_type" integer DEFAULT '0',
-    "bot_config" jsonb DEFAULT '{}',
-    CONSTRAINT "agent_bots_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
-
-CREATE INDEX "index_agent_bots_on_account_id" ON "public"."agent_bots" USING btree ("account_id");
-
-
-DROP TABLE IF EXISTS "applied_slas";
-DROP SEQUENCE IF EXISTS applied_slas_id_seq;
-CREATE SEQUENCE applied_slas_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."applied_slas" (
-    "id" bigint DEFAULT nextval('applied_slas_id_seq') NOT NULL,
-    "account_id" bigint NOT NULL,
-    "sla_policy_id" bigint NOT NULL,
-    "conversation_id" bigint NOT NULL,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    "sla_status" integer DEFAULT '0',
-    CONSTRAINT "applied_slas_pkey" PRIMARY KEY ("id"),
-    CONSTRAINT "index_applied_slas_on_account_sla_policy_conversation" UNIQUE ("account_id", "sla_policy_id", "conversation_id")
-) WITH (oids = false);
-
-CREATE INDEX "index_applied_slas_on_account_id" ON "public"."applied_slas" USING btree ("account_id");
-
-CREATE INDEX "index_applied_slas_on_conversation_id" ON "public"."applied_slas" USING btree ("conversation_id");
-
-CREATE INDEX "index_applied_slas_on_sla_policy_id" ON "public"."applied_slas" USING btree ("sla_policy_id");
-
-
 DROP TABLE IF EXISTS "ar_internal_metadata";
 CREATE TABLE "public"."ar_internal_metadata" (
     "key" character varying NOT NULL,
@@ -207,37 +142,9 @@ CREATE TABLE "public"."ar_internal_metadata" (
     CONSTRAINT "ar_internal_metadata_pkey" PRIMARY KEY ("key")
 ) WITH (oids = false);
 
-
-DROP TABLE IF EXISTS "articles";
-DROP SEQUENCE IF EXISTS articles_id_seq;
-CREATE SEQUENCE articles_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."articles" (
-    "id" bigint DEFAULT nextval('articles_id_seq') NOT NULL,
-    "account_id" integer NOT NULL,
-    "portal_id" integer NOT NULL,
-    "category_id" integer,
-    "folder_id" integer,
-    "title" character varying,
-    "description" text,
-    "content" text,
-    "status" integer,
-    "views" integer,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    "author_id" bigint,
-    "associated_article_id" bigint,
-    "meta" jsonb DEFAULT '{}',
-    "slug" character varying NOT NULL,
-    "position" integer,
-    CONSTRAINT "articles_pkey" PRIMARY KEY ("id"),
-    CONSTRAINT "index_articles_on_slug" UNIQUE ("slug")
-) WITH (oids = false);
-
-CREATE INDEX "index_articles_on_associated_article_id" ON "public"."articles" USING btree ("associated_article_id");
-
-CREATE INDEX "index_articles_on_author_id" ON "public"."articles" USING btree ("author_id");
-
+INSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES
+('environment',	'production',	'2024-08-10 16:30:45.492121',	'2024-08-10 16:30:45.492121'),
+('schema_sha1',	'64c5268154fd2350a3dac816eb792204ae043785',	'2024-08-10 16:30:45.501014',	'2024-08-10 16:30:45.501014');
 
 DROP TABLE IF EXISTS "attachments";
 DROP SEQUENCE IF EXISTS attachments_id_seq;
@@ -261,150 +168,6 @@ CREATE TABLE "public"."attachments" (
 CREATE INDEX "index_attachments_on_account_id" ON "public"."attachments" USING btree ("account_id");
 
 CREATE INDEX "index_attachments_on_message_id" ON "public"."attachments" USING btree ("message_id");
-
-
-DROP TABLE IF EXISTS "audits";
-DROP SEQUENCE IF EXISTS audits_id_seq;
-CREATE SEQUENCE audits_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."audits" (
-    "id" bigint DEFAULT nextval('audits_id_seq') NOT NULL,
-    "auditable_id" bigint,
-    "auditable_type" character varying,
-    "associated_id" bigint,
-    "associated_type" character varying,
-    "user_id" bigint,
-    "user_type" character varying,
-    "username" character varying,
-    "action" character varying,
-    "audited_changes" jsonb,
-    "version" integer DEFAULT '0',
-    "comment" character varying,
-    "remote_address" character varying,
-    "request_uuid" character varying,
-    "created_at" timestamp,
-    CONSTRAINT "audits_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
-
-CREATE INDEX "associated_index" ON "public"."audits" USING btree ("associated_type", "associated_id");
-
-CREATE INDEX "auditable_index" ON "public"."audits" USING btree ("auditable_type", "auditable_id", "version");
-
-CREATE INDEX "index_audits_on_created_at" ON "public"."audits" USING btree ("created_at");
-
-CREATE INDEX "index_audits_on_request_uuid" ON "public"."audits" USING btree ("request_uuid");
-
-CREATE INDEX "user_index" ON "public"."audits" USING btree ("user_id", "user_type");
-
-
-DROP TABLE IF EXISTS "automation_rules";
-DROP SEQUENCE IF EXISTS automation_rules_id_seq;
-CREATE SEQUENCE automation_rules_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."automation_rules" (
-    "id" bigint DEFAULT nextval('automation_rules_id_seq') NOT NULL,
-    "account_id" bigint NOT NULL,
-    "name" character varying NOT NULL,
-    "description" text,
-    "event_name" character varying NOT NULL,
-    "conditions" jsonb DEFAULT '"{}"' NOT NULL,
-    "actions" jsonb DEFAULT '"{}"' NOT NULL,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    "active" boolean DEFAULT true NOT NULL,
-    CONSTRAINT "automation_rules_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
-
-CREATE INDEX "index_automation_rules_on_account_id" ON "public"."automation_rules" USING btree ("account_id");
-
-
-DROP TABLE IF EXISTS "campaigns";
-DROP SEQUENCE IF EXISTS campaigns_id_seq;
-CREATE SEQUENCE campaigns_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."campaigns" (
-    "id" bigint DEFAULT nextval('campaigns_id_seq') NOT NULL,
-    "display_id" integer NOT NULL,
-    "title" character varying NOT NULL,
-    "description" text,
-    "message" text NOT NULL,
-    "sender_id" integer,
-    "enabled" boolean DEFAULT true,
-    "account_id" bigint NOT NULL,
-    "inbox_id" bigint NOT NULL,
-    "trigger_rules" jsonb DEFAULT '{}',
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    "campaign_type" integer DEFAULT '0' NOT NULL,
-    "campaign_status" integer DEFAULT '0' NOT NULL,
-    "audience" jsonb DEFAULT '[]',
-    "scheduled_at" timestamp,
-    "trigger_only_during_business_hours" boolean DEFAULT false,
-    CONSTRAINT "campaigns_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
-
-CREATE INDEX "index_campaigns_on_account_id" ON "public"."campaigns" USING btree ("account_id");
-
-CREATE INDEX "index_campaigns_on_campaign_status" ON "public"."campaigns" USING btree ("campaign_status");
-
-CREATE INDEX "index_campaigns_on_campaign_type" ON "public"."campaigns" USING btree ("campaign_type");
-
-CREATE INDEX "index_campaigns_on_inbox_id" ON "public"."campaigns" USING btree ("inbox_id");
-
-CREATE INDEX "index_campaigns_on_scheduled_at" ON "public"."campaigns" USING btree ("scheduled_at");
-
-
-DELIMITER ;;
-
-CREATE TRIGGER "campaigns_before_insert_row_tr" BEFORE INSERT ON "public"."campaigns" FOR EACH ROW EXECUTE FUNCTION campaigns_before_insert_row_tr();;
-
-DELIMITER ;
-
-DROP TABLE IF EXISTS "canned_responses";
-DROP SEQUENCE IF EXISTS canned_responses_id_seq;
-CREATE SEQUENCE canned_responses_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
-
-CREATE TABLE "public"."canned_responses" (
-    "id" integer DEFAULT nextval('canned_responses_id_seq') NOT NULL,
-    "account_id" integer NOT NULL,
-    "short_code" character varying,
-    "content" text,
-    "created_at" timestamp NOT NULL,
-    "updated_at" timestamp NOT NULL,
-    CONSTRAINT "canned_responses_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
-
-
-DROP TABLE IF EXISTS "categories";
-DROP SEQUENCE IF EXISTS categories_id_seq;
-CREATE SEQUENCE categories_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."categories" (
-    "id" bigint DEFAULT nextval('categories_id_seq') NOT NULL,
-    "account_id" integer NOT NULL,
-    "portal_id" integer NOT NULL,
-    "name" character varying,
-    "description" text,
-    "position" integer,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    "locale" character varying DEFAULT 'en',
-    "slug" character varying NOT NULL,
-    "parent_category_id" bigint,
-    "associated_category_id" bigint,
-    "icon" character varying DEFAULT '',
-    CONSTRAINT "categories_pkey" PRIMARY KEY ("id"),
-    CONSTRAINT "index_categories_on_slug_and_locale_and_portal_id" UNIQUE ("slug", "locale", "portal_id")
-) WITH (oids = false);
-
-CREATE INDEX "index_categories_on_associated_category_id" ON "public"."categories" USING btree ("associated_category_id");
-
-CREATE INDEX "index_categories_on_locale" ON "public"."categories" USING btree ("locale");
-
-CREATE INDEX "index_categories_on_locale_and_account_id" ON "public"."categories" USING btree ("locale", "account_id");
-
-CREATE INDEX "index_categories_on_parent_category_id" ON "public"."categories" USING btree ("parent_category_id");
-
 
 
 DROP TABLE IF EXISTS "channel_web_widgets";
@@ -433,6 +196,8 @@ CREATE TABLE "public"."channel_web_widgets" (
     CONSTRAINT "index_channel_web_widgets_on_website_token" UNIQUE ("website_token")
 ) WITH (oids = false);
 
+INSERT INTO "channel_web_widgets" ("id", "website_url", "account_id", "created_at", "updated_at", "website_token", "widget_color", "welcome_title", "welcome_tagline", "feature_flags", "reply_time", "hmac_token", "pre_chat_form_enabled", "pre_chat_form_options", "hmac_mandatory", "continuity_via_email") VALUES
+(1,	'w',	1,	'2024-08-10 16:32:48.903492',	'2024-08-10 16:32:48.903492',	'GM1rqq5EunZggxULQie958kT',	'#009CE0',	'',	'',	0,	0,	'UQNZmC6KG2BVz5CPpWxxfFFm',	'f',	'{"pre_chat_fields": [{"name": "emailAddress", "type": "email", "label": "Email Id", "enabled": false, "required": true, "field_type": "standard"}, {"name": "fullName", "type": "text", "label": "Full name", "enabled": false, "required": false, "field_type": "standard"}, {"name": "phoneNumber", "type": "text", "label": "Phone number", "enabled": false, "required": false, "field_type": "standard"}], "pre_chat_message": "Share your queries or comments here."}',	'f',	't');
 
 DROP TABLE IF EXISTS "contact_inboxes";
 DROP SEQUENCE IF EXISTS contact_inboxes_id_seq;
@@ -458,6 +223,8 @@ CREATE INDEX "index_contact_inboxes_on_inbox_id" ON "public"."contact_inboxes" U
 
 CREATE INDEX "index_contact_inboxes_on_source_id" ON "public"."contact_inboxes" USING btree ("source_id");
 
+INSERT INTO "contact_inboxes" ("id", "contact_id", "inbox_id", "source_id", "created_at", "updated_at", "hmac_verified", "pubsub_token") VALUES
+(1,	1,	1,	'98547029-ff11-4b71-af05-024b724a6532',	'2024-08-10 16:02:16.653409',	'2024-08-10 16:02:16.653409',	'f',	'CTTps4EHbmvF1pc8kYtRfRCv');
 
 DROP TABLE IF EXISTS "contacts";
 DROP SEQUENCE IF EXISTS contacts_id_seq;
@@ -502,6 +269,8 @@ CREATE INDEX "index_contacts_on_phone_number_and_account_id" ON "public"."contac
 
 CREATE INDEX "index_resolved_contact_account_id" ON "public"."contacts" USING btree ("account_id");
 
+INSERT INTO "contacts" ("id", "name", "email", "phone_number", "account_id", "created_at", "updated_at", "additional_attributes", "identifier", "custom_attributes", "last_activity_at", "contact_type", "middle_name", "last_name", "location", "country_code", "blocked") VALUES
+(1,	'restless-dream-990',	NULL,	NULL,	1,	'2024-08-10 16:02:16.633773',	'2024-08-10 16:02:16.633773',	'{}',	NULL,	'{}',	NULL,	0,	'',	'',	'',	'',	'f');
 
 DROP TABLE IF EXISTS "conversation_participants";
 DROP SEQUENCE IF EXISTS conversation_participants_id_seq;
@@ -589,159 +358,14 @@ CREATE INDEX "index_conversations_on_team_id" ON "public"."conversations" USING 
 
 CREATE INDEX "index_conversations_on_waiting_since" ON "public"."conversations" USING btree ("waiting_since");
 
+INSERT INTO "conversations" ("id", "account_id", "inbox_id", "status", "assignee_id", "created_at", "updated_at", "contact_id", "display_id", "contact_last_seen_at", "agent_last_seen_at", "additional_attributes", "contact_inbox_id", "uuid", "identifier", "last_activity_at", "team_id", "campaign_id", "snoozed_until", "custom_attributes", "assignee_last_seen_at", "first_reply_created_at", "priority", "sla_policy_id", "waiting_since", "cached_label_list") VALUES
+(1,	1,	1,	0,	NULL,	'2024-08-10 16:02:23.76768',	'2024-08-10 16:36:09.858623',	1,	1,	'2024-08-10 16:02:23.992798',	'2024-08-10 16:36:20.937793',	'{}',	1,	'076c828e-4e59-4f67-8b75-7651efe09b49',	NULL,	'2024-08-10 16:36:09.85368',	NULL,	NULL,	NULL,	'{}',	NULL,	'2024-08-10 16:34:20.900493',	NULL,	NULL,	NULL,	NULL);
 
 DELIMITER ;;
 
 CREATE TRIGGER "conversations_before_insert_row_tr" BEFORE INSERT ON "public"."conversations" FOR EACH ROW EXECUTE FUNCTION conversations_before_insert_row_tr();;
 
 DELIMITER ;
-
-DROP TABLE IF EXISTS "csat_survey_responses";
-DROP SEQUENCE IF EXISTS csat_survey_responses_id_seq;
-CREATE SEQUENCE csat_survey_responses_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."csat_survey_responses" (
-    "id" bigint DEFAULT nextval('csat_survey_responses_id_seq') NOT NULL,
-    "account_id" bigint NOT NULL,
-    "conversation_id" bigint NOT NULL,
-    "message_id" bigint NOT NULL,
-    "rating" integer NOT NULL,
-    "feedback_message" text,
-    "contact_id" bigint NOT NULL,
-    "assigned_agent_id" bigint,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    CONSTRAINT "csat_survey_responses_pkey" PRIMARY KEY ("id"),
-    CONSTRAINT "index_csat_survey_responses_on_message_id" UNIQUE ("message_id")
-) WITH (oids = false);
-
-CREATE INDEX "index_csat_survey_responses_on_account_id" ON "public"."csat_survey_responses" USING btree ("account_id");
-
-CREATE INDEX "index_csat_survey_responses_on_assigned_agent_id" ON "public"."csat_survey_responses" USING btree ("assigned_agent_id");
-
-CREATE INDEX "index_csat_survey_responses_on_contact_id" ON "public"."csat_survey_responses" USING btree ("contact_id");
-
-CREATE INDEX "index_csat_survey_responses_on_conversation_id" ON "public"."csat_survey_responses" USING btree ("conversation_id");
-
-
-DROP TABLE IF EXISTS "custom_attribute_definitions";
-DROP SEQUENCE IF EXISTS custom_attribute_definitions_id_seq;
-CREATE SEQUENCE custom_attribute_definitions_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."custom_attribute_definitions" (
-    "id" bigint DEFAULT nextval('custom_attribute_definitions_id_seq') NOT NULL,
-    "attribute_display_name" character varying,
-    "attribute_key" character varying,
-    "attribute_display_type" integer DEFAULT '0',
-    "default_value" integer,
-    "attribute_model" integer DEFAULT '0',
-    "account_id" bigint,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    "attribute_description" text,
-    "attribute_values" jsonb DEFAULT '[]',
-    "regex_pattern" character varying,
-    "regex_cue" character varying,
-    CONSTRAINT "attribute_key_model_index" UNIQUE ("attribute_key", "attribute_model", "account_id"),
-    CONSTRAINT "custom_attribute_definitions_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
-
-CREATE INDEX "index_custom_attribute_definitions_on_account_id" ON "public"."custom_attribute_definitions" USING btree ("account_id");
-
-
-DROP TABLE IF EXISTS "custom_filters";
-DROP SEQUENCE IF EXISTS custom_filters_id_seq;
-CREATE SEQUENCE custom_filters_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."custom_filters" (
-    "id" bigint DEFAULT nextval('custom_filters_id_seq') NOT NULL,
-    "name" character varying NOT NULL,
-    "filter_type" integer DEFAULT '0' NOT NULL,
-    "query" jsonb DEFAULT '"{}"' NOT NULL,
-    "account_id" bigint NOT NULL,
-    "user_id" bigint NOT NULL,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    CONSTRAINT "custom_filters_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
-
-CREATE INDEX "index_custom_filters_on_account_id" ON "public"."custom_filters" USING btree ("account_id");
-
-CREATE INDEX "index_custom_filters_on_user_id" ON "public"."custom_filters" USING btree ("user_id");
-
-
-DROP TABLE IF EXISTS "dashboard_apps";
-DROP SEQUENCE IF EXISTS dashboard_apps_id_seq;
-CREATE SEQUENCE dashboard_apps_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."dashboard_apps" (
-    "id" bigint DEFAULT nextval('dashboard_apps_id_seq') NOT NULL,
-    "title" character varying NOT NULL,
-    "content" jsonb DEFAULT '[]',
-    "account_id" bigint NOT NULL,
-    "user_id" bigint,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    CONSTRAINT "dashboard_apps_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
-
-CREATE INDEX "index_dashboard_apps_on_account_id" ON "public"."dashboard_apps" USING btree ("account_id");
-
-CREATE INDEX "index_dashboard_apps_on_user_id" ON "public"."dashboard_apps" USING btree ("user_id");
-
-
-DROP TABLE IF EXISTS "data_imports";
-DROP SEQUENCE IF EXISTS data_imports_id_seq;
-CREATE SEQUENCE data_imports_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."data_imports" (
-    "id" bigint DEFAULT nextval('data_imports_id_seq') NOT NULL,
-    "account_id" bigint NOT NULL,
-    "data_type" character varying NOT NULL,
-    "status" integer DEFAULT '0' NOT NULL,
-    "processing_errors" text,
-    "total_records" integer,
-    "processed_records" integer,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    CONSTRAINT "data_imports_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
-
-CREATE INDEX "index_data_imports_on_account_id" ON "public"."data_imports" USING btree ("account_id");
-
-
-DROP TABLE IF EXISTS "email_templates";
-DROP SEQUENCE IF EXISTS email_templates_id_seq;
-CREATE SEQUENCE email_templates_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."email_templates" (
-    "id" bigint DEFAULT nextval('email_templates_id_seq') NOT NULL,
-    "name" character varying NOT NULL,
-    "body" text NOT NULL,
-    "account_id" integer,
-    "template_type" integer DEFAULT '1',
-    "locale" integer DEFAULT '0' NOT NULL,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    CONSTRAINT "email_templates_pkey" PRIMARY KEY ("id"),
-    CONSTRAINT "index_email_templates_on_name_and_account_id" UNIQUE ("name", "account_id")
-) WITH (oids = false);
-
-
-DROP TABLE IF EXISTS "folders";
-DROP SEQUENCE IF EXISTS folders_id_seq;
-CREATE SEQUENCE folders_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."folders" (
-    "id" bigint DEFAULT nextval('folders_id_seq') NOT NULL,
-    "account_id" integer NOT NULL,
-    "category_id" integer NOT NULL,
-    "name" character varying,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    CONSTRAINT "folders_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
-
 
 DROP TABLE IF EXISTS "inbox_members";
 DROP SEQUENCE IF EXISTS inbox_members_id_seq;
@@ -759,6 +383,8 @@ CREATE TABLE "public"."inbox_members" (
 
 CREATE INDEX "index_inbox_members_on_inbox_id" ON "public"."inbox_members" USING btree ("inbox_id");
 
+INSERT INTO "inbox_members" ("id", "user_id", "inbox_id", "created_at", "updated_at") VALUES
+(1,	1,	1,	'2024-08-10 16:32:52.274384',	'2024-08-10 16:32:52.274384');
 
 DROP TABLE IF EXISTS "inboxes";
 DROP SEQUENCE IF EXISTS inboxes_id_seq;
@@ -796,6 +422,8 @@ CREATE INDEX "index_inboxes_on_channel_id_and_channel_type" ON "public"."inboxes
 
 CREATE INDEX "index_inboxes_on_portal_id" ON "public"."inboxes" USING btree ("portal_id");
 
+INSERT INTO "inboxes" ("id", "channel_id", "account_id", "name", "created_at", "updated_at", "channel_type", "enable_auto_assignment", "greeting_enabled", "greeting_message", "email_address", "working_hours_enabled", "out_of_office_message", "timezone", "enable_email_collect", "csat_survey_enabled", "allow_messages_after_resolved", "auto_assignment_config", "lock_to_single_conversation", "portal_id", "sender_name_type", "business_name") VALUES
+(1,	1,	1,	'w',	'2024-08-10 16:32:48.92711',	'2024-08-10 16:32:48.92711',	'Channel::WebWidget',	't',	'f',	'',	NULL,	'f',	NULL,	'UTC',	't',	'f',	't',	'{}',	'f',	NULL,	0,	NULL);
 
 DROP TABLE IF EXISTS "installation_configs";
 DROP SEQUENCE IF EXISTS installation_configs_id_seq;
@@ -812,89 +440,6 @@ CREATE TABLE "public"."installation_configs" (
     CONSTRAINT "index_installation_configs_on_name_and_created_at" UNIQUE ("name", "created_at"),
     CONSTRAINT "installation_configs_pkey" PRIMARY KEY ("id")
 ) WITH (oids = false);
-
-
-DROP TABLE IF EXISTS "integrations_hooks";
-DROP SEQUENCE IF EXISTS integrations_hooks_id_seq;
-CREATE SEQUENCE integrations_hooks_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."integrations_hooks" (
-    "id" bigint DEFAULT nextval('integrations_hooks_id_seq') NOT NULL,
-    "status" integer DEFAULT '1',
-    "inbox_id" integer,
-    "account_id" integer,
-    "app_id" character varying,
-    "hook_type" integer DEFAULT '0',
-    "reference_id" character varying,
-    "access_token" character varying,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    "settings" jsonb DEFAULT '{}',
-    CONSTRAINT "integrations_hooks_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
-
-
-DROP TABLE IF EXISTS "labels";
-DROP SEQUENCE IF EXISTS labels_id_seq;
-CREATE SEQUENCE labels_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."labels" (
-    "id" bigint DEFAULT nextval('labels_id_seq') NOT NULL,
-    "title" character varying,
-    "description" text,
-    "color" character varying DEFAULT '#1f93ff' NOT NULL,
-    "show_on_sidebar" boolean,
-    "account_id" bigint,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    CONSTRAINT "index_labels_on_title_and_account_id" UNIQUE ("title", "account_id"),
-    CONSTRAINT "labels_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
-
-CREATE INDEX "index_labels_on_account_id" ON "public"."labels" USING btree ("account_id");
-
-
-DROP TABLE IF EXISTS "macros";
-DROP SEQUENCE IF EXISTS macros_id_seq;
-CREATE SEQUENCE macros_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."macros" (
-    "id" bigint DEFAULT nextval('macros_id_seq') NOT NULL,
-    "account_id" bigint NOT NULL,
-    "name" character varying NOT NULL,
-    "visibility" integer DEFAULT '0',
-    "created_by_id" bigint,
-    "updated_by_id" bigint,
-    "actions" jsonb DEFAULT '{}' NOT NULL,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    CONSTRAINT "macros_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
-
-CREATE INDEX "index_macros_on_account_id" ON "public"."macros" USING btree ("account_id");
-
-
-DROP TABLE IF EXISTS "mentions";
-DROP SEQUENCE IF EXISTS mentions_id_seq;
-CREATE SEQUENCE mentions_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."mentions" (
-    "id" bigint DEFAULT nextval('mentions_id_seq') NOT NULL,
-    "user_id" bigint NOT NULL,
-    "conversation_id" bigint NOT NULL,
-    "account_id" bigint NOT NULL,
-    "mentioned_at" timestamp NOT NULL,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    CONSTRAINT "index_mentions_on_user_id_and_conversation_id" UNIQUE ("user_id", "conversation_id"),
-    CONSTRAINT "mentions_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
-
-CREATE INDEX "index_mentions_on_account_id" ON "public"."mentions" USING btree ("account_id");
-
-CREATE INDEX "index_mentions_on_conversation_id" ON "public"."mentions" USING btree ("conversation_id");
-
-CREATE INDEX "index_mentions_on_user_id" ON "public"."mentions" USING btree ("user_id");
 
 
 DROP TABLE IF EXISTS "messages";
@@ -946,97 +491,8 @@ CREATE INDEX "index_messages_on_sender_type_and_sender_id" ON "public"."messages
 
 CREATE INDEX "index_messages_on_source_id" ON "public"."messages" USING btree ("source_id");
 
-
-DROP TABLE IF EXISTS "notes";
-DROP SEQUENCE IF EXISTS notes_id_seq;
-CREATE SEQUENCE notes_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."notes" (
-    "id" bigint DEFAULT nextval('notes_id_seq') NOT NULL,
-    "content" text NOT NULL,
-    "account_id" bigint NOT NULL,
-    "contact_id" bigint NOT NULL,
-    "user_id" bigint,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    CONSTRAINT "notes_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
-
-CREATE INDEX "index_notes_on_account_id" ON "public"."notes" USING btree ("account_id");
-
-CREATE INDEX "index_notes_on_contact_id" ON "public"."notes" USING btree ("contact_id");
-
-CREATE INDEX "index_notes_on_user_id" ON "public"."notes" USING btree ("user_id");
-
-
-DROP TABLE IF EXISTS "notification_settings";
-DROP SEQUENCE IF EXISTS notification_settings_id_seq;
-CREATE SEQUENCE notification_settings_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."notification_settings" (
-    "id" bigint DEFAULT nextval('notification_settings_id_seq') NOT NULL,
-    "account_id" integer,
-    "user_id" integer,
-    "email_flags" integer DEFAULT '0' NOT NULL,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    "push_flags" integer DEFAULT '0' NOT NULL,
-    CONSTRAINT "by_account_user" UNIQUE ("account_id", "user_id"),
-    CONSTRAINT "notification_settings_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
-
-
-DROP TABLE IF EXISTS "notification_subscriptions";
-DROP SEQUENCE IF EXISTS notification_subscriptions_id_seq;
-CREATE SEQUENCE notification_subscriptions_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."notification_subscriptions" (
-    "id" bigint DEFAULT nextval('notification_subscriptions_id_seq') NOT NULL,
-    "user_id" bigint NOT NULL,
-    "subscription_type" integer NOT NULL,
-    "subscription_attributes" jsonb DEFAULT '{}' NOT NULL,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    "identifier" text,
-    CONSTRAINT "index_notification_subscriptions_on_identifier" UNIQUE ("identifier"),
-    CONSTRAINT "notification_subscriptions_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
-
-CREATE INDEX "index_notification_subscriptions_on_user_id" ON "public"."notification_subscriptions" USING btree ("user_id");
-
-
-DROP TABLE IF EXISTS "notifications";
-DROP SEQUENCE IF EXISTS notifications_id_seq;
-CREATE SEQUENCE notifications_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."notifications" (
-    "id" bigint DEFAULT nextval('notifications_id_seq') NOT NULL,
-    "account_id" bigint NOT NULL,
-    "user_id" bigint NOT NULL,
-    "notification_type" integer NOT NULL,
-    "primary_actor_type" character varying NOT NULL,
-    "primary_actor_id" bigint NOT NULL,
-    "secondary_actor_type" character varying,
-    "secondary_actor_id" bigint,
-    "read_at" timestamp,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    "snoozed_until" timestamp(6),
-    "last_activity_at" timestamp(6) DEFAULT CURRENT_TIMESTAMP,
-    "meta" jsonb DEFAULT '{}',
-    CONSTRAINT "notifications_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
-
-CREATE INDEX "index_notifications_on_account_id" ON "public"."notifications" USING btree ("account_id");
-
-CREATE INDEX "index_notifications_on_last_activity_at" ON "public"."notifications" USING btree ("last_activity_at");
-
-CREATE INDEX "index_notifications_on_user_id" ON "public"."notifications" USING btree ("user_id");
-
-CREATE INDEX "uniq_primary_actor_per_account_notifications" ON "public"."notifications" USING btree ("primary_actor_type", "primary_actor_id");
-
-CREATE INDEX "uniq_secondary_actor_per_account_notifications" ON "public"."notifications" USING btree ("secondary_actor_type", "secondary_actor_id");
-
+INSERT INTO "messages" ("id", "content", "account_id", "inbox_id", "conversation_id", "message_type", "created_at", "updated_at", "private", "status", "source_id", "content_type", "content_attributes", "sender_type", "sender_id", "external_source_ids", "additional_attributes", "processed_message_content", "sentiment") VALUES
+(8,	'sample message ',	1,	1,	1,	1,	'2024-08-10 16:36:09.85368',	'2024-08-10 16:36:09.85368',	'f',	0,	NULL,	0,	NULL,	'User',	2,	NULL,	'{}',	'sample message ',	'{}');
 
 DROP VIEW IF EXISTS "pg_stat_statements";
 CREATE TABLE "pg_stat_statements" ("userid" oid, "dbid" oid, "toplevel" boolean, "queryid" bigint, "query" text, "plans" bigint, "total_plan_time" double precision, "min_plan_time" double precision, "max_plan_time" double precision, "mean_plan_time" double precision, "stddev_plan_time" double precision, "calls" bigint, "total_exec_time" double precision, "min_exec_time" double precision, "max_exec_time" double precision, "mean_exec_time" double precision, "stddev_exec_time" double precision, "rows" bigint, "shared_blks_hit" bigint, "shared_blks_read" bigint, "shared_blks_dirtied" bigint, "shared_blks_written" bigint, "local_blks_hit" bigint, "local_blks_read" bigint, "local_blks_dirtied" bigint, "local_blks_written" bigint, "temp_blks_read" bigint, "temp_blks_written" bigint, "blk_read_time" double precision, "blk_write_time" double precision, "wal_records" bigint, "wal_fpi" bigint, "wal_bytes" numeric);
@@ -1046,12 +502,14 @@ DROP VIEW IF EXISTS "pg_stat_statements_info";
 CREATE TABLE "pg_stat_statements_info" ("dealloc" bigint, "stats_reset" timestamptz);
 
 
-
 DROP TABLE IF EXISTS "schema_migrations";
 CREATE TABLE "public"."schema_migrations" (
     "version" character varying NOT NULL,
     CONSTRAINT "schema_migrations_pkey" PRIMARY KEY ("version")
 ) WITH (oids = false);
+
+INSERT INTO "schema_migrations" ("version") VALUES
+('20240516003531');
 
 DROP TABLE IF EXISTS "team_members";
 DROP SEQUENCE IF EXISTS team_members_id_seq;
@@ -1089,21 +547,6 @@ CREATE TABLE "public"."teams" (
 ) WITH (oids = false);
 
 CREATE INDEX "index_teams_on_account_id" ON "public"."teams" USING btree ("account_id");
-
-
-DROP TABLE IF EXISTS "telegram_bots";
-DROP SEQUENCE IF EXISTS telegram_bots_id_seq;
-CREATE SEQUENCE telegram_bots_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
-
-CREATE TABLE "public"."telegram_bots" (
-    "id" integer DEFAULT nextval('telegram_bots_id_seq') NOT NULL,
-    "name" character varying,
-    "auth_key" character varying,
-    "account_id" integer,
-    "created_at" timestamp NOT NULL,
-    "updated_at" timestamp NOT NULL,
-    CONSTRAINT "telegram_bots_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
 
 
 DROP TABLE IF EXISTS "users";
@@ -1148,31 +591,9 @@ CREATE TABLE "public"."users" (
 CREATE INDEX "index_users_on_email" ON "public"."users" USING btree ("email");
 
 INSERT INTO "users" ("id", "provider", "uid", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "sign_in_count", "current_sign_in_at", "last_sign_in_at", "current_sign_in_ip", "last_sign_in_ip", "confirmation_token", "confirmed_at", "confirmation_sent_at", "unconfirmed_email", "name", "display_name", "email", "tokens", "created_at", "updated_at", "pubsub_token", "availability", "ui_settings", "custom_attributes", "type", "message_signature") VALUES
-(5,	'email',	'test2@chatwoot.com',	'$2a$11$Qa5YhJ1nn4oLWdJ08c/v9OPV7folByULOUYUN4zYc671orWPGq82q',	NULL,	NULL,	NULL,	0,	NULL,	NULL,	NULL,	NULL,	'gZo_BhDWtij1bYFtDSbk',	NULL,	'2024-08-08 23:45:17.070475',	NULL,	'test2',	NULL,	'test2@chatwoot.com',	NULL,	'2024-08-08 23:45:17.070033',	'2024-08-09 00:10:03.372514',	'cr62fVXND6sVepAxQGLyN1kf',	0,	'{}',	'{}',	NULL,	NULL),
-(1,	'email',	'admin@chatwoot.com',	'$2a$11$FtIwlc0cdqKbSrRJVPuBYOHIvYjc7NylNLAfcjw0lfLHNWqARbQ36',	NULL,	NULL,	NULL,	12,	'2024-08-08 19:29:03.407769',	'2024-08-08 15:34:36.177332',	'47.231.131.141',	'47.231.131.141',	'ziPzDdGrZmz1zDfm9LQr',	'2024-08-07 08:27:31.496809',	'2024-08-07 08:27:31.496809',	NULL,	'Admin',	NULL,	'admin@chatwoot.com',	'"{\"37axtS1x5PhE5Hc8UmFK2A\":{\"token\":\"$2a$10$vBa6lVOcurYSmFYUz0amUOb0iYU6jM2AwSNrWR9.DTG0DCc2B616i\",\"expiry\":1728372057},\"w-9ezLW_NxQt7In0LBAbsQ\":{\"token\":\"$2a$10$BmsdWjTTAPvkaV3c22/QG.Yqn5cKsDatKK7L4iGxu7XE0dNuYACEy\",\"expiry\":1728373116},\"CK4gXouuMT493Gad1Gy8Vg\":{\"token\":\"$2a$10$2K/Xw3kPsAFAZ7tFeYQyyu0hod3fTq62d4z3UTKfTkK5BBgNAbTuu\",\"expiry\":1728415743}}"',	'2024-08-07 08:27:31.496601',	'2024-08-08 19:29:03.408432',	'KhhyuCY6g3n4DmnwNZ3b476W',	0,	'{"rtl_view": false, "conversation_display_type": "condensed", "previously_used_conversation_display_type": "condensed"}',	'{}',	NULL,	NULL),
-(6,	'email',	'test4@chatwoot.com',	'$2a$11$0nYoa9Ae2d2vBsAu/OS.i.f.bCLR4YxsLZNRk5/TTh.JaVieYbf/W',	NULL,	NULL,	NULL,	0,	NULL,	NULL,	NULL,	NULL,	'x6yoPu5kQyMFEyXUPjjd',	NULL,	'2024-08-09 00:10:26.014568',	NULL,	'test4',	NULL,	'test4@chatwoot.com',	NULL,	'2024-08-09 00:10:26.014197',	'2024-08-09 00:37:07.339593',	'1JMnf5CykFHZthRwUGXFt2se',	0,	'{}',	'{}',	NULL,	NULL),
-(3,	'email',	'rkpers2009@gmail.com',	'$2a$11$XfjTw7rjt9wVy2F43l54LetSsOYYqsdyZbhebWvUTYGXqZxcH5veW',	NULL,	NULL,	NULL,	1,	'2024-08-08 19:28:02.693907',	'2024-08-08 19:28:02.693907',	'47.231.131.141',	'47.231.131.141',	'2oXLVfmhxr8hVREvWtnZ',	'2024-08-08 19:26:38.457177',	'2024-08-08 19:26:38.457177',	NULL,	'rkpers2009',	NULL,	'rkpers2009@gmail.com',	'"{\"rY9qbbvpxqJt8JEYDrcktw\":{\"token\":\"$2a$10$nEYbGFKXuyoFWxImwEZ3OOzyWUyI0tZDuo2YpAoaBh4FxWVirGTpi\",\"expiry\":1728415682}}"',	'2024-08-08 19:26:38.457102',	'2024-08-08 19:28:47.893961',	'vfyG4vXqN4bcUBZSx16y3jvm',	0,	'{"rtl_view": false, "conversation_display_type": "condensed", "previously_used_conversation_display_type": "condensed"}',	'{}',	NULL,	NULL),
-(7,	'email',	'test9@9.com',	'$2a$11$VotJN6RhUYezS3ThgLorNO/yzSben9rrhnJIm0nPh8s53K86yKcvS',	NULL,	NULL,	NULL,	0,	NULL,	NULL,	NULL,	NULL,	'F5xTycfpu9X9JDaWHbdB',	NULL,	'2024-08-09 00:37:29.262807',	NULL,	'test9',	NULL,	'test9@9.com',	'"{\"5ndOtxENiI6a3eaBOeS7Ow\":{\"token\":\"$2a$10$Ny7NhrLbITlymkW6zdgrVuNg0FoQqd6GUzWtNUWItiP/vBSxocQly\",\"expiry\":1728434249,\"updated_at\":\"2024-08-09T00:37:29Z\"}}"',	'2024-08-09 00:37:29.262626',	'2024-08-09 00:37:29.342499',	'wvJasfpRgyLRS5x1GiYQYmgH',	0,	'{}',	'{}',	NULL,	NULL),
-(2,	'email',	'kumarbets@chatwoot.com',	'$2a$11$1HmIfxMJ5yOB9ioUo3yG7uNm1jl8gUBdVStiq3ZMqGPzFBOtUP5CK',	NULL,	NULL,	NULL,	1,	'2024-08-08 19:33:07.272966',	'2024-08-08 19:33:07.272966',	'47.231.131.141',	'47.231.131.141',	'Egjc8qh5FFe8b1Cy-5FZ',	'2024-08-08 19:25:23.953186',	'2024-08-08 19:25:23.953186',	NULL,	'Kumarbets',	NULL,	'kumarbets@chatwoot.com',	NULL,	'2024-08-08 19:25:23.953008',	'2024-08-08 22:59:09.267884',	'wdmxqJpGLXr9Z9dScKjDfEkG',	0,	'{"rtl_view": false, "conversation_display_type": "condensed", "previously_used_conversation_display_type": "condensed"}',	'{}',	NULL,	NULL),
-(4,	'email',	'test1@chatwoot.com',	'$2a$11$J9a0e8luDjvPOhpawDBWD.GXkbuaxp39Qzs9jL4DSeDrYmRSe7mWS',	NULL,	NULL,	NULL,	0,	NULL,	NULL,	NULL,	NULL,	'8TAzuPKz4M8kJ5b2D9EH',	NULL,	'2024-08-08 23:01:56.723963',	NULL,	'test1',	NULL,	'test1@chatwoot.com',	NULL,	'2024-08-08 23:01:56.723721',	'2024-08-08 23:43:57.664703',	'ViHqvSJJfjvpfyMj8H2ygZwt',	0,	'{}',	'{}',	NULL,	NULL);
-
-DROP TABLE IF EXISTS "webhooks";
-DROP SEQUENCE IF EXISTS webhooks_id_seq;
-CREATE SEQUENCE webhooks_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."webhooks" (
-    "id" bigint DEFAULT nextval('webhooks_id_seq') NOT NULL,
-    "account_id" integer,
-    "inbox_id" integer,
-    "url" character varying,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    "webhook_type" integer DEFAULT '0',
-    "subscriptions" jsonb DEFAULT '["conversation_status_changed", "conversation_updated", "conversation_created", "contact_created", "contact_updated", "message_created", "message_updated", "webwidget_triggered"]',
-    CONSTRAINT "index_webhooks_on_account_id_and_url" UNIQUE ("account_id", "url"),
-    CONSTRAINT "webhooks_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
-
+(1,	'email',	'a1@gmail.com',	'$2a$11$PLMd8Cge5xFvt8PfWZan4uqIJrV.ettML8k4IjiRwyk5LRbFTDiUC',	NULL,	NULL,	NULL,	0,	NULL,	NULL,	NULL,	NULL,	'yTdNmPxJCUffux5imrV-',	'2024-08-10 16:31:37.006133',	'2024-08-10 16:31:37.006133',	NULL,	'A1',	NULL,	'a1@gmail.com',	'"{\"FpCGPsuofPl6kevYr2kthg\":{\"token\":\"$2a$10$7KpI87vs.E3NbkIoNjb8luFyrf021NeNjELi3W2/XRAH9rwM41ScW\",\"expiry\":1728577897,\"updated_at\":\"2024-08-10T16:31:37Z\"}}"',	'2024-08-10 16:31:37.00594',	'2024-08-10 16:31:37.107946',	'sD8o4XR9xpcvwzsjcBh253cG',	0,	'{}',	'{}',	NULL,	NULL),
+(2,	'email',	'a2@gmail.com',	'$2a$11$YC/xpeNinw1BBnT5skk0ae76brA/THiJQfYPF0VmDNpHmfE5W0gGS',	NULL,	NULL,	NULL,	0,	NULL,	NULL,	NULL,	NULL,	'PsGhhaAyPEyKRnFxNfGs',	'2024-08-10 16:31:45.851401',	'2024-08-10 16:31:45.851401',	NULL,	'A2',	NULL,	'a2@gmail.com',	'"{\"5klz4PP8wgPhPi4Jk3W_iA\":{\"token\":\"$2a$10$J7VyLxNnaOLRGpGFnUK/LeK.yL28sUUXvcBXQTpmrc7qt0cY2tFfO\",\"expiry\":1728577905,\"updated_at\":\"2024-08-10T16:31:45Z\"}}"',	'2024-08-10 16:31:45.85133',	'2024-08-10 16:31:45.929335',	'tGiFPCFy9c7NPU2KSJWRkWAV',	0,	'{}',	'{}',	NULL,	NULL),
+(3,	'email',	'a3@gmail.com',	'$2a$11$2V6ReGmlzjRopAcRpOnSd.orDQ05busKQfQ2EtW83Vp4WH40p/qt6',	NULL,	NULL,	NULL,	0,	NULL,	NULL,	NULL,	NULL,	'kZf7X2BEXkEq3F2JJiJ2',	'2024-08-10 16:31:53.995065',	'2024-08-10 16:31:53.995065',	NULL,	'A3',	NULL,	'a3@gmail.com',	'"{\"d1YCHe0idGiWSXSuyRAkXg\":{\"token\":\"$2a$10$uDSeaAOkbEPE3/yvNBbHeuuwsAUH2xafhRZF0jNzF8KB/Jr1MBSbK\",\"expiry\":1728577914,\"updated_at\":\"2024-08-10T16:31:54Z\"}}"',	'2024-08-10 16:31:53.994994',	'2024-08-10 16:31:54.077261',	'soS2BQkLCEYTAKYwKHzrP6HF',	0,	'{}',	'{}',	NULL,	NULL);
 
 DROP TABLE IF EXISTS "working_hours";
 DROP SEQUENCE IF EXISTS working_hours_id_seq;
@@ -1198,12 +619,18 @@ CREATE INDEX "index_working_hours_on_account_id" ON "public"."working_hours" USI
 
 CREATE INDEX "index_working_hours_on_inbox_id" ON "public"."working_hours" USING btree ("inbox_id");
 
+INSERT INTO "working_hours" ("id", "inbox_id", "account_id", "day_of_week", "closed_all_day", "open_hour", "open_minutes", "close_hour", "close_minutes", "created_at", "updated_at", "open_all_day") VALUES
+(1,	1,	1,	0,	't',	NULL,	NULL,	NULL,	NULL,	'2024-08-10 16:32:48.946763',	'2024-08-10 16:32:48.946763',	'f'),
+(2,	1,	1,	1,	'f',	9,	0,	17,	0,	'2024-08-10 16:32:48.950973',	'2024-08-10 16:32:48.950973',	'f'),
+(3,	1,	1,	2,	'f',	9,	0,	17,	0,	'2024-08-10 16:32:48.952965',	'2024-08-10 16:32:48.952965',	'f'),
+(4,	1,	1,	3,	'f',	9,	0,	17,	0,	'2024-08-10 16:32:48.954414',	'2024-08-10 16:32:48.954414',	'f'),
+(5,	1,	1,	4,	'f',	9,	0,	17,	0,	'2024-08-10 16:32:48.955924',	'2024-08-10 16:32:48.955924',	'f'),
+(6,	1,	1,	5,	'f',	9,	0,	17,	0,	'2024-08-10 16:32:48.95849',	'2024-08-10 16:32:48.95849',	'f'),
+(7,	1,	1,	6,	't',	NULL,	NULL,	NULL,	NULL,	'2024-08-10 16:32:48.960037',	'2024-08-10 16:32:48.960037',	'f');
 
 ALTER TABLE ONLY "public"."active_storage_attachments" ADD CONSTRAINT "fk_rails_c3b3935057" FOREIGN KEY (blob_id) REFERENCES active_storage_blobs(id) NOT DEFERRABLE;
 
 ALTER TABLE ONLY "public"."active_storage_variant_records" ADD CONSTRAINT "fk_rails_993965df05" FOREIGN KEY (blob_id) REFERENCES active_storage_blobs(id) NOT DEFERRABLE;
-
-ALTER TABLE ONLY "public"."inboxes" ADD CONSTRAINT "fk_rails_a1f654bf2d" FOREIGN KEY (portal_id) REFERENCES portals(id) NOT DEFERRABLE;
 
 DROP TABLE IF EXISTS "pg_stat_statements";
 CREATE VIEW "pg_stat_statements" AS SELECT pg_stat_statements.userid,
@@ -1246,4 +673,4 @@ CREATE VIEW "pg_stat_statements_info" AS SELECT pg_stat_statements_info.dealloc,
     pg_stat_statements_info.stats_reset
    FROM pg_stat_statements_info() pg_stat_statements_info(dealloc, stats_reset);
 
--- 2024-08-09 01:04:17.297083+00
+-- 2024-08-10 16:36:34.173115+00
