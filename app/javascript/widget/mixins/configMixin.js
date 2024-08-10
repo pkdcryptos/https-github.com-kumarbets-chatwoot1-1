@@ -9,13 +9,13 @@ export default {
       return window.chatwootWebChannel;
     },
     hasEmojiPickerEnabled() {
-      return this.channelConfig.enabledFeatures.includes('emoji_picker');
+      return true;
     },
     hasAttachmentsEnabled() {
-      return this.channelConfig.enabledFeatures.includes('attachments');
+      return true;
     },
     hasEndConversationEnabled() {
-      return this.channelConfig.enabledFeatures.includes('end_conversation');
+      return true;
     },
     preChatFormEnabled() {
       return window.chatwootWebChannel.preChatFormEnabled;
