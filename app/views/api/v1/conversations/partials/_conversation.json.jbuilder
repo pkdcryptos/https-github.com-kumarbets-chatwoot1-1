@@ -2,7 +2,19 @@
 # Currently the file there is used only for search endpoint.
 # Everywhere else we use conversation builder in partials folder
 
-
+json.meta do
+  json.sender do
+    json.partial! 'api/v1/models/contact', formats: [:json], resource: conversation.contact
+  end
+  json.channel conversation.inbox.try(:channel_type)
+  if conversation.assignee&.account
+    json.assignee do
+      json.partial! 'api/v1/models/agent', formats: [:json], resource: conversation.assignee
+    end
+  end
+ 
+  json.hmac_verified conversation.contact_inbox&.hmac_verified
+end
 
 json.id conversation.display_id
 if conversation.messages.where(account_id: conversation.account_id).last.blank?
@@ -19,6 +31,8 @@ json.uuid conversation.uuid
 json.agent_last_seen_at conversation.agent_last_seen_at.to_i
 json.assignee_last_seen_at conversation.assignee_last_seen_at.to_i
 json.can_reply conversation.can_reply?
+json.contact_last_seen_at conversation.contact_last_seen_at.to_i
+json.inbox_id conversation.inbox_id
 json.muted conversation.muted?
 json.snoozed_until conversation.snoozed_until
 json.status conversation.status

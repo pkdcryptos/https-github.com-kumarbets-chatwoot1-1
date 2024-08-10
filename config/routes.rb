@@ -47,6 +47,11 @@ Rails.application.routes.draw do
           resources :agent_bots, only: [:index, :create, :show, :update, :destroy] do
             delete :avatar, on: :member
           end
+          resources :contact_inboxes, only: [] do
+            collection do
+              post :filter
+            end
+          end
           resources :assignable_agents, only: [:index]
           
           resources :callbacks, only: [] do
@@ -111,6 +116,7 @@ Rails.application.routes.draw do
             end
             scope module: :contacts do
               resources :conversations, only: [:index]
+              resources :contact_inboxes, only: [:create]
               resources :labels, only: [:create, :index]
             end
           end
