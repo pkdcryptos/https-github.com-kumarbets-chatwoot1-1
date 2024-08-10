@@ -65,7 +65,6 @@ class Api::V1::AccountsController < Api::BaseController
     {
 
       inbox: fetch_value_for_key(params[:id], Inbox.name.underscore),
-      team: fetch_value_for_key(params[:id], Team.name.underscore)
     }
   end
 
