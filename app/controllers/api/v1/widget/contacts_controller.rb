@@ -19,8 +19,7 @@ class Api::V1::Widget::ContactsController < Api::V1::Widget::BaseController
       contact = @contact
     end
 
-    @contact_inbox.update(hmac_verified: true) if should_verify_hmac? && valid_hmac?
-
+ 
     identify_contact(contact)
   end
 
@@ -41,11 +40,7 @@ class Api::V1::Widget::ContactsController < Api::V1::Widget::BaseController
     @contact.identifier.present? && @contact.identifier != permitted_params[:identifier]
   end
 
-  def validate_hmac
-    return unless should_verify_hmac?
 
-    render json: { error: 'HMAC failed: Invalid Identifier Hash Provided' }, status: :unauthorized unless valid_hmac?
-  end
 
   def should_verify_hmac?
     return false if params[:identifier_hash].blank? && !@web_widget.hmac_mandatory
@@ -56,13 +51,7 @@ class Api::V1::Widget::ContactsController < Api::V1::Widget::BaseController
     true
   end
 
-  def valid_hmac?
-    params[:identifier_hash] == OpenSSL::HMAC.hexdigest(
-      'sha256',
-      @web_widget.hmac_token,
-      params[:identifier].to_s
-    )
-  end
+ 
 
   def permitted_params
     params.permit(:website_token, :identifier, :identifier_hash, :email, :name, :avatar_url, :phone_number)
