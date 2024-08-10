@@ -134,6 +134,51 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
     t.index ["website_token"], name: "index_channel_web_widgets_on_website_token", unique: true
   end
 
+
+  create_table "contact_inboxes", force: :cascade do |t|
+    t.bigint "contact_id"
+    t.bigint "inbox_id"
+    t.string "source_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "hmac_verified", default: false
+    t.string "pubsub_token"
+    t.index ["contact_id"], name: "index_contact_inboxes_on_contact_id"
+    t.index ["inbox_id", "source_id"], name: "index_contact_inboxes_on_inbox_id_and_source_id", unique: true
+    t.index ["inbox_id"], name: "index_contact_inboxes_on_inbox_id"
+    t.index ["pubsub_token"], name: "index_contact_inboxes_on_pubsub_token", unique: true
+    t.index ["source_id"], name: "index_contact_inboxes_on_source_id"
+  end
+
+  create_table "contacts", id: :serial, force: :cascade do |t|
+    t.string "name", default: ""
+    t.string "email"
+    t.string "phone_number"
+    t.integer "account_id", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.jsonb "additional_attributes", default: {}
+    t.string "identifier"
+    t.jsonb "custom_attributes", default: {}
+    t.datetime "last_activity_at", precision: nil
+    t.integer "contact_type", default: 0
+    t.string "middle_name", default: ""
+    t.string "last_name", default: ""
+    t.string "location", default: ""
+    t.string "country_code", default: ""
+    t.boolean "blocked", default: false, null: false
+    t.index "lower((email)::text), account_id", name: "index_contacts_on_lower_email_account_id"
+    t.index ["account_id", "email", "phone_number", "identifier"], name: "index_contacts_on_nonempty_fields", where: "(((email)::text <> ''::text) OR ((phone_number)::text <> ''::text) OR ((identifier)::text <> ''::text))"
+    t.index ["account_id", "last_activity_at"], name: "index_contacts_on_account_id_and_last_activity_at", order: { last_activity_at: "DESC NULLS LAST" }
+    t.index ["account_id"], name: "index_contacts_on_account_id"
+    t.index ["account_id"], name: "index_resolved_contact_account_id", where: "(((email)::text <> ''::text) OR ((phone_number)::text <> ''::text) OR ((identifier)::text <> ''::text))"
+    t.index ["blocked"], name: "index_contacts_on_blocked"
+    t.index ["email", "account_id"], name: "uniq_email_per_account_contact", unique: true
+    t.index ["identifier", "account_id"], name: "uniq_identifier_per_account_contact", unique: true
+    t.index ["name", "email", "phone_number", "identifier"], name: "index_contacts_on_name_email_phone_number_identifier", opclass: :gin_trgm_ops, using: :gin
+    t.index ["phone_number", "account_id"], name: "index_contacts_on_phone_number_and_account_id"
+  end
+
   create_table "conversation_participants", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.bigint "user_id", null: false
@@ -194,6 +239,42 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
 
 
 
+
+  create_table "inbox_members", id: :serial, force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "inbox_id", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["inbox_id", "user_id"], name: "index_inbox_members_on_inbox_id_and_user_id", unique: true
+    t.index ["inbox_id"], name: "index_inbox_members_on_inbox_id"
+  end
+
+  create_table "inboxes", id: :serial, force: :cascade do |t|
+    t.integer "channel_id", null: false
+    t.integer "account_id", null: false
+    t.string "name", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.string "channel_type"
+    t.boolean "enable_auto_assignment", default: true
+    t.boolean "greeting_enabled", default: false
+    t.string "greeting_message"
+    t.string "email_address"
+    t.boolean "working_hours_enabled", default: false
+    t.string "out_of_office_message"
+    t.string "timezone", default: "UTC"
+    t.boolean "enable_email_collect", default: true
+    t.boolean "csat_survey_enabled", default: false
+    t.boolean "allow_messages_after_resolved", default: true
+    t.jsonb "auto_assignment_config", default: {}
+    t.boolean "lock_to_single_conversation", default: false, null: false
+    t.bigint "portal_id"
+    t.integer "sender_name_type", default: 0, null: false
+    t.string "business_name"
+    t.index ["account_id"], name: "index_inboxes_on_account_id"
+    t.index ["channel_id", "channel_type"], name: "index_inboxes_on_channel_id_and_channel_type"
+    t.index ["portal_id"], name: "index_inboxes_on_portal_id"
+  end
 
   create_table "installation_configs", force: :cascade do |t|
     t.string "name", null: false
