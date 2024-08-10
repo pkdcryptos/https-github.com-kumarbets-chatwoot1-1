@@ -357,7 +357,7 @@ CREATE INDEX "index_conversations_on_team_id" ON "public"."conversations" USING 
 CREATE INDEX "index_conversations_on_waiting_since" ON "public"."conversations" USING btree ("waiting_since");
 
 INSERT INTO "conversations" ("id", "account_id", "inbox_id", "status", "assignee_id", "created_at", "updated_at", "contact_id", "display_id", "contact_last_seen_at", "agent_last_seen_at", "additional_attributes", "contact_inbox_id", "uuid", "identifier", "last_activity_at", "team_id", "campaign_id", "snoozed_until", "custom_attributes", "assignee_last_seen_at", "first_reply_created_at", "priority", "sla_policy_id", "waiting_since", "cached_label_list") VALUES
-(1,	1,	1,	0,	NULL,	'2024-08-10 16:02:23.76768',	'2024-08-10 21:22:12.024125',	1,	1,	'2024-08-10 16:02:23.992798',	'2024-08-10 21:22:12.078369',	'{}',	1,	'076c828e-4e59-4f67-8b75-7651efe09b49',	NULL,	'2024-08-10 21:22:11.975732',	NULL,	NULL,	NULL,	'{}',	NULL,	'2024-08-10 21:22:11.975732',	NULL,	NULL,	NULL,	NULL);
+(1,	1,	1,	0,	NULL,	'2024-08-10 16:02:23.76768',	'2024-08-10 21:29:26.634745',	1,	1,	'2024-08-10 16:02:23.992798',	'2024-08-10 21:29:26.754262',	'{}',	1,	'076c828e-4e59-4f67-8b75-7651efe09b49',	NULL,	'2024-08-10 21:29:26.63274',	NULL,	NULL,	NULL,	'{}',	NULL,	'2024-08-10 21:22:11.975732',	NULL,	NULL,	NULL,	NULL);
 
 DELIMITER ;;
 
@@ -491,7 +491,9 @@ CREATE INDEX "index_messages_on_source_id" ON "public"."messages" USING btree ("
 
 INSERT INTO "messages" ("id", "content", "account_id", "inbox_id", "conversation_id", "message_type", "created_at", "updated_at", "private", "status", "source_id", "content_type", "content_attributes", "sender_type", "sender_id", "external_source_ids", "additional_attributes", "processed_message_content", "sentiment") VALUES
 (1,	'a1',	1,	1,	1,	0,	'2024-08-10 16:02:23.827163',	'2024-08-10 16:02:23.827163',	'f',	0,	NULL,	0,	'"{\"in_reply_to\":null}"',	'Contact',	1,	NULL,	'{}',	'a1',	'{}'),
-(2,	'aaaa',	1,	1,	1,	1,	'2024-08-10 21:22:11.975732',	'2024-08-10 21:22:11.975732',	'f',	0,	NULL,	0,	NULL,	'User',	2,	NULL,	'{}',	'aaaa',	'{}');
+(2,	'aaaa',	1,	1,	1,	1,	'2024-08-10 21:22:11.975732',	'2024-08-10 21:22:11.975732',	'f',	0,	NULL,	0,	NULL,	'User',	2,	NULL,	'{}',	'aaaa',	'{}'),
+(3,	'aaaa',	1,	1,	1,	1,	'2024-08-10 21:29:11.682271',	'2024-08-10 21:29:11.682271',	'f',	0,	NULL,	0,	NULL,	'User',	1,	NULL,	'{}',	'aaaa',	'{}'),
+(4,	'ccccccc',	1,	1,	1,	1,	'2024-08-10 21:29:26.63274',	'2024-08-10 21:29:26.63274',	'f',	0,	NULL,	0,	NULL,	'User',	2,	NULL,	'{}',	'ccccccc',	'{}');
 
 DROP VIEW IF EXISTS "pg_stat_statements";
 CREATE TABLE "pg_stat_statements" ("userid" oid, "dbid" oid, "toplevel" boolean, "queryid" bigint, "query" text, "plans" bigint, "total_plan_time" double precision, "min_plan_time" double precision, "max_plan_time" double precision, "mean_plan_time" double precision, "stddev_plan_time" double precision, "calls" bigint, "total_exec_time" double precision, "min_exec_time" double precision, "max_exec_time" double precision, "mean_exec_time" double precision, "stddev_exec_time" double precision, "rows" bigint, "shared_blks_hit" bigint, "shared_blks_read" bigint, "shared_blks_dirtied" bigint, "shared_blks_written" bigint, "local_blks_hit" bigint, "local_blks_read" bigint, "local_blks_dirtied" bigint, "local_blks_written" bigint, "temp_blks_read" bigint, "temp_blks_written" bigint, "blk_read_time" double precision, "blk_write_time" double precision, "wal_records" bigint, "wal_fpi" bigint, "wal_bytes" numeric);
@@ -633,4 +635,4 @@ CREATE VIEW "pg_stat_statements_info" AS SELECT pg_stat_statements_info.dealloc,
     pg_stat_statements_info.stats_reset
    FROM pg_stat_statements_info() pg_stat_statements_info(dealloc, stats_reset);
 
--- 2024-08-10 14:22:19.309913-07
+-- 2024-08-10 14:29:56.331044-07
