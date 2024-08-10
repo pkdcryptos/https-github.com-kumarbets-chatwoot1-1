@@ -18,16 +18,7 @@ class ConversationFinder
     'sort_on_priority' => %w[sort_on_priority desc],
     'sort_on_waiting_since' => %w[sort_on_waiting_since asc]
   }.with_indifferent_access
-  # assumptions
-  # inbox_id if not given, take from all conversations, else specific to inbox
-  # assignee_type if not given, take 'all'
-  # conversation_status if not given, take 'open'
 
-  # response of this class will be of type
-  # {conversations: [array of conversations], count: {open: count, resolved: count}}
-
-  # params
-  # assignee_type, inbox_id, :status
 
   def initialize(current_user, params)
     @current_user = current_user
@@ -57,22 +48,12 @@ class ConversationFinder
   private
 
   def set_up
-    set_inboxes
     set_assignee_type
-
-    find_all_conversations
     filter_by_status unless params[:q]
     filter_by_query
-    filter_by_source_id
   end
 
-  def set_inboxes
-    @inbox_ids = if params[:inbox_id]
-                   @current_user.assigned_inboxes.where(id: params[:inbox_id])
-                 else
-                   @current_user.assigned_inboxes.pluck(:id)
-                 end
-  end
+
 
   def set_assignee_type
     @assignee_type = params[:assignee_type]
@@ -80,11 +61,7 @@ class ConversationFinder
 
 
 
-  def find_all_conversations
-    @conversations = current_account.conversations.where(inbox_id: @inbox_ids)
-    filter_by_conversation_type if params[:conversation_type]
-    @conversations
-  end
+
 
   def filter_by_assignee_type
     case @assignee_type
@@ -126,12 +103,7 @@ class ConversationFinder
 
 
 
-  def filter_by_source_id
-    return unless params[:source_id]
 
-    @conversations = @conversations.joins(:contact_inbox)
-    @conversations = @conversations.where(contact_inboxes: { source_id: params[:source_id] })
-  end
 
   def set_count_for_all_conversations
     [
@@ -147,7 +119,7 @@ class ConversationFinder
 
   def conversations_base_query
     @conversations.includes(
-      :inbox, { assignee: { } }, { contact: { } },  :contact_inbox
+      { assignee: { } }
     )
   end
 
