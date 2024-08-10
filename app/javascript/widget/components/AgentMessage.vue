@@ -83,9 +83,7 @@ export default {
         return displayImage;
       }
 
-      return this.message.sender
-        ? this.message.sender.avatar_url
-        : displayImage;
+      return  displayImage;
     },
     hasRecordedResponse() {
       return (
