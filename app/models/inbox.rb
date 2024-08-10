@@ -39,7 +39,7 @@
 #
 
 class Inbox < ApplicationRecord
-  include Avatarable
+
   include OutOfOffisable
   include AccountCacheRevalidator
 

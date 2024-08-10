@@ -41,7 +41,7 @@
 
 class User < ApplicationRecord
   include AccessTokenable
-  include Avatarable
+
   # Include default devise modules.
   include DeviseTokenAuth::Concerns::User
   include Pubsubable
