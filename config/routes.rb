@@ -147,6 +147,22 @@ Rails.application.routes.draw do
           end
 
 
+
+
+          resources :teams do
+            resources :team_members, only: [:index, :create] do
+              collection do
+                delete :destroy
+                patch :update
+              end
+            end
+          end
+
+        
+          namespace :google do
+            resource :authorization, only: [:create]
+          end
+
          
         
           resources :working_hours, only: [:update]
@@ -204,15 +220,20 @@ Rails.application.routes.draw do
           resources :summary_reports, only: [] do
             collection do
               get :agent
+              get :team
             end
           end
           resources :reports, only: [:index] do
             collection do
               get :summary
+              get :bot_summary
               get :agents
               get :inboxes
+              get :labels
+              get :teams
               get :conversations
               get :conversation_traffic
+              get :bot_metrics
             end
           end
         end

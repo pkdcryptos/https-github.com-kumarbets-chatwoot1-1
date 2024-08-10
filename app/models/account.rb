@@ -52,7 +52,7 @@ class Account < ApplicationRecord
 
 
 
-
+  has_many :teams, dependent: :destroy_async
   has_many :users, through: :account_users
   has_many :web_widgets, dependent: :destroy_async, class_name: '::Channel::WebWidget'
 

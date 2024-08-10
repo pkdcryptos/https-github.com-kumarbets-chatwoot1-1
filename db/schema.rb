@@ -327,7 +327,26 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
 
 
 
+  create_table "team_members", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id", "user_id"], name: "index_team_members_on_team_id_and_user_id", unique: true
+    t.index ["team_id"], name: "index_team_members_on_team_id"
+    t.index ["user_id"], name: "index_team_members_on_user_id"
+  end
 
+  create_table "teams", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.boolean "allow_auto_assign", default: true
+    t.bigint "account_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_teams_on_account_id"
+    t.index ["name", "account_id"], name: "index_teams_on_name_and_account_id", unique: true
+  end
 
 
 

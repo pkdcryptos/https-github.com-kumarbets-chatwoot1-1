@@ -86,6 +86,9 @@ class User < ApplicationRecord
 
 
 
+  has_many :team_members, dependent: :destroy_async
+  has_many :teams, through: :team_members
+
   # rubocop:enable Rails/HasManyOrHasOneDependent
 
   before_validation :set_password_and_uid, on: :create

@@ -91,7 +91,7 @@ class Conversation < ApplicationRecord
   belongs_to :assignee, class_name: 'User', optional: true, inverse_of: :assigned_conversations
   belongs_to :contact
   belongs_to :contact_inbox
-
+  belongs_to :team, optional: true
 
 
 
@@ -210,7 +210,7 @@ class Conversation < ApplicationRecord
   end
 
   def list_of_keys
-    %w[ assignee_id status snoozed_until   waiting_since first_reply_created_at
+    %w[team_id assignee_id status snoozed_until   waiting_since first_reply_created_at
        priority]
   end
 

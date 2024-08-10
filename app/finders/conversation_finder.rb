@@ -58,10 +58,12 @@ class ConversationFinder
 
   def set_up
     set_inboxes
+    set_team
     set_assignee_type
 
     find_all_conversations
     filter_by_status unless params[:q]
+    filter_by_team
     filter_by_query
     filter_by_source_id
   end
@@ -78,7 +80,9 @@ class ConversationFinder
     @assignee_type = params[:assignee_type]
   end
 
-
+  def set_team
+    @team = current_account.teams.find(params[:team_id]) if params[:team_id]
+  end
 
   def find_all_conversations
     @conversations = current_account.conversations.where(inbox_id: @inbox_ids)
@@ -124,6 +128,11 @@ class ConversationFinder
     @conversations = @conversations.where(status: params[:status] || DEFAULT_STATUS)
   end
 
+  def filter_by_team
+    return unless @team
+
+    @conversations = @conversations.where(team: @team)
+  end
 
 
   def filter_by_source_id
@@ -147,7 +156,7 @@ class ConversationFinder
 
   def conversations_base_query
     @conversations.includes(
-      :inbox, { assignee: { } }, { contact: { } },  :contact_inbox
+      :inbox, { assignee: { } }, { contact: { } }, :team, :contact_inbox
     )
   end
 

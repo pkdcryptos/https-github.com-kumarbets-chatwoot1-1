@@ -3,6 +3,7 @@ module ActivityMessageHandler
 
   include PriorityActivityMessageHandler
 
+  include TeamActivityMessageHandler
 
   private
 
