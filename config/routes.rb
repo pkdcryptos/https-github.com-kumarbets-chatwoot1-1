@@ -44,7 +44,9 @@ Rails.application.routes.draw do
           resources :agents, only: [:index, :create, :update, :destroy] do
             post :bulk_create, on: :collection
           end
-        
+          resources :agent_bots, only: [:index, :create, :show, :update, :destroy] do
+            delete :avatar, on: :member
+          end
           resources :contact_inboxes, only: [] do
             collection do
               post :filter
@@ -110,6 +112,7 @@ Rails.application.routes.draw do
             end
             member do
               get :contactable_inboxes
+              delete :avatar
             end
             scope module: :contacts do
               resources :conversations, only: [:index]
@@ -124,6 +127,7 @@ Rails.application.routes.draw do
             get :response_sources, on: :member
             get :agent_bot, on: :member
             post :set_agent_bot, on: :member
+            delete :avatar, on: :member
           end
           resources :inbox_members, only: [:create, :show], param: :inbox_id do
             collection do
@@ -173,6 +177,7 @@ Rails.application.routes.draw do
      
 
       resource :profile, only: [:show, :update] do
+        delete :avatar, on: :collection
         member do
           post :availability
           post :auto_offline
@@ -321,7 +326,9 @@ Rails.application.routes.draw do
         post :seed, on: :member
         post :reset_cache, on: :member
       end
-     
+      resources :users, only: [:index, :new, :create, :show, :edit, :update, :destroy] do
+        delete :avatar, on: :member, action: :destroy_avatar
+      end
 
       resources :access_tokens, only: [:index, :show]
       resources :response_sources, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
@@ -331,7 +338,10 @@ Rails.application.routes.draw do
       resources :response_documents, only: [:index, :show, :new, :create, :edit, :update, :destroy]
       resources :responses, only: [:index, :show, :new, :create, :edit, :update, :destroy]
       resources :installation_configs, only: [:index, :new, :create, :show, :edit, :update]
-    
+      resources :agent_bots, only: [:index, :new, :create, :show, :edit, :update] do
+        delete :avatar, on: :member, action: :destroy_avatar
+      end
+
       resource :instance_status, only: [:show]
 
       resource :settings, only: [:show] do

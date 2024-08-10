@@ -14,7 +14,10 @@ export default {
   },
   mixins: [nextAvailabilityTime, availabilityMixin, routerMixin, darkMixin],
   props: {
-  
+    avatarUrl: {
+      type: String,
+      default: '',
+    },
     title: {
       type: String,
       default: '',
@@ -68,7 +71,12 @@ export default {
           :class="$dm('text-black-900', 'dark:text-slate-50')"
         />
       </button>
-    
+      <img
+        v-if="avatarUrl"
+        class="w-8 h-8 mr-3 rounded-full"
+        :src="avatarUrl"
+        alt="avatar"
+      />
       <div>
         <div
           class="flex items-center text-base font-medium leading-4"

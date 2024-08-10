@@ -7,3 +7,4 @@ json.confirmed resource.confirmed?
 json.available_name resource.available_name
 json.name resource.name
 json.role resource.role
+json.thumbnail resource.avatar_url
