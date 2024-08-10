@@ -45,3 +45,39 @@ curl --location --request POST 'http://66.94.113.42:3000/api/v1/accounts/5/agent
 }'
 
 
+5. create inbox
+
+curl -X POST http://66.94.113.42:3000/api/v1/accounts/1/inboxes \
+     -H "Content-Type: application/json" \
+     -H "api_access_token: yLzVu1ootxAob145Pwp9WGAS" \
+     -d '{
+           "name": "Z1",
+            "channel": {
+    "type": "web_widget",
+    "website_url": "www.z1.com",
+    "welcome_title": "we",
+    "welcome_tagline": "we",
+    "agent_away_message": "away",
+    "widget_color": "blue"
+  }
+         }'
+
+=> websiteToken: "37j8JchgXu18S3MNLWLF5mmx",
+
+
+5. create contact
+
+curl -X POST 'http://66.94.113.42:3000/api/v1/widget/messages?website_token=37j8JchgXu18S3MNLWLF5mmx&locale=en'  -H "Content-Type: application/json" \
+ -d '{
+    "message": {
+        "content": "a",
+        "reply_to": null,
+        "timestamp": "Sat Aug 10 2024 05:02:45 GMT-0700 (Pacific Daylight Time)",
+        "referer_url": "http://localhost:3000/"
+    }
+}'
+
+
+ curl -X POST 'http://66.94.113.42:3000/public/api/v1/inboxes/5/contacts' \
+  -H "Content-Type: application/json"   \
+     -H "api_access_token: yLzVu1ootxAob145Pwp9WGAS" -d '{"name": "RBS", "email": "aa@aa.com"}'

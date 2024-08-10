@@ -35,7 +35,7 @@ class Account < ApplicationRecord
   validates :domain, length: { maximum: 100 }
 
   has_many :account_users, dependent: :destroy_async
-  has_many :api_channels, dependent: :destroy_async, class_name: '::Channel::Api'
+
 
 
 
