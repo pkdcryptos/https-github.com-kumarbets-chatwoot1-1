@@ -60,7 +60,7 @@ class Conversation < ApplicationRecord
   include ConversationMuteHelpers
 
   validates :account_id, presence: true
-  validates :inbox_id, presence: true
+
   validates :contact_id, presence: true
 
   validates :uuid, uniqueness: true
@@ -87,10 +87,9 @@ class Conversation < ApplicationRecord
   }
 
   belongs_to :account
-  belongs_to :inbox
-  belongs_to :assignee, class_name: 'User', optional: true, inverse_of: :assigned_conversations
+
   belongs_to :contact
-  belongs_to :contact_inbox
+
 
 
 
@@ -111,10 +110,7 @@ class Conversation < ApplicationRecord
   delegate :auto_resolve_duration, to: :account
 
   def can_reply?
-    channel = inbox&.channel
-
-   
-    return true unless channel&.messaging_window_enabled?
+ 
 
     messaging_window =  24
     last_message_in_messaging_window?(messaging_window)
