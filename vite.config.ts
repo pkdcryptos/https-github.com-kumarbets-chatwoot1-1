@@ -29,13 +29,6 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      dashboard: path.resolve('./app/javascript/dashboard'),
-      widget: path.resolve('./app/javascript/widget'),
-      assets: path.resolve('./app/javascript/dashboard/assets'),
-      components: path.resolve('./app/javascript/dashboard/components'),
-      helpers: path.resolve('./app/javascript/shared/helpers'),
-      v3: path.resolve('./app/javascript/v3'),
-      shared: path.resolve('./app/javascript/shared'),
     },
   },
 });

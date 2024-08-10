@@ -353,8 +353,6 @@ function setup_chatwoot() {
   sed -i -e "/POSTGRES_PASSWORD/ s/=.*/=$pg_pass/" .env
   sed -i -e '/RAILS_ENV/ s/=.*/=$RAILS_ENV/' .env
   echo -en "\nINSTALLATION_ENV=linux_script" >> ".env"
-
-  rake assets:precompile RAILS_ENV=production NODE_OPTIONS=--openssl-legacy-provider
 EOF
 }
 
@@ -828,8 +826,7 @@ function upgrade() {
   bundle
   yarn
 
-  # Recompile the assets
-  rake assets:precompile RAILS_ENV=production NODE_OPTIONS=--openssl-legacy-provider
+
 
   # Migrate the database schema
   RAILS_ENV=production POSTGRES_STATEMENT_TIMEOUT=600s bundle exec rake db:migrate
