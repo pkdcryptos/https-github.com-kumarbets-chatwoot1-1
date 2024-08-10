@@ -64,7 +64,6 @@ class Message < ApplicationRecord
   before_save :ensure_in_reply_to
 
   validates :account_id, presence: true
-  validates :inbox_id, presence: true
   validates :conversation_id, presence: true
   validates_with ContentAttributeValidator
 
@@ -115,7 +114,6 @@ class Message < ApplicationRecord
   default_scope { order(created_at: :asc) }
 
   belongs_to :account
-  belongs_to :inbox
   belongs_to :conversation, touch: true
   belongs_to :sender, polymorphic: true, optional: true
 
@@ -126,9 +124,7 @@ class Message < ApplicationRecord
 
   after_update_commit :dispatch_update_event
 
-  def channel_token
-    @token ||= inbox.channel.try(:page_access_token)
-  end
+
 
   def push_event_data
     data = attributes.symbolize_keys.merge(
@@ -147,7 +143,6 @@ class Message < ApplicationRecord
       assignee_id: conversation.assignee_id,
       unread_count: conversation.unread_incoming_messages.count,
       last_activity_at: conversation.last_activity_at.to_i,
-      contact_inbox: { source_id: conversation.contact_inbox.source_id }
     }
   end
 
@@ -162,7 +157,7 @@ class Message < ApplicationRecord
 
   def content
     # move this to a presenter
-    return self[:content] if inbox.web_widget?
+    return self[:content] 
 
   end
 
@@ -282,13 +277,7 @@ class Message < ApplicationRecord
   end
 
   def reopen_resolved_conversation
-    # mark resolved bot conversation as pending to be reopened by bot processor service
-    if  conversation.inbox.api?
-      Current.executed_by = sender if reopened_by_contact?
-      conversation.open!
-    else
-      conversation.open!
-    end
+    conversation.open!
   end
 
   def reopened_by_contact?
@@ -296,17 +285,6 @@ class Message < ApplicationRecord
   end
 
 
-  def email_notifiable_webwidget?
-    inbox.web_widget? && inbox.channel.continuity_via_email
-  end
-
-  def email_notifiable_api_channel?
-    inbox.api? && inbox.account.feature_enabled?('email_continuity_on_api_channel')
-  end
-
-  def email_notifiable_channel?
-    email_notifiable_webwidget? || %w[Email].include?(inbox.inbox_type) || email_notifiable_api_channel?
-  end
 
   def can_notify_via_mail?
     return unless email_notifiable_message?
