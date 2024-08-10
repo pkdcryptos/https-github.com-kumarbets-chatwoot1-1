@@ -10,11 +10,7 @@ class Api::V1::AccountsController < Api::BaseController
   before_action :fetch_account, except: [:create]
   before_action :check_authorization, except: [:create]
 
-  rescue_from CustomExceptions::Account::InvalidEmail,
-              CustomExceptions::Account::InvalidParams,
-              CustomExceptions::Account::UserExists,
-              CustomExceptions::Account::UserErrors,
-              with: :render_error_response
+ 
 
   def show
     @latest_chatwoot_version = ::Redis::Alfred.get(::Redis::Alfred::LATEST_CHATWOOT_VERSION)
@@ -33,8 +29,7 @@ class Api::V1::AccountsController < Api::BaseController
     if @user
       send_auth_headers(@user)
       render 'api/v1/accounts/create', format: :json, locals: { resource: @user }
-    else
-      render_error_response(CustomExceptions::Account::SignupFailed.new({}))
+   
     end
   end
 
@@ -64,7 +59,6 @@ class Api::V1::AccountsController < Api::BaseController
     return if account_params[:account_name].present?
     return if account_params[:user_full_name].present?
 
-    raise CustomExceptions::Account::InvalidParams.new({})
   end
 
   def cache_keys_for_account

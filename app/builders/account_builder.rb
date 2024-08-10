@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AccountBuilder
-  include CustomExceptions::Account
+
   pattr_initialize [:account_name, :email!, :confirmed, :user, :user_full_name, :user_password, :super_admin, :locale]
 
   def perform
