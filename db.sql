@@ -1,4 +1,4 @@
--- Adminer 4.8.1 PostgreSQL 14.12 dump
+-- Adminer 4.8.1 PostgreSQL 14.12 (Ubuntu 14.12-0ubuntu0.22.04.1) dump
 
 DROP TABLE IF EXISTS "access_tokens";
 DROP SEQUENCE IF EXISTS access_tokens_id_seq;
@@ -18,9 +18,8 @@ CREATE TABLE "public"."access_tokens" (
 CREATE INDEX "index_access_tokens_on_owner_type_and_owner_id" ON "public"."access_tokens" USING btree ("owner_type", "owner_id");
 
 INSERT INTO "access_tokens" ("id", "owner_type", "owner_id", "token", "created_at", "updated_at") VALUES
-(1,	'User',	1,	'JiYFxaJUDR7NoiQt7vwfp4gn',	'2024-08-10 16:31:37.017134',	'2024-08-10 16:31:37.017134'),
-(2,	'User',	2,	'SXLLwouq5rLTYtL823UbDZeC',	'2024-08-10 16:31:45.853874',	'2024-08-10 16:31:45.853874'),
-(3,	'User',	3,	'U1Np3xKGhzAkySxdpQkYJo9W',	'2024-08-10 16:31:53.998455',	'2024-08-10 16:31:53.998455');
+(1,	'User',	1,	'AiLyn7BAhUWXcLs2K9PwUPQG',	'2024-08-10 21:19:56.945816',	'2024-08-10 21:19:56.945816'),
+(2,	'User',	2,	'cL9SuNWN5TA4Ssz4YsazGUdS',	'2024-08-10 21:20:26.420595',	'2024-08-10 21:20:26.420595');
 
 DROP TABLE IF EXISTS "account_users";
 DROP SEQUENCE IF EXISTS account_users_id_seq;
@@ -46,9 +45,8 @@ CREATE INDEX "index_account_users_on_account_id" ON "public"."account_users" USI
 CREATE INDEX "index_account_users_on_user_id" ON "public"."account_users" USING btree ("user_id");
 
 INSERT INTO "account_users" ("id", "account_id", "user_id", "role", "inviter_id", "created_at", "updated_at", "active_at", "availability", "auto_offline") VALUES
-(1,	1,	1,	1,	NULL,	'2024-08-10 16:31:37.037353',	'2024-08-10 16:31:37.037353',	NULL,	0,	't'),
-(2,	1,	2,	1,	NULL,	'2024-08-10 16:31:45.859646',	'2024-08-10 16:31:45.859646',	NULL,	0,	't'),
-(3,	1,	3,	1,	NULL,	'2024-08-10 16:31:54.005903',	'2024-08-10 16:31:54.005903',	NULL,	0,	't');
+(1,	1,	1,	1,	NULL,	'2024-08-10 21:19:56.965059',	'2024-08-10 21:19:56.965059',	NULL,	0,	't'),
+(2,	1,	2,	1,	NULL,	'2024-08-10 21:20:26.424113',	'2024-08-10 21:20:26.424113',	NULL,	0,	't');
 
 DROP TABLE IF EXISTS "accounts";
 DROP SEQUENCE IF EXISTS accounts_id_seq;
@@ -73,7 +71,7 @@ CREATE TABLE "public"."accounts" (
 CREATE INDEX "index_accounts_on_status" ON "public"."accounts" USING btree ("status");
 
 INSERT INTO "accounts" ("id", "name", "created_at", "updated_at", "locale", "domain", "support_email", "feature_flags", "auto_resolve_duration", "limits", "custom_attributes", "status") VALUES
-(1,	'Test',	'2024-08-10 16:31:36.848864',	'2024-08-10 16:31:36.848864',	0,	NULL,	NULL,	0,	NULL,	'{}',	'{}',	0);
+(1,	'Test',	'2024-08-10 21:19:56.781446',	'2024-08-10 21:19:56.781446',	0,	NULL,	NULL,	0,	NULL,	'{}',	'{}',	0);
 
 DELIMITER ;;
 
@@ -143,8 +141,8 @@ CREATE TABLE "public"."ar_internal_metadata" (
 ) WITH (oids = false);
 
 INSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES
-('environment',	'production',	'2024-08-10 16:30:45.492121',	'2024-08-10 16:30:45.492121'),
-('schema_sha1',	'64c5268154fd2350a3dac816eb792204ae043785',	'2024-08-10 16:30:45.501014',	'2024-08-10 16:30:45.501014');
+('environment',	'production',	'2024-08-10 21:12:50.036292',	'2024-08-10 21:12:50.036292'),
+('schema_sha1',	'1e209029ff69d7f44816c709affcf2445f03feed',	'2024-08-10 21:12:50.04087',	'2024-08-10 21:12:50.04087');
 
 DROP TABLE IF EXISTS "attachments";
 DROP SEQUENCE IF EXISTS attachments_id_seq;
@@ -197,7 +195,7 @@ CREATE TABLE "public"."channel_web_widgets" (
 ) WITH (oids = false);
 
 INSERT INTO "channel_web_widgets" ("id", "website_url", "account_id", "created_at", "updated_at", "website_token", "widget_color", "welcome_title", "welcome_tagline", "feature_flags", "reply_time", "hmac_token", "pre_chat_form_enabled", "pre_chat_form_options", "hmac_mandatory", "continuity_via_email") VALUES
-(1,	'w',	1,	'2024-08-10 16:32:48.903492',	'2024-08-10 16:32:48.903492',	'GM1rqq5EunZggxULQie958kT',	'#009CE0',	'',	'',	0,	0,	'UQNZmC6KG2BVz5CPpWxxfFFm',	'f',	'{"pre_chat_fields": [{"name": "emailAddress", "type": "email", "label": "Email Id", "enabled": false, "required": true, "field_type": "standard"}, {"name": "fullName", "type": "text", "label": "Full name", "enabled": false, "required": false, "field_type": "standard"}, {"name": "phoneNumber", "type": "text", "label": "Phone number", "enabled": false, "required": false, "field_type": "standard"}], "pre_chat_message": "Share your queries or comments here."}',	'f',	't');
+(1,	'w',	1,	'2024-08-10 21:21:05.38953',	'2024-08-10 21:21:05.38953',	'qMmJQTkDcViig6Bd9XaBvQyC',	'#009CE0',	'',	'',	0,	0,	'FyQwqNPxcUwiBWX8bNLf1vbJ',	'f',	'{"pre_chat_fields": [{"name": "emailAddress", "type": "email", "label": "Email Id", "enabled": false, "required": true, "field_type": "standard"}, {"name": "fullName", "type": "text", "label": "Full name", "enabled": false, "required": false, "field_type": "standard"}, {"name": "phoneNumber", "type": "text", "label": "Phone number", "enabled": false, "required": false, "field_type": "standard"}], "pre_chat_message": "Share your queries or comments here."}',	'f',	't');
 
 DROP TABLE IF EXISTS "contact_inboxes";
 DROP SEQUENCE IF EXISTS contact_inboxes_id_seq;
@@ -359,7 +357,7 @@ CREATE INDEX "index_conversations_on_team_id" ON "public"."conversations" USING 
 CREATE INDEX "index_conversations_on_waiting_since" ON "public"."conversations" USING btree ("waiting_since");
 
 INSERT INTO "conversations" ("id", "account_id", "inbox_id", "status", "assignee_id", "created_at", "updated_at", "contact_id", "display_id", "contact_last_seen_at", "agent_last_seen_at", "additional_attributes", "contact_inbox_id", "uuid", "identifier", "last_activity_at", "team_id", "campaign_id", "snoozed_until", "custom_attributes", "assignee_last_seen_at", "first_reply_created_at", "priority", "sla_policy_id", "waiting_since", "cached_label_list") VALUES
-(1,	1,	1,	0,	NULL,	'2024-08-10 16:02:23.76768',	'2024-08-10 16:36:09.858623',	1,	1,	'2024-08-10 16:02:23.992798',	'2024-08-10 16:36:20.937793',	'{}',	1,	'076c828e-4e59-4f67-8b75-7651efe09b49',	NULL,	'2024-08-10 16:36:09.85368',	NULL,	NULL,	NULL,	'{}',	NULL,	'2024-08-10 16:34:20.900493',	NULL,	NULL,	NULL,	NULL);
+(1,	1,	1,	0,	NULL,	'2024-08-10 16:02:23.76768',	'2024-08-10 21:22:12.024125',	1,	1,	'2024-08-10 16:02:23.992798',	'2024-08-10 21:22:12.078369',	'{}',	1,	'076c828e-4e59-4f67-8b75-7651efe09b49',	NULL,	'2024-08-10 21:22:11.975732',	NULL,	NULL,	NULL,	'{}',	NULL,	'2024-08-10 21:22:11.975732',	NULL,	NULL,	NULL,	NULL);
 
 DELIMITER ;;
 
@@ -384,7 +382,7 @@ CREATE TABLE "public"."inbox_members" (
 CREATE INDEX "index_inbox_members_on_inbox_id" ON "public"."inbox_members" USING btree ("inbox_id");
 
 INSERT INTO "inbox_members" ("id", "user_id", "inbox_id", "created_at", "updated_at") VALUES
-(1,	1,	1,	'2024-08-10 16:32:52.274384',	'2024-08-10 16:32:52.274384');
+(1,	1,	1,	'2024-08-10 21:21:08.392085',	'2024-08-10 21:21:08.392085');
 
 DROP TABLE IF EXISTS "inboxes";
 DROP SEQUENCE IF EXISTS inboxes_id_seq;
@@ -423,7 +421,7 @@ CREATE INDEX "index_inboxes_on_channel_id_and_channel_type" ON "public"."inboxes
 CREATE INDEX "index_inboxes_on_portal_id" ON "public"."inboxes" USING btree ("portal_id");
 
 INSERT INTO "inboxes" ("id", "channel_id", "account_id", "name", "created_at", "updated_at", "channel_type", "enable_auto_assignment", "greeting_enabled", "greeting_message", "email_address", "working_hours_enabled", "out_of_office_message", "timezone", "enable_email_collect", "csat_survey_enabled", "allow_messages_after_resolved", "auto_assignment_config", "lock_to_single_conversation", "portal_id", "sender_name_type", "business_name") VALUES
-(1,	1,	1,	'w',	'2024-08-10 16:32:48.92711',	'2024-08-10 16:32:48.92711',	'Channel::WebWidget',	't',	'f',	'',	NULL,	'f',	NULL,	'UTC',	't',	'f',	't',	'{}',	'f',	NULL,	0,	NULL);
+(1,	1,	1,	'w',	'2024-08-10 21:21:05.452917',	'2024-08-10 21:21:05.452917',	'Channel::WebWidget',	't',	'f',	'',	NULL,	'f',	NULL,	'UTC',	't',	'f',	't',	'{}',	'f',	NULL,	0,	NULL);
 
 DROP TABLE IF EXISTS "installation_configs";
 DROP SEQUENCE IF EXISTS installation_configs_id_seq;
@@ -492,7 +490,8 @@ CREATE INDEX "index_messages_on_sender_type_and_sender_id" ON "public"."messages
 CREATE INDEX "index_messages_on_source_id" ON "public"."messages" USING btree ("source_id");
 
 INSERT INTO "messages" ("id", "content", "account_id", "inbox_id", "conversation_id", "message_type", "created_at", "updated_at", "private", "status", "source_id", "content_type", "content_attributes", "sender_type", "sender_id", "external_source_ids", "additional_attributes", "processed_message_content", "sentiment") VALUES
-(8,	'sample message ',	1,	1,	1,	1,	'2024-08-10 16:36:09.85368',	'2024-08-10 16:36:09.85368',	'f',	0,	NULL,	0,	NULL,	'User',	2,	NULL,	'{}',	'sample message ',	'{}');
+(1,	'a1',	1,	1,	1,	0,	'2024-08-10 16:02:23.827163',	'2024-08-10 16:02:23.827163',	'f',	0,	NULL,	0,	'"{\"in_reply_to\":null}"',	'Contact',	1,	NULL,	'{}',	'a1',	'{}'),
+(2,	'aaaa',	1,	1,	1,	1,	'2024-08-10 21:22:11.975732',	'2024-08-10 21:22:11.975732',	'f',	0,	NULL,	0,	NULL,	'User',	2,	NULL,	'{}',	'aaaa',	'{}');
 
 DROP VIEW IF EXISTS "pg_stat_statements";
 CREATE TABLE "pg_stat_statements" ("userid" oid, "dbid" oid, "toplevel" boolean, "queryid" bigint, "query" text, "plans" bigint, "total_plan_time" double precision, "min_plan_time" double precision, "max_plan_time" double precision, "mean_plan_time" double precision, "stddev_plan_time" double precision, "calls" bigint, "total_exec_time" double precision, "min_exec_time" double precision, "max_exec_time" double precision, "mean_exec_time" double precision, "stddev_exec_time" double precision, "rows" bigint, "shared_blks_hit" bigint, "shared_blks_read" bigint, "shared_blks_dirtied" bigint, "shared_blks_written" bigint, "local_blks_hit" bigint, "local_blks_read" bigint, "local_blks_dirtied" bigint, "local_blks_written" bigint, "temp_blks_read" bigint, "temp_blks_written" bigint, "blk_read_time" double precision, "blk_write_time" double precision, "wal_records" bigint, "wal_fpi" bigint, "wal_bytes" numeric);
@@ -510,44 +509,6 @@ CREATE TABLE "public"."schema_migrations" (
 
 INSERT INTO "schema_migrations" ("version") VALUES
 ('20240516003531');
-
-DROP TABLE IF EXISTS "team_members";
-DROP SEQUENCE IF EXISTS team_members_id_seq;
-CREATE SEQUENCE team_members_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."team_members" (
-    "id" bigint DEFAULT nextval('team_members_id_seq') NOT NULL,
-    "team_id" bigint NOT NULL,
-    "user_id" bigint NOT NULL,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    CONSTRAINT "index_team_members_on_team_id_and_user_id" UNIQUE ("team_id", "user_id"),
-    CONSTRAINT "team_members_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
-
-CREATE INDEX "index_team_members_on_team_id" ON "public"."team_members" USING btree ("team_id");
-
-CREATE INDEX "index_team_members_on_user_id" ON "public"."team_members" USING btree ("user_id");
-
-
-DROP TABLE IF EXISTS "teams";
-DROP SEQUENCE IF EXISTS teams_id_seq;
-CREATE SEQUENCE teams_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
-
-CREATE TABLE "public"."teams" (
-    "id" bigint DEFAULT nextval('teams_id_seq') NOT NULL,
-    "name" character varying NOT NULL,
-    "description" text,
-    "allow_auto_assign" boolean DEFAULT true,
-    "account_id" bigint NOT NULL,
-    "created_at" timestamp(6) NOT NULL,
-    "updated_at" timestamp(6) NOT NULL,
-    CONSTRAINT "index_teams_on_name_and_account_id" UNIQUE ("name", "account_id"),
-    CONSTRAINT "teams_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
-
-CREATE INDEX "index_teams_on_account_id" ON "public"."teams" USING btree ("account_id");
-
 
 DROP TABLE IF EXISTS "users";
 DROP SEQUENCE IF EXISTS users_id_seq;
@@ -591,9 +552,8 @@ CREATE TABLE "public"."users" (
 CREATE INDEX "index_users_on_email" ON "public"."users" USING btree ("email");
 
 INSERT INTO "users" ("id", "provider", "uid", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "sign_in_count", "current_sign_in_at", "last_sign_in_at", "current_sign_in_ip", "last_sign_in_ip", "confirmation_token", "confirmed_at", "confirmation_sent_at", "unconfirmed_email", "name", "display_name", "email", "tokens", "created_at", "updated_at", "pubsub_token", "availability", "ui_settings", "custom_attributes", "type", "message_signature") VALUES
-(1,	'email',	'a1@gmail.com',	'$2a$11$PLMd8Cge5xFvt8PfWZan4uqIJrV.ettML8k4IjiRwyk5LRbFTDiUC',	NULL,	NULL,	NULL,	0,	NULL,	NULL,	NULL,	NULL,	'yTdNmPxJCUffux5imrV-',	'2024-08-10 16:31:37.006133',	'2024-08-10 16:31:37.006133',	NULL,	'A1',	NULL,	'a1@gmail.com',	'"{\"FpCGPsuofPl6kevYr2kthg\":{\"token\":\"$2a$10$7KpI87vs.E3NbkIoNjb8luFyrf021NeNjELi3W2/XRAH9rwM41ScW\",\"expiry\":1728577897,\"updated_at\":\"2024-08-10T16:31:37Z\"}}"',	'2024-08-10 16:31:37.00594',	'2024-08-10 16:31:37.107946',	'sD8o4XR9xpcvwzsjcBh253cG',	0,	'{}',	'{}',	NULL,	NULL),
-(2,	'email',	'a2@gmail.com',	'$2a$11$YC/xpeNinw1BBnT5skk0ae76brA/THiJQfYPF0VmDNpHmfE5W0gGS',	NULL,	NULL,	NULL,	0,	NULL,	NULL,	NULL,	NULL,	'PsGhhaAyPEyKRnFxNfGs',	'2024-08-10 16:31:45.851401',	'2024-08-10 16:31:45.851401',	NULL,	'A2',	NULL,	'a2@gmail.com',	'"{\"5klz4PP8wgPhPi4Jk3W_iA\":{\"token\":\"$2a$10$J7VyLxNnaOLRGpGFnUK/LeK.yL28sUUXvcBXQTpmrc7qt0cY2tFfO\",\"expiry\":1728577905,\"updated_at\":\"2024-08-10T16:31:45Z\"}}"',	'2024-08-10 16:31:45.85133',	'2024-08-10 16:31:45.929335',	'tGiFPCFy9c7NPU2KSJWRkWAV',	0,	'{}',	'{}',	NULL,	NULL),
-(3,	'email',	'a3@gmail.com',	'$2a$11$2V6ReGmlzjRopAcRpOnSd.orDQ05busKQfQ2EtW83Vp4WH40p/qt6',	NULL,	NULL,	NULL,	0,	NULL,	NULL,	NULL,	NULL,	'kZf7X2BEXkEq3F2JJiJ2',	'2024-08-10 16:31:53.995065',	'2024-08-10 16:31:53.995065',	NULL,	'A3',	NULL,	'a3@gmail.com',	'"{\"d1YCHe0idGiWSXSuyRAkXg\":{\"token\":\"$2a$10$uDSeaAOkbEPE3/yvNBbHeuuwsAUH2xafhRZF0jNzF8KB/Jr1MBSbK\",\"expiry\":1728577914,\"updated_at\":\"2024-08-10T16:31:54Z\"}}"',	'2024-08-10 16:31:53.994994',	'2024-08-10 16:31:54.077261',	'soS2BQkLCEYTAKYwKHzrP6HF',	0,	'{}',	'{}',	NULL,	NULL);
+(1,	'email',	'a1@gmail.com',	'$2a$11$cpRmrRLcmtR8Co.dR9coTuYWcVDf2bXmTZPmcpbBXkSMqTv3RDjia',	NULL,	NULL,	NULL,	0,	NULL,	NULL,	NULL,	NULL,	'rzDrw9CLFK1nT6AfR6xG',	'2024-08-10 21:19:56.933826',	'2024-08-10 21:19:56.933826',	NULL,	'A1',	NULL,	'a1@gmail.com',	'"{\"JBmWk_PM6U87-KCN2BmIvQ\":{\"token\":\"$2a$10$wxFbt7FT7F6foUXjeJ/UJOqsN2px3XgYSfXnyfascQXJT8Z/VgbKa\",\"expiry\":1728595197,\"updated_at\":\"2024-08-10T21:19:56Z\"}}"',	'2024-08-10 21:19:56.933343',	'2024-08-10 21:19:57.041497',	'XrxfG6PyVUVsSjaxgRYKfnGY',	0,	'{}',	'{}',	NULL,	NULL),
+(2,	'email',	'a2@gmail.com',	'$2a$11$FABkJYxYr0Nkh1qWaRm85e9wZsok3wVqTEVOGNU8wXAujALwLMO/q',	NULL,	NULL,	NULL,	0,	NULL,	NULL,	NULL,	NULL,	'35PRrsxhwfVk5ssxWJHs',	NULL,	'2024-08-10 21:20:26.418764',	NULL,	'A2',	NULL,	'a2@gmail.com',	'"{\"KJ4p8i9Bdhq3xebCagSJZA\":{\"token\":\"$2a$10$C3/lhu8bMS9Ixy/ALQ3Gn.d5rMulNBymX.P2Bq7ROkrnTI85sD8dS\",\"expiry\":1728595226,\"updated_at\":\"2024-08-10T21:20:26Z\"}}"',	'2024-08-10 21:20:26.418708',	'2024-08-10 21:20:26.49688',	'7cjZ3a1a24oXoYwUXvMH81Jb',	0,	'{}',	'{}',	NULL,	NULL);
 
 DROP TABLE IF EXISTS "working_hours";
 DROP SEQUENCE IF EXISTS working_hours_id_seq;
@@ -620,13 +580,13 @@ CREATE INDEX "index_working_hours_on_account_id" ON "public"."working_hours" USI
 CREATE INDEX "index_working_hours_on_inbox_id" ON "public"."working_hours" USING btree ("inbox_id");
 
 INSERT INTO "working_hours" ("id", "inbox_id", "account_id", "day_of_week", "closed_all_day", "open_hour", "open_minutes", "close_hour", "close_minutes", "created_at", "updated_at", "open_all_day") VALUES
-(1,	1,	1,	0,	't',	NULL,	NULL,	NULL,	NULL,	'2024-08-10 16:32:48.946763',	'2024-08-10 16:32:48.946763',	'f'),
-(2,	1,	1,	1,	'f',	9,	0,	17,	0,	'2024-08-10 16:32:48.950973',	'2024-08-10 16:32:48.950973',	'f'),
-(3,	1,	1,	2,	'f',	9,	0,	17,	0,	'2024-08-10 16:32:48.952965',	'2024-08-10 16:32:48.952965',	'f'),
-(4,	1,	1,	3,	'f',	9,	0,	17,	0,	'2024-08-10 16:32:48.954414',	'2024-08-10 16:32:48.954414',	'f'),
-(5,	1,	1,	4,	'f',	9,	0,	17,	0,	'2024-08-10 16:32:48.955924',	'2024-08-10 16:32:48.955924',	'f'),
-(6,	1,	1,	5,	'f',	9,	0,	17,	0,	'2024-08-10 16:32:48.95849',	'2024-08-10 16:32:48.95849',	'f'),
-(7,	1,	1,	6,	't',	NULL,	NULL,	NULL,	NULL,	'2024-08-10 16:32:48.960037',	'2024-08-10 16:32:48.960037',	'f');
+(1,	1,	1,	0,	't',	NULL,	NULL,	NULL,	NULL,	'2024-08-10 21:21:05.472265',	'2024-08-10 21:21:05.472265',	'f'),
+(2,	1,	1,	1,	'f',	9,	0,	17,	0,	'2024-08-10 21:21:05.476465',	'2024-08-10 21:21:05.476465',	'f'),
+(3,	1,	1,	2,	'f',	9,	0,	17,	0,	'2024-08-10 21:21:05.47821',	'2024-08-10 21:21:05.47821',	'f'),
+(4,	1,	1,	3,	'f',	9,	0,	17,	0,	'2024-08-10 21:21:05.479577',	'2024-08-10 21:21:05.479577',	'f'),
+(5,	1,	1,	4,	'f',	9,	0,	17,	0,	'2024-08-10 21:21:05.481573',	'2024-08-10 21:21:05.481573',	'f'),
+(6,	1,	1,	5,	'f',	9,	0,	17,	0,	'2024-08-10 21:21:05.483674',	'2024-08-10 21:21:05.483674',	'f'),
+(7,	1,	1,	6,	't',	NULL,	NULL,	NULL,	NULL,	'2024-08-10 21:21:05.486062',	'2024-08-10 21:21:05.486062',	'f');
 
 ALTER TABLE ONLY "public"."active_storage_attachments" ADD CONSTRAINT "fk_rails_c3b3935057" FOREIGN KEY (blob_id) REFERENCES active_storage_blobs(id) NOT DEFERRABLE;
 
@@ -673,4 +633,4 @@ CREATE VIEW "pg_stat_statements_info" AS SELECT pg_stat_statements_info.dealloc,
     pg_stat_statements_info.stats_reset
    FROM pg_stat_statements_info() pg_stat_statements_info(dealloc, stats_reset);
 
--- 2024-08-10 16:36:34.173115+00
+-- 2024-08-10 14:22:19.309913-07
