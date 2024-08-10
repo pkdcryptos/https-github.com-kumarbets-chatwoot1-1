@@ -31,7 +31,6 @@ class ConversationBuilder
       contact_inbox_id: @contact_inbox.id,
       snoozed_until: params[:snoozed_until],
       assignee_id: params[:assignee_id],
-      team_id: params[:team_id]
     }.merge(status)
   end
 end
