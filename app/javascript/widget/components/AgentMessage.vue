@@ -74,19 +74,7 @@ export default {
 
     
     },
-    avatarUrl() {
-      // eslint-disable-next-line
-
-      const displayImage = this.inboxAvatarUrl;
-
-      if (this.message.message_type === MESSAGE_TYPE.TEMPLATE) {
-        return displayImage;
-      }
-
-      return this.message.sender
-        ? this.message.sender.avatar_url
-        : displayImage;
-    },
+ 
     hasRecordedResponse() {
       return (
         this.messageContentAttributes.submitted_email 
@@ -158,9 +146,7 @@ export default {
     }"
   >
     <div v-if="!isASubmittedForm" class="agent-message">
-      <div class="avatar-wrap">
-    
-      </div>
+      
       <div class="message-wrap">
         <div v-if="hasReplyTo" class="flex mt-2 mb-1 text-xs">
           <ReplyToChip :reply-to="replyTo" />
@@ -214,7 +200,7 @@ export default {
           </div>
         </div>
         <p
-          v-if="message.showAvatar || hasRecordedResponse"
+          v-if=" hasRecordedResponse"
           v-dompurify-html="agentName"
           class="agent-name"
           :class="$dm('text-slate-700', 'dark:text-slate-200')"

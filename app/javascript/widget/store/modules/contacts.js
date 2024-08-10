@@ -47,7 +47,6 @@ export const actions = {
       const {
         email,
         name,
-        avatar_url,
         identifier_hash: identifierHash,
         phone_number,
         company_name,
@@ -59,7 +58,6 @@ export const actions = {
       const user = {
         email,
         name,
-        avatar_url,
         identifier_hash: identifierHash,
         phone_number,
         additional_attributes: {},

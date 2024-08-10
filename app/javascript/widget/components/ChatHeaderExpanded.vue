@@ -9,10 +9,6 @@ export default {
   },
   mixins: [darkModeMixin],
   props: {
-    avatarUrl: {
-      type: String,
-      default: '',
-    },
     introHeading: {
       type: String,
       default: '',
@@ -35,14 +31,9 @@ export default {
   >
     <div
       class="flex items-start"
-      :class="[avatarUrl ? 'justify-between' : 'justify-end']"
+      
     >
-      <img
-        v-if="avatarUrl"
-        class="h-12 rounded-full"
-        :src="avatarUrl"
-        alt="Avatar"
-      />
+     
       <HeaderActions
         :show-popout-button="showPopoutButton"
         :show-end-conversation-button="false"

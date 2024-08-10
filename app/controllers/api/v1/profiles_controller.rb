@@ -13,10 +13,7 @@ class Api::V1::ProfilesController < Api::BaseController
     @user.save!
   end
 
-  def avatar
-    @user.avatar.attachment.destroy! if @user.avatar.attached?
-    head :ok
-  end
+
 
   def auto_offline
     @user.account_users.find_by!(account_id: auto_offline_params[:account_id]).update!(auto_offline: auto_offline_params[:auto_offline] || false)
@@ -55,7 +52,6 @@ class Api::V1::ProfilesController < Api::BaseController
       :email,
       :name,
       :display_name,
-      :avatar,
       :message_signature,
       :account_id,
       ui_settings: {}

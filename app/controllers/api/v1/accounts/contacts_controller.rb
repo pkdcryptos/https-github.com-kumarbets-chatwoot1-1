@@ -13,7 +13,7 @@ class Api::V1::Accounts::ContactsController < Api::V1::Accounts::BaseController
 
   before_action :check_authorization
   before_action :set_current_page, only: [:index, :active, :search, :filter]
-  before_action :fetch_contact, only: [:show, :update, :destroy, :avatar, :contactable_inboxes]
+  before_action :fetch_contact, only: [:show, :update, :destroy,  :contactable_inboxes]
   before_action :set_include_contact_inboxes, only: [:index, :search, :filter]
 
   def index
@@ -63,17 +63,15 @@ class Api::V1::Accounts::ContactsController < Api::V1::Accounts::BaseController
 
   def create
     ActiveRecord::Base.transaction do
-      @contact = Current.account.contacts.new(permitted_params.except(:avatar_url))
+      @contact = Current.account.contacts.new(permitted_params)
       @contact.save!
       @contact_inbox = build_contact_inbox
-      process_avatar_from_url
     end
   end
 
   def update
     @contact.assign_attributes(contact_update_params)
     @contact.save!
-    process_avatar_from_url
   end
 
   def destroy
@@ -88,10 +86,7 @@ class Api::V1::Accounts::ContactsController < Api::V1::Accounts::BaseController
     head :ok
   end
 
-  def avatar
-    @contact.avatar.purge if @contact.avatar.attached?
-    @contact
-  end
+
 
   private
 
@@ -111,7 +106,6 @@ class Api::V1::Accounts::ContactsController < Api::V1::Accounts::BaseController
 
   def fetch_contacts(contacts)
     contacts_with_avatar = filtrate(contacts)
-                           .includes([{ avatar_attachment: [:blob] }])
                            .page(@current_page).per(RESULTS_PER_PAGE)
 
     return contacts_with_avatar.includes([{ contact_inboxes: [:inbox] }]) if @include_contact_inboxes
@@ -131,7 +125,7 @@ class Api::V1::Accounts::ContactsController < Api::V1::Accounts::BaseController
   end
 
   def permitted_params
-    params.permit(:name, :identifier, :email, :phone_number, :avatar, :blocked, :avatar_url)
+    params.permit(:name, :identifier, :email, :phone_number,:blocked, )
   end
 
 
@@ -150,9 +144,6 @@ class Api::V1::Accounts::ContactsController < Api::V1::Accounts::BaseController
     @contact = Current.account.contacts.includes(contact_inboxes: [:inbox]).find(params[:id])
   end
 
-  def process_avatar_from_url
-    ::Avatar::AvatarFromUrlJob.perform_later(@contact, params[:avatar_url]) if params[:avatar_url].present?
-  end
 
   def render_error(error, error_status)
     render json: error, status: error_status

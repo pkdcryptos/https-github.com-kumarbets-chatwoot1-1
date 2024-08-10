@@ -2,9 +2,7 @@ export default {
   computed: {
    
 
-    inboxAvatarUrl() {
-      return window.chatwootWebChannel.avatarUrl;
-    },
+  
     channelConfig() {
       return window.chatwootWebChannel;
     },

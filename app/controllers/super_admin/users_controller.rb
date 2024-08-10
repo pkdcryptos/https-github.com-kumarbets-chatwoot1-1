@@ -46,15 +46,7 @@ class SuperAdmin::UsersController < SuperAdmin::ApplicationController
   # and `dashboard`:
   #
 
-  def destroy_avatar
-    avatar = requested_resource.avatar
-    avatar.purge
-    redirect_back(fallback_location: super_admin_users_path)
-  end
 
-  def scoped_resource
-    resource_class.with_attached_avatar
-  end
 
   def resource_params
     permitted_params = super

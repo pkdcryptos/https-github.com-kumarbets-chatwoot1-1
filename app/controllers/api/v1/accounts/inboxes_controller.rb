@@ -6,7 +6,7 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
   before_action :check_authorization, except: [:show]
 
   def index
-    @inboxes = policy_scope(Current.account.inboxes.order_by_name.includes(:channel, { avatar_attachment: [:blob] }))
+    @inboxes = policy_scope(Current.account.inboxes.order_by_name.includes(:channel))
   end
 
   def show; end
@@ -18,10 +18,7 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
 
 
 
-  def avatar
-    @inbox.avatar.attachment.destroy! if @inbox.avatar.attached?
-    head :ok
-  end
+
 
   def create
     ActiveRecord::Base.transaction do
@@ -103,7 +100,7 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
   end
 
   def inbox_attributes
-    [:name, :avatar, :greeting_enabled, :greeting_message, :enable_email_collect, 
+    [:name,:greeting_enabled, :greeting_message, :enable_email_collect, 
      :enable_auto_assignment, :working_hours_enabled, :out_of_office_message, :timezone, :allow_messages_after_resolved,
      :lock_to_single_conversation,  :sender_name_type, :business_name]
   end

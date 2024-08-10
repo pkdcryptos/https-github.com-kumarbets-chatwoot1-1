@@ -33,25 +33,14 @@ export default {
         this.channelConfig.websiteName
       }`;
     },
-    avatarUrl() {
-      // eslint-disable-next-line
-
-      const displayImage =  this.inboxAvatarUrl;
-      if (this.isSenderExist(this.sender)) {
-        const { avatar_url: avatarUrl } = this.sender;
-        return avatarUrl;
-      }
-      return displayImage;
-    },
+ 
     agentName() {
       if (this.isSenderExist(this.sender)) {
         const { available_name: availableName } = this.sender;
         return availableName;
       }
-      if (this.useInboxAvatarForBot) {
-        return this.channelConfig.websiteName;
-      }
-      return this.$t('UNREAD_VIEW.BOT');
+     return this.channelConfig.websiteName;
+     
     },
     availabilityStatus() {
       if (this.isSenderExist(this.sender)) {

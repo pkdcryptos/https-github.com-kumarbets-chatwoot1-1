@@ -9,7 +9,7 @@ export default {
 <template>
   <div class="agent-message-wrap">
     <div class="agent-message">
-      <div class="avatar-wrap" />
+      
       <div class="message-wrap mt-2">
         <div
           class="typing-bubble chat-bubble agent"

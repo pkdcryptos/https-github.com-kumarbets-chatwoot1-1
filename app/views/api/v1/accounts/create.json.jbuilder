@@ -10,7 +10,6 @@ json.data do
   json.role resource.active_account_user&.role
   json.inviter_id resource.active_account_user&.inviter_id
   json.confirmed resource.confirmed?
-  json.avatar_url resource.avatar_url
   json.access_token resource.access_token.token
   json.accounts do
     json.array! resource.account_users do |account_user|
