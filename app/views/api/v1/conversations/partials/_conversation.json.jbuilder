@@ -2,15 +2,7 @@
 # Currently the file there is used only for search endpoint.
 # Everywhere else we use conversation builder in partials folder
 
-json.meta do
-  
-  if conversation.assignee&.account
-    json.assignee do
-      json.partial! 'api/v1/models/agent', formats: [:json], resource: conversation.assignee
-    end
-  end
- 
-end
+
 
 json.id conversation.display_id
 if conversation.messages.where(account_id: conversation.account_id).last.blank?
